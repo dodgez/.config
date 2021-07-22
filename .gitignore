@@ -1,4 +1,12 @@
 *
 !.gitignore
-!.doom.d
-!.doom.d/*
+!.emacs
+
+# Include .config only to whitelist children
+!.config
+.config/*
+!.config/starship.toml
+
+!.config/fish
+.config/fish/*
+!.config/fish/config.fish
