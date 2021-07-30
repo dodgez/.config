@@ -1,4 +1,4 @@
-set -x EDITOR "micro"
+set -x EDITOR "emacs"
 alias editor "$EDITOR"
 alias edit "editor"
 
@@ -11,4 +11,3 @@ alias bat batcat
 set -x PATH "$HOME/.cargo/bin:$PATH"
 
 starship init fish | source
-direnv hook fish | source
