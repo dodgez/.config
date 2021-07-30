@@ -1,3 +1,5 @@
+(package-initialize)
+
 (require 'package)
 (add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/"))
 
@@ -98,12 +100,14 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(custom-enabled-themes '(dracula))
+ '(custom-enabled-themes (quote (dracula)))
  '(custom-safe-themes
-   '("549ccbd11c125a4e671a1e8d3609063a91228e918ffb269e57bd2cd2c0a6f1c6" default))
- '(mouse-wheel-scroll-amount '(2 ((shift) . 5) ((meta)) ((control) . text-scale)))
+   (quote
+    ("c1284dd4c650d6d74cfaf0106b8ae42270cab6c58f78efc5b7c825b6a4580417" "549ccbd11c125a4e671a1e8d3609063a91228e918ffb269e57bd2cd2c0a6f1c6" default)))
+ '(mouse-wheel-scroll-amount (quote (2 ((shift) . 5) ((meta)) ((control) . text-scale))))
  '(package-selected-packages
-   '(centaur-tabs highlight-parentheses markdown-mode dracula-theme restart-emacs treemacs treemacs-all-the-icons treemacs-magit treemacs-projectile projectile counsel ivy-prescient web-mode use-package which-key swiper ivy magit)))
+   (quote
+    (centaur-tabs highlight-parentheses markdown-mode dracula-theme restart-emacs treemacs treemacs-all-the-icons treemacs-magit treemacs-projectile projectile counsel ivy-prescient web-mode use-package which-key swiper ivy magit))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
