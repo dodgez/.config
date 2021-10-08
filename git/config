@@ -5,6 +5,8 @@
 	ui = auto
 [push]
 	default = simple
+[pull]
+	ff = only
 [pager]
     diff = delta
     log = delta
