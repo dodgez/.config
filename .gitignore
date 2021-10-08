@@ -1,12 +1,20 @@
+# Ignore all files by default
 *
+
+# This file
 !.gitignore
-!.emacs
 
-# Include .config only to whitelist children
-!.config
-.config/*
-!.config/starship.toml
+# Starship shell prompt configuration
+!starship.toml
 
-!.config/fish
-.config/fish/*
-!.config/fish/config.fish
+# Fish shell configuration
+!fish
+!fish/config.fish
+
+# Doom Emacs configuration
+!doom
+!doom/*
+
+# Git configuration
+!git
+!git/config

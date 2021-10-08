@@ -1,0 +1,19 @@
+[user]
+	email = zacharysdodge@gmail.com
+	name = Zachary Dodge
+[color]
+	ui = auto
+[push]
+	default = simple
+[pager]
+    diff = delta
+    log = delta
+    reflog = delta
+    show = delta
+[interactive]
+    diffFilter = delta --color-only --features=interactive
+[delta]
+	features = decorations
+	side-by-side = true
+[alias]
+	dag = log --graph --format='format:%C(yellow)%h%C(reset) %C(blue)\"%an\" <%ae>%C(reset) %C(magenta)%cr%C(reset)%C(auto)%d%C(reset)%n%s' --date-order

@@ -3,3 +3,5 @@ add_newline = false
 disabled = true
 [package]
 disabled = true
+[[battery.display]]
+threshold = 20
