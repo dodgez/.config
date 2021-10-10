@@ -4,23 +4,71 @@
 #+begin_src elisp
 (setq user-full-name "Zachary Dodge"
       user-mail-address "zacharysdodge@gmail.com")
+#+end_src
+
+#+begin_src elisp
 (setq doom-theme 'doom-dracula)
+(setq doom-font (font-spec :family "Hack Nerd Font Mono" :size 16))
+#+end_src
+
+#+RESULTS:
+: #<font-spec nil nil Hack\ Nerd\ Font\ Mono nil nil nil nil nil 16 nil nil nil nil>
+
+#+begin_src elisp
 (setq org-support-shift-select t)
+#+end_src
+
+- Display (absolute) line numbers
+- Tell projectile to only search non-gitignored files
+- Blink the cursor
+- Don't require confirmation to exit emacs
+- Disable scroll wheel "acceleration"
+#+begin_src elisp
 (setq display-line-numbers-type t)
 (setq projectile-indexing-method 'alien)
+(blink-cursor-mode)
+(setq confirm-kill-emacs nil)
+(setq mouse-wheel-progressive-speed nil)
+#+end_src
+
+#+RESULTS:
+
+- Make Emacs and User the only two tab groups
+- Use delta mode in magit
+- Enable minimap
+#+begin_src elisp
 (defun centaur-tabs-buffer-groups ()
   (list
     (cond
       ((string-equal "*" (substring (buffer-name) 0 1)) "Emacs")
       (t "User"))))
-(setq doom-font (font-spec :family "Hack Nerd Font Mono" :size 16))
-(show-smartparens-global-mode)
-(blink-cursor-mode)
-(setq confirm-kill-emacs nil)
-(global-set-key (kbd "<escape>") 'keyboard-escape-quit)
-(magit-delta-mode)
 (use-package! magit-delta
   :hook (magit-mode . magit-delta-mode))
+(use-package! minimap
+  :config
+  (minimap-mode))
+#+end_src
+
+#+RESULTS:
+: t
+
+Make the escape key quit (as opposed to triple escape)
+#+begin_src elisp
+(global-set-key (kbd "<escape>") 'keyboard-escape-quit)
+#+end_src
+
+#+RESULTS:
+: keyboard-escape-quit
+
+Keep treemacs open while in a project
+#+begin_src elisp
+(use-package! treemacs
+  :config
+  (defun project-treemacs ()
+    (if (and (doom-project-p) (not (equal (treemacs-current-visibility) 'visible)))
+      (treemacs)
+      t))
+  (add-hook! prog-mode project-treemacs))
 #+end_src
 
 #+RESULTS:
