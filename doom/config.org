@@ -66,25 +66,16 @@ Make the escape key quit (as opposed to triple escape)
 #+RESULTS:
 : keyboard-escape-quit
 
-Utility functions
-#+begin_src elisp
-(defun wsl-p () (string-match "WSL" operating-system-release))
-(defun wsl-default (a b) (if (wsl-p) a b))
-#+end_src
-
-#+RESULTS:
-: wsl-default
-
 Size the frame to be proportional to the display.
 The default proportion is 0.8 of width and height.
-My personal computer uses emacs in WSL which doesn't provide the correct display size so this defaults to 2560x1440 when in WSL.
+If the display width is too large (>= 2 * 1920) then default to 2560 (my main monitor)
 #+begin_src elisp
 (defun set-ideal-frame-size (&optional proportion)
   (when window-system
     (let* ((proportion (or proportion 0.8))
            (margin (/ (- 1 proportion) 2))
-           (display-width (wsl-default 2560 (display-pixel-width)))
-           (display-height (wsl-default 1440 (display-pixel-height)))
+           (display-width (if (>= (display-pixel-width) (* 2 1920)) 2560 (display-pixel-width)))
+           (display-height (display-pixel-height))
            (width (truncate (* display-width proportion)))
            (height (truncate (* display-height proportion)))
            (margin-left (truncate (* display-width margin)))
