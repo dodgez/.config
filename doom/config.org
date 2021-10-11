@@ -61,11 +61,15 @@
 #+RESULTS:
 : t
 
-Make the escape key quit (as opposed to triple escape) and switch home and end to move relative to a line.
+- Make escape quit (instead of triple escape)
+- Make home and end relative to single lines
+- Normalize meta shift on MAC
 #+begin_src elisp
 (map! "<escape>" #'keyboard-escape-quit)
 (map! "<home>" #'beginning-of-line)
 (map! "<end>" #'end-of-line)
+(when IS-MAC (map! :i "<M-S-right>" "<C-S-right>"))
+(when IS-MAC (map! :i "<M-S-left>" "<C-S-left>"))
 #+end_src
 
 #+RESULTS:
