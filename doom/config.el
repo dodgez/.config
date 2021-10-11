@@ -23,9 +23,12 @@
   :config
   (minimap-mode))
 
-(global-set-key (kbd "<escape>") 'keyboard-escape-quit)
+(map! "<escape>" #'keyboard-escape-quit)
+(map! "<home>" #'beginning-of-line)
+(map! "<end>" #'end-of-line)
 
 (defun set-ideal-frame-size (&optional proportion)
+  (interactive)
   (when (display-graphic-p)
     (pcase (frame-monitor-workarea)
       (`(,display-x ,display-y ,display-raw-width ,display-raw-height)
@@ -40,3 +43,5 @@
          (set-frame-size (selected-frame) width height t)
          (set-frame-position (selected-frame) margin-left margin-top))))))
 (set-ideal-frame-size)
+(map! :leader
+      :desc "Set ideal frame size" "F" #'set-ideal-frame-size)

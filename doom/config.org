@@ -58,19 +58,21 @@
 #+RESULTS:
 : t
 
-Make the escape key quit (as opposed to triple escape)
+Make the escape key quit (as opposed to triple escape) and switch home and end to move relative to a line.
 #+begin_src elisp
-(global-set-key (kbd "<escape>") 'keyboard-escape-quit)
+(map! "<escape>" #'keyboard-escape-quit)
+(map! "<home>" #'beginning-of-line)
+(map! "<end>" #'end-of-line)
 #+end_src
 
 #+RESULTS:
-: keyboard-escape-quit
 
 Size the frame to be proportional to the display.
 The default proportion is 0.8 of width and height.
-If the display width is too large (>= 2 * 1920) then default to 2560 (my main monitor)
+If the display width is too large (>= 2 * 1920) then default to 2560 (my main monitor).
 #+begin_src elisp
 (defun set-ideal-frame-size (&optional proportion)
+  (interactive)
   (when (display-graphic-p)
     (pcase (frame-monitor-workarea)
       (`(,display-x ,display-y ,display-raw-width ,display-raw-height)
@@ -85,7 +87,9 @@ If the display width is too large (>= 2 * 1920) then default to 2560 (my main mo
          (set-frame-size (selected-frame) width height t)
          (set-frame-position (selected-frame) margin-left margin-top))))))
 (set-ideal-frame-size)
+(map! :leader
+      :desc "Set ideal frame size" "F" #'set-ideal-frame-size)
 #+end_src
 
 #+RESULTS:
-: t
+: set-ideal-frame-size
