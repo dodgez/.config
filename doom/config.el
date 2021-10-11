@@ -14,9 +14,9 @@
 
 (defun centaur-tabs-buffer-groups ()
   (list
-    (cond
-      ((string-equal "*" (substring (buffer-name) 0 1)) "Emacs")
-      (t "User"))))
+   (cond
+    ((string-equal "*" (substring (buffer-name) 0 1)) "Emacs")
+    (t "User"))))
 (use-package! magit-delta
   :hook (magit-mode . magit-delta-mode))
 (use-package! minimap
@@ -26,16 +26,17 @@
 (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
 
 (defun set-ideal-frame-size (&optional proportion)
-  (when window-system
-    (let* ((proportion (or proportion 0.8))
-           (margin (/ (- 1 proportion) 2))
-           (display-width (if (>= (display-pixel-width) (* 2 1920)) 2560 (display-pixel-width)))
-           (display-height (display-pixel-height))
-           (width (truncate (* display-width proportion)))
-           (height (truncate (* display-height proportion)))
-           (margin-left (truncate (* display-width margin)))
-           (margin-top (truncate (* display-height margin))))
-
-          (set-frame-size (selected-frame) width height t)
-          (set-frame-position (selected-frame) margin-left margin-top))))
-(set-ideal-frame-size 0.8)
+  (when (display-graphic-p)
+    (pcase (frame-monitor-workarea)
+      (`(,display-x ,display-y ,display-raw-width ,display-raw-height)
+       (let* ((proportion (or proportion 0.9))
+              (margin (/ (- 1 proportion) 2))
+              (display-width (- display-raw-width display-x))
+              (display-height (- display-raw-height display-y))
+              (width (truncate (* display-width proportion)))
+              (height (truncate (* display-height proportion)))
+              (margin-left (+ display-x (truncate (* display-width margin))))
+              (margin-top (+ display-y (truncate (* display-height margin)))))
+         (set-frame-size (selected-frame) width height t)
+         (set-frame-position (selected-frame) margin-left margin-top))))))
+(set-ideal-frame-size)
