@@ -29,6 +29,8 @@
 (map! "<escape>" #'keyboard-escape-quit)
 (map! "<home>" #'beginning-of-line)
 (map! "<end>" #'end-of-line)
+(when IS-MAC (map! :i "<M-S-right>" "<C-S-right>"))
+(when IS-MAC (map! :i "<M-S-left>" "<C-S-left>"))
 
 (defun set-ideal-frame-size (&optional proportion)
   (interactive)
