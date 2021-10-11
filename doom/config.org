@@ -6,6 +6,9 @@
       user-mail-address "zacharysdodge@gmail.com")
 #+end_src
 
+#+RESULTS:
+: zacharysdodge@gmail.com
+
 #+begin_src elisp
 (setq doom-theme 'doom-dracula)
 (setq doom-font (font-spec :family "Hack Nerd Font Mono" :size 16))
@@ -17,6 +20,9 @@
 #+begin_src elisp
 (setq org-support-shift-select t)
 #+end_src
+
+#+RESULTS:
+: t
 
 - Display (absolute) line numbers
 - Tell projectile to only search non-gitignored files
@@ -60,15 +66,29 @@ Make the escape key quit (as opposed to triple escape)
 #+RESULTS:
 : keyboard-escape-quit
 
-Keep treemacs open while in a project
+Utility functions
 #+begin_src elisp
-(use-package! treemacs
-  :config
-  (defun project-treemacs ()
-    (if (and (doom-project-p) (not (equal (treemacs-current-visibility) 'visible)))
-      (treemacs)
-      t))
-  (add-hook! prog-mode project-treemacs))
+(defun wsl-p () (string-match "WSL" operating-system-release))
+#+end_src
+
+#+RESULTS:
+: wsl-p
+
+Size the frame to be proportional to the display
+#+begin_src elisp
+(defun set-ideal-frame-size ()
+  (when window-system
+    (let ((width (* (display-pixel-width) 0.8))
+          (height (* (display-pixel-height) 0.8))
+          (default-width (* 2560 0.8))
+          (default-height (* 1440 0.8)))
+      (if (wsl-p)
+        (set-frame-size (selected-frame) (truncate default-width) (truncate default-height) t)
+        (set-frame-size (selected-frame) (truncate width) (truncate height) t))
+      (if (wsl-p)
+       (set-frame-position (selected-frame) (truncate (* default-width 0.125)) (truncate (* default-height 0.125)))
+       (set-frame-position (selected-frame) (truncate (* width 0.125)) (truncate (* height 0.125)))))))
+(set-ideal-frame-size)
 #+end_src
 
 #+RESULTS:

@@ -25,10 +25,18 @@
 
 (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
 
-(use-package! treemacs
-  :config
-  (defun project-treemacs ()
-    (if (and (doom-project-p) (not (equal (treemacs-current-visibility) 'visible)))
-      (treemacs)
-      t))
-  (add-hook! prog-mode project-treemacs))
+(defun wsl-p () (string-match "WSL" operating-system-release))
+
+(defun set-ideal-frame-size ()
+  (when window-system
+    (let ((width (* (display-pixel-width) 0.8))
+          (height (* (display-pixel-height) 0.8))
+          (default-width (* 2560 0.8))
+          (default-height (* 1440 0.8)))
+      (if (wsl-p)
+        (set-frame-size (selected-frame) (truncate default-width) (truncate default-height) t)
+        (set-frame-size (selected-frame) (truncate width) (truncate height) t))
+      (if (wsl-p)
+       (set-frame-position (selected-frame) (truncate (* default-width 0.125)) (truncate (* default-height 0.125)))
+       (set-frame-position (selected-frame) (truncate (* width 0.125)) (truncate (* height 0.125)))))))
+(set-ideal-frame-size)
