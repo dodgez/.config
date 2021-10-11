@@ -25,15 +25,12 @@
 
 (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
 
-(defun wsl-p () (string-match "WSL" operating-system-release))
-(defun wsl-default (a b) (if (wsl-p) a b))
-
 (defun set-ideal-frame-size (&optional proportion)
   (when window-system
     (let* ((proportion (or proportion 0.8))
            (margin (/ (- 1 proportion) 2))
-           (display-width (wsl-default 2560 (display-pixel-width)))
-           (display-height (wsl-default 1440 (display-pixel-height)))
+           (display-width (if (>= (display-pixel-width) (* 2 1920)) 2560 (display-pixel-width)))
+           (display-height (display-pixel-height))
            (width (truncate (* display-width proportion)))
            (height (truncate (* display-height proportion)))
            (margin-left (truncate (* display-width margin)))
