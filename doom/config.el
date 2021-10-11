@@ -22,9 +22,6 @@
   (setq centaur-tabs-buffer-groups-function #'custom-centaur-tabs-buffer-groups))
 (use-package! magit-delta
   :hook (magit-mode . magit-delta-mode))
-(use-package! minimap
-  :config
-  (minimap-mode))
 
 (map! "<escape>" #'keyboard-escape-quit)
 (map! "<home>" #'beginning-of-line)
