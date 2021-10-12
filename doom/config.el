@@ -23,11 +23,17 @@
 (use-package! magit-delta
   :hook (magit-mode . magit-delta-mode))
 
+(use-package evil
+  :custom
+  (evil-toggle-key "C-v"))
+(map! "C-z" #'undo)
+
 (map! "<escape>" #'keyboard-escape-quit)
 (map! "<home>" #'beginning-of-line)
 (map! "<end>" #'end-of-line)
-(when IS-MAC (map! :i "<M-S-right>" "<C-S-right>"))
-(when IS-MAC (map! :i "<M-S-left>" "<C-S-left>"))
+(map! :when IS-MAC :i "<M-S-right>" "<C-S-right>")
+(map! :when IS-MAC :i "<M-S-left>" "<C-S-left>")
+(map! "C-/" #'comment-line)
 
 (defun set-ideal-frame-size (&optional proportion)
   (interactive)

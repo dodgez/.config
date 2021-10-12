@@ -58,6 +58,15 @@
 #+RESULTS:
 | (closure (t) (&rest _) (progn (defalias '+magit-enlargen-fringe-h #'(lambda nil Make fringe larger in magit. (and (display-graphic-p) (derived-mode-p 'magit-mode) +magit-fringe-size (let ((left (or (car-safe +magit-fringe-size) +magit-fringe-size)) (right (or (cdr-safe +magit-fringe-size) +magit-fringe-size))) (set-window-fringes nil left right))))) (add-hook 'window-configuration-change-hook #'+magit-enlargen-fringe-h nil t))) | doom-modeline-set-vcs-modeline | +modeline-hide-in-non-status-buffer-h | magit-delta-mode | turn-on-magit-gitflow | doom--setq-evil-ex-hl-update-delay-for-magit-mode-h |
 
+#+begin_src elisp
+(use-package evil
+  :custom
+  (evil-toggle-key "C-v"))
+(map! "C-z" #'undo)
+#+end_src
+
+#+RESULTS:
+
 - Make escape quit (instead of triple escape)
 - Make home and end relative to single lines
 - Normalize meta shift on MAC
@@ -65,8 +74,9 @@
 (map! "<escape>" #'keyboard-escape-quit)
 (map! "<home>" #'beginning-of-line)
 (map! "<end>" #'end-of-line)
-(when IS-MAC (map! :i "<M-S-right>" "<C-S-right>"))
-(when IS-MAC (map! :i "<M-S-left>" "<C-S-left>"))
+(map! :when IS-MAC :i "<M-S-right>" "<C-S-right>")
+(map! :when IS-MAC :i "<M-S-left>" "<C-S-left>")
+(map! "C-/" #'comment-line)
 #+end_src
 
 #+RESULTS:
