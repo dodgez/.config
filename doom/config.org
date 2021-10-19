@@ -39,24 +39,24 @@
 
 #+RESULTS:
 
-- Make Emacs and User the only two tab groups
+- Centaur-tabs causes issues on my home computer
 - Use delta mode in magit
-- Enable minimap
 #+begin_src elisp
 (defun custom-centaur-tabs-buffer-groups ()
   (list
    (cond
     ((string-equal "*" (substring (buffer-name) 0 1)) "Emacs")
     (t "User"))))
-(use-package! centaur-tabs
-  :config
-  (setq centaur-tabs-buffer-groups-function #'custom-centaur-tabs-buffer-groups))
+(when (not (string-equal system-type "windows-nt"))
+  (use-package! centaur-tabs
+    :config
+    (setq centaur-tabs-buffer-groups-function #'custom-centaur-tabs-buffer-groups)))
 (use-package! magit-delta
   :hook (magit-mode . magit-delta-mode))
 #+end_src
 
 #+RESULTS:
-| (closure (t) (&rest _) (progn (defalias '+magit-enlargen-fringe-h #'(lambda nil Make fringe larger in magit. (and (display-graphic-p) (derived-mode-p 'magit-mode) +magit-fringe-size (let ((left (or (car-safe +magit-fringe-size) +magit-fringe-size)) (right (or (cdr-safe +magit-fringe-size) +magit-fringe-size))) (set-window-fringes nil left right))))) (add-hook 'window-configuration-change-hook #'+magit-enlargen-fringe-h nil t))) | doom-modeline-set-vcs-modeline | +modeline-hide-in-non-status-buffer-h | magit-delta-mode | turn-on-magit-gitflow | doom--setq-evil-ex-hl-update-delay-for-magit-mode-h |
+| (closure ((hook . magit-mode-hook) (--dolist-tail--) t) (&rest _) (progn (defalias '+magit-enlargen-fringe-h #'(lambda nil Make fringe larger in magit. (and (display-graphic-p) (derived-mode-p 'magit-mode) +magit-fringe-size (let ((left (or (car-safe +magit-fringe-size) +magit-fringe-size)) (right (or (cdr-safe +magit-fringe-size) +magit-fringe-size))) (set-window-fringes nil left right))))) (let ((--dolist-tail-- (nreverse '(window-configuration-change-hook)))) (while --dolist-tail-- (let ((hook (car --dolist-tail--))) (let ((--dolist-tail-- (list #'+magit-enlargen-fringe-h))) (while --dolist-tail-- (let ((func (car --dolist-tail--))) (add-hook hook func nil t) (setq --dolist-tail-- (cdr --dolist-tail--))))) (setq --dolist-tail-- (cdr --dolist-tail--))))))) | doom--setq-evil-ex-hl-update-delay-for-magit-mode-h | (closure ((hook . magit-mode-hook) (--dolist-tail--) t) (&rest _) (progn (defalias '+magit-enlargen-fringe-h #'(lambda nil Make fringe larger in magit. (and (display-graphic-p) (derived-mode-p 'magit-mode) +magit-fringe-size (let ((left (or (car-safe +magit-fringe-size) +magit-fringe-size)) (right (or (cdr-safe +magit-fringe-size) +magit-fringe-size))) (set-window-fringes nil left right))))) (let ((--dolist-tail-- (nreverse '(window-configuration-change-hook)))) (while --dolist-tail-- (let ((hook (car --dolist-tail--))) (let ((--dolist-tail-- (list #'+magit-enlargen-fringe-h))) (while --dolist-tail-- (let ((func (car --dolist-tail--))) (add-hook hook func nil t) (setq --dolist-tail-- (cdr --dolist-tail--))))) (setq --dolist-tail-- (cdr --dolist-tail--))))))) | doom-modeline-set-vcs-modeline | +modeline-hide-in-non-status-buffer-h | magit-delta-mode | turn-on-magit-gitflow |
 
 #+begin_src elisp
 (use-package evil
@@ -83,7 +83,8 @@
 
 Size the frame to be proportional to the display.
 The default proportion is 0.8 of width and height.
-If the display width is too large (>= 2 * 1920) then default to 2560 (my main monitor).
+The first parameter of workarea is simultaneously the display's offset from the left and padding from the window manager.
+Therefore, if the number is too high (like 1920), treat it as 0 for calculating frame width but use it to position correctly.
 #+begin_src elisp
 (defun set-ideal-frame-size (&optional proportion)
   (interactive)
@@ -92,14 +93,14 @@ If the display width is too large (>= 2 * 1920) then default to 2560 (my main mo
       (`(,display-x ,display-y ,display-raw-width ,display-raw-height)
        (let* ((proportion (or proportion 0.9))
               (margin (/ (- 1 proportion) 2))
-              (display-width (- display-raw-width display-x))
+              (display-width (- display-raw-width (if (< display-x 1920) display-x 0)))
               (display-height (- display-raw-height display-y))
               (width (truncate (* display-width proportion)))
               (height (truncate (* display-height proportion)))
               (margin-left (+ display-x (truncate (* display-width margin))))
               (margin-top (+ display-y (truncate (* display-height margin)))))
-         (set-frame-size (selected-frame) width height t)
-         (set-frame-position (selected-frame) margin-left margin-top))))))
+         (set-frame-position (selected-frame) margin-left margin-top)
+         (set-frame-size (selected-frame) width height t))))))
 (set-ideal-frame-size)
 (map! :leader
       :desc "Set ideal frame size" "F" #'set-ideal-frame-size)
