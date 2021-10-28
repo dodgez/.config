@@ -1,4 +1,4 @@
-set -x EDITOR "emacs -nw"
+set -x EDITOR "micro"
 alias editor="$EDITOR"
 alias edit="editor"
 
@@ -20,4 +20,9 @@ if test -e "$HOME/.config/fish/work_config.fish"
     source "$HOME/.config/fish/work_config.fish"
 end
 
-starship init fish | source
+switch (uname -s)
+    case "*CYGWIN*"
+        source "$HOME/.config/fish/starship_cygwin.fish"
+    case '*'
+        starship init fish | source
+end
