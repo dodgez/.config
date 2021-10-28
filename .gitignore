@@ -10,6 +10,7 @@
 # Fish shell configuration
 !fish
 !fish/config.fish
+!fish/starship_cygwin.fish
 
 # Doom Emacs configuration
 !doom
