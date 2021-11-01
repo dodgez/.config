@@ -45,7 +45,7 @@
 (defun custom-centaur-tabs-buffer-groups ()
   (list
    (cond
-    ((string-equal "*" (substring (buffer-name) 0 1)) "Emacs")
+    ((and (string-equal "*" (substring (buffer-name) 0 1)) (not (string-prefix-p "*eshell" (buffer-name)))) "Emacs")
     (t "User"))))
 (when (not (string-equal system-type "windows-nt"))
   (use-package! centaur-tabs
@@ -56,7 +56,7 @@
 #+end_src
 
 #+RESULTS:
-| (closure ((hook . magit-mode-hook) (--dolist-tail--) t) (&rest _) (progn (defalias '+magit-enlargen-fringe-h #'(lambda nil Make fringe larger in magit. (and (display-graphic-p) (derived-mode-p 'magit-mode) +magit-fringe-size (let ((left (or (car-safe +magit-fringe-size) +magit-fringe-size)) (right (or (cdr-safe +magit-fringe-size) +magit-fringe-size))) (set-window-fringes nil left right))))) (let ((--dolist-tail-- (nreverse '(window-configuration-change-hook)))) (while --dolist-tail-- (let ((hook (car --dolist-tail--))) (let ((--dolist-tail-- (list #'+magit-enlargen-fringe-h))) (while --dolist-tail-- (let ((func (car --dolist-tail--))) (add-hook hook func nil t) (setq --dolist-tail-- (cdr --dolist-tail--))))) (setq --dolist-tail-- (cdr --dolist-tail--))))))) | doom--setq-evil-ex-hl-update-delay-for-magit-mode-h | (closure ((hook . magit-mode-hook) (--dolist-tail--) t) (&rest _) (progn (defalias '+magit-enlargen-fringe-h #'(lambda nil Make fringe larger in magit. (and (display-graphic-p) (derived-mode-p 'magit-mode) +magit-fringe-size (let ((left (or (car-safe +magit-fringe-size) +magit-fringe-size)) (right (or (cdr-safe +magit-fringe-size) +magit-fringe-size))) (set-window-fringes nil left right))))) (let ((--dolist-tail-- (nreverse '(window-configuration-change-hook)))) (while --dolist-tail-- (let ((hook (car --dolist-tail--))) (let ((--dolist-tail-- (list #'+magit-enlargen-fringe-h))) (while --dolist-tail-- (let ((func (car --dolist-tail--))) (add-hook hook func nil t) (setq --dolist-tail-- (cdr --dolist-tail--))))) (setq --dolist-tail-- (cdr --dolist-tail--))))))) | doom-modeline-set-vcs-modeline | +modeline-hide-in-non-status-buffer-h | magit-delta-mode | turn-on-magit-gitflow |
+| doom--setq-evil-ex-hl-update-delay-for-magit-mode-h | (closure (t) (&rest _) (progn (defalias '+magit-enlargen-fringe-h #'(lambda nil Make fringe larger in magit. (and (display-graphic-p) (derived-mode-p 'magit-mode) +magit-fringe-size (let ((left (or (car-safe +magit-fringe-size) +magit-fringe-size)) (right (or (cdr-safe +magit-fringe-size) +magit-fringe-size))) (set-window-fringes nil left right))))) (add-hook 'window-configuration-change-hook #'+magit-enlargen-fringe-h nil t))) | doom-modeline-set-vcs-modeline | +modeline-hide-in-non-status-buffer-h | magit-delta-mode | turn-on-magit-gitflow |
 
 #+begin_src elisp
 (use-package evil
