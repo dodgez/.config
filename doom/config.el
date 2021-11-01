@@ -15,7 +15,7 @@
 (defun custom-centaur-tabs-buffer-groups ()
   (list
    (cond
-    ((string-equal "*" (substring (buffer-name) 0 1)) "Emacs")
+    ((and (string-equal "*" (substring (buffer-name) 0 1)) (not (string-prefix-p "*eshell" (buffer-name)))) "Emacs")
     (t "User"))))
 (when (not (string-equal system-type "windows-nt"))
   (use-package! centaur-tabs
