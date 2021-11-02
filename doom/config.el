@@ -49,3 +49,7 @@
 (set-ideal-frame-size)
 (map! :leader
       :desc "Set ideal frame size" "F" #'set-ideal-frame-size)
+
+(progn
+  (load! "+work-config.el")
+  nil)
