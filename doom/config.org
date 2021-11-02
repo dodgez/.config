@@ -69,6 +69,8 @@
 - Make escape quit (instead of triple escape)
 - Make home and end relative to single lines
 - Normalize meta shift on MAC
+- Add comment line shortcut
+- SPC e as eval-last-sexp
 #+begin_src elisp
 (map! "<escape>" #'keyboard-escape-quit)
 (map! "<home>" #'beginning-of-line)
@@ -76,9 +78,11 @@
 (map! :when IS-MAC :i "<M-S-right>" "<C-S-right>")
 (map! :when IS-MAC :i "<M-S-left>" "<C-S-left>")
 (map! "C-/" #'comment-line)
+(map! :leader "e" #'eval-last-sexp)
 #+end_src
 
 #+RESULTS:
+: eval-last-sexp
 
 Size the frame to be proportional to the display.
 The default proportion is 0.8 of width and height.

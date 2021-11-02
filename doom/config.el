@@ -34,6 +34,7 @@
 (map! :when IS-MAC :i "<M-S-right>" "<C-S-right>")
 (map! :when IS-MAC :i "<M-S-left>" "<C-S-left>")
 (map! "C-/" #'comment-line)
+(map! :leader "e" #'eval-last-sexp)
 
 (defun set-ideal-frame-size (&optional proportion)
   (interactive)
