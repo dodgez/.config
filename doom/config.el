@@ -50,6 +50,8 @@
 (map! :leader
       :desc "Set ideal frame size" "F" #'set-ideal-frame-size)
 
+(map! "C-s" #'swiper)
+
 (progn
   (load! "+work-config.el")
   nil)

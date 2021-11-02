@@ -107,6 +107,13 @@ Therefore, if the number is too high (like 1920), treat it as 0 for calculating 
 #+RESULTS:
 : set-ideal-frame-size
 
+Use swiper instead of isearch.
+#+begin_src elisp
+(map! "C-s" #'swiper)
+#+end_src
+
+#+RESULTS:
+
 Load a work config file if it exists.
 #+begin_src elisp
 (progn
