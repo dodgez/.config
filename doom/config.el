@@ -52,6 +52,8 @@
 
 (map! "C-s" #'swiper)
 
-(progn
-  (load! "+work-config.el")
-  nil)
+(add-to-list
+ 'ivy-sort-matches-functions-alist
+ '(t . ivy--shorter-matches-first))
+
+(load! "+work-config.el")
