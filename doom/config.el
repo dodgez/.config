@@ -12,14 +12,9 @@
 (setq confirm-kill-emacs nil)
 (setq mouse-wheel-progressive-speed nil)
 
-(defun custom-centaur-tabs-buffer-groups ()
-  (list
-   (cond
-    ((and (string-equal "*" (substring (buffer-name) 0 1)) (not (string-prefix-p "*eshell" (buffer-name)))) "Emacs")
-    (t "User"))))
 (use-package! centaur-tabs
   :config
-  (setq centaur-tabs-buffer-groups-function #'custom-centaur-tabs-buffer-groups))
+  (centaur-tabs-group-by-projectile-project))
 (use-package! magit-delta
   :hook (magit-mode . magit-delta-mode))
 
