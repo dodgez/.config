@@ -6,23 +6,14 @@
       user-mail-address "zacharysdodge@gmail.com")
 #+end_src
 
-#+RESULTS:
-: zacharysdodge@gmail.com
-
 #+begin_src elisp
 (setq doom-theme 'doom-dracula)
 (setq doom-font (font-spec :family "Hack Nerd Font Mono" :size 16))
 #+end_src
 
-#+RESULTS:
-: #<font-spec nil nil Hack\ Nerd\ Font\ Mono nil nil nil nil nil 16 nil nil nil nil>
-
 #+begin_src elisp
 (setq org-support-shift-select t)
 #+end_src
-
-#+RESULTS:
-: t
 
 - Display (absolute) line numbers
 - Tell projectile to only search non-gitignored files
@@ -37,8 +28,6 @@
 (setq mouse-wheel-progressive-speed nil)
 #+end_src
 
-#+RESULTS:
-
 - Group centaur tabs by project
 - Use delta mode in magit
 #+begin_src elisp
@@ -49,17 +38,12 @@
   :hook (magit-mode . magit-delta-mode))
 #+end_src
 
-#+RESULTS:
-| doom--setq-evil-ex-hl-update-delay-for-magit-mode-h | (closure (t) (&rest _) (progn (defalias '+magit-enlargen-fringe-h #'(lambda nil Make fringe larger in magit. (and (display-graphic-p) (derived-mode-p 'magit-mode) +magit-fringe-size (let ((left (or (car-safe +magit-fringe-size) +magit-fringe-size)) (right (or (cdr-safe +magit-fringe-size) +magit-fringe-size))) (set-window-fringes nil left right))))) (add-hook 'window-configuration-change-hook #'+magit-enlargen-fringe-h nil t))) | doom-modeline-set-vcs-modeline | +modeline-hide-in-non-status-buffer-h | magit-delta-mode | turn-on-magit-gitflow |
-
 #+begin_src elisp
 (use-package evil
   :custom
   (evil-toggle-key "C-v"))
 (map! "C-z" #'undo)
 #+end_src
-
-#+RESULTS:
 
 - Make escape quit (instead of triple escape)
 - Make home and end relative to single lines
@@ -75,9 +59,6 @@
 (map! "C-/" #'comment-line)
 (map! :leader "e" #'eval-last-sexp)
 #+end_src
-
-#+RESULTS:
-: eval-last-sexp
 
 Size the frame to be proportional to the display.
 The default proportion is 0.8 of width and height.
@@ -104,21 +85,19 @@ Therefore, if the number is too high (like 1920), treat it as 0 for calculating 
       :desc "Set ideal frame size" "F" #'set-ideal-frame-size)
 #+end_src
 
-#+RESULTS:
-: set-ideal-frame-size
-
 Use swiper instead of isearch.
 #+begin_src elisp
 (map! "C-s" #'swiper)
 #+end_src
 
-#+RESULTS:
+Order ivy results with preference to shorter matches.
+#+begin_src elisp
+(add-to-list
+ 'ivy-sort-matches-functions-alist
+ '(t . ivy--shorter-matches-first))
+#+end_src
 
 Load a work config file if it exists.
 #+begin_src elisp
-(progn
-  (load! "+work-config.el")
-  nil)
+(load! "+work-config.el")
 #+end_src
-
-#+RESULTS:
