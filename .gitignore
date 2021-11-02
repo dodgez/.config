@@ -14,7 +14,10 @@
 
 # Doom Emacs configuration
 !doom
-!doom/*
+!doom/init.el
+!doom/packages.el
+!doom/config.org
+!doom/config.el
 
 # Git configuration
 !git

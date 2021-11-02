@@ -106,3 +106,12 @@ Therefore, if the number is too high (like 1920), treat it as 0 for calculating 
 
 #+RESULTS:
 : set-ideal-frame-size
+
+Load a work config file if it exists.
+#+begin_src elisp
+(progn
+  (load! "+work-config.el")
+  nil)
+#+end_src
+
+#+RESULTS:
