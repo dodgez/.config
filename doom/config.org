@@ -92,9 +92,11 @@ Use swiper instead of isearch.
 
 Order ivy results with preference to shorter matches.
 #+begin_src elisp
-(add-to-list
- 'ivy-sort-matches-functions-alist
- '(t . ivy--shorter-matches-first))
+(use-package! ivy
+  :config
+  (add-to-list
+   'ivy-sort-matches-functions-alist
+   '(t . ivy--shorter-matches-first)))
 #+end_src
 
 Load a work config file if it exists.
