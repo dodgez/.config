@@ -90,15 +90,6 @@ Use swiper instead of isearch.
 (map! "C-s" #'swiper)
 #+end_src
 
-Order ivy results with preference to shorter matches.
-#+begin_src elisp
-(use-package! ivy
-  :config
-  (add-to-list
-   'ivy-sort-matches-functions-alist
-   '(t . ivy--shorter-matches-first)))
-#+end_src
-
 When on Windows, change the default directory for faster indexing.
 #+begin_src elisp
 (when IS-WINDOWS (setq default-directory doom-private-dir))

@@ -52,12 +52,6 @@
 
 (map! "C-s" #'swiper)
 
-(use-package! ivy
-  :config
-  (add-to-list
-   'ivy-sort-matches-functions-alist
-   '(t . ivy--shorter-matches-first)))
-
 (when IS-WINDOWS (setq default-directory doom-private-dir))
 
 (let ((work-config (doom-dir doom-private-dir "+work-config.el")))
