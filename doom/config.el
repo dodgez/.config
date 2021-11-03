@@ -58,6 +58,8 @@
    'ivy-sort-matches-functions-alist
    '(t . ivy--shorter-matches-first)))
 
-(let ((work-config (doom-dir "+work-config.el")))
+(when IS-WINDOWS (setq default-directory doom-private-dir))
+
+(let ((work-config (doom-dir doom-private-dir "+work-config.el")))
   (when (file-exists-p work-config)
     (load! "+work-config.el")))
