@@ -52,8 +52,10 @@
 
 (map! "C-s" #'swiper)
 
-(add-to-list
- 'ivy-sort-matches-functions-alist
- '(t . ivy--shorter-matches-first))
+(use-package! ivy
+  :config
+  (add-to-list
+   'ivy-sort-matches-functions-alist
+   '(t . ivy--shorter-matches-first)))
 
 (load! "+work-config.el")
