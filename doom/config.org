@@ -101,5 +101,7 @@ Order ivy results with preference to shorter matches.
 
 Load a work config file if it exists.
 #+begin_src elisp
-(load! "+work-config.el")
+(let ((work-config (doom-dir "+work-config.el")))
+  (when (file-exists-p work-config)
+    (load! "+work-config.el")))
 #+end_src
