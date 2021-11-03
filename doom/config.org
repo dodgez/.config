@@ -99,9 +99,14 @@ Order ivy results with preference to shorter matches.
    '(t . ivy--shorter-matches-first)))
 #+end_src
 
+When on Windows, change the default directory for faster indexing.
+#+begin_src elisp
+(when IS-WINDOWS (setq default-directory doom-private-dir))
+#+end_src
+
 Load a work config file if it exists.
 #+begin_src elisp
-(let ((work-config (doom-dir "+work-config.el")))
+(let ((work-config (doom-dir doom-private-dir "+work-config.el")))
   (when (file-exists-p work-config)
     (load! "+work-config.el")))
 #+end_src
