@@ -58,4 +58,6 @@
    'ivy-sort-matches-functions-alist
    '(t . ivy--shorter-matches-first)))
 
-(load! "+work-config.el")
+(let ((work-config (doom-dir "+work-config.el")))
+  (when (file-exists-p work-config)
+    (load! "+work-config.el")))
