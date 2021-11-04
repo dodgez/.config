@@ -54,6 +54,12 @@
 
 (when IS-WINDOWS (setq default-directory doom-private-dir))
 
+(use-package! ivy-prescient
+  :after (ivy counsel prescient)
+  :config
+  (setq prescient-sort-length-enable t)
+  (setq ivy-sort-max-size 100000))
+
 (let ((work-config (doom-dir doom-private-dir "+work-config.el")))
   (when (file-exists-p work-config)
     (load! "+work-config.el")))

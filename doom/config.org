@@ -95,6 +95,16 @@ When on Windows, change the default directory for faster indexing.
 (when IS-WINDOWS (setq default-directory doom-private-dir))
 #+end_src
 
+Enable ivy-prescient for sorts by length.
+Increase max sort size otherwise describe-symbol doesn't work.
+#+begin_src elisp
+(use-package! ivy-prescient
+  :after (ivy counsel prescient)
+  :config
+  (setq prescient-sort-length-enable t)
+  (setq ivy-sort-max-size 100000))
+#+end_src
+
 Load a work config file if it exists.
 #+begin_src elisp
 (let ((work-config (doom-dir doom-private-dir "+work-config.el")))
