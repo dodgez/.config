@@ -15,8 +15,9 @@
 (use-package! centaur-tabs
   :config
   (centaur-tabs-group-by-projectile-project))
-(use-package! magit-delta
-  :hook (magit-mode . magit-delta-mode))
+; Performance isn't great: https://github.com/dandavison/magit-delta/issues/9
+;(use-package! magit-delta
+;  :hook (magit-mode . magit-delta-mode))
 
 (use-package evil
   :custom
