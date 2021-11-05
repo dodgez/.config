@@ -12,12 +12,21 @@
 !fish/config.fish
 !fish/starship_cygwin.fish
 
+# Chemacs configuration
+!chemacs
+!chemacs/profile
+!chemacs/profiles.el
+
 # Doom Emacs configuration
 !doom
 !doom/init.el
 !doom/packages.el
 !doom/config.org
 !doom/config.el
+
+# Hand-rolled Emacs configuration
+!emacs
+!emacs/init.el
 
 # Git configuration
 !git
