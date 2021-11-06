@@ -40,8 +40,25 @@
 (setq straight-use-package-by-default t)
 
 (use-package ivy
+	:bind (("C-s" . swiper))
   :config
   (ivy-mode))
+
+(use-package counsel
+	:bind (("M-x" . counsel-M-x)
+				 ("C-x b" . counsel-ibuffer)
+				 ("C-x C-f" . counsel-find-file))
+	:config
+	(setq ivy-initial-inputs-alist nil)
+	(counsel-mode t))
+
+(use-package prescient
+	:after counsel)
+
+(use-package ivy-prescient
+	:after prescient
+	:config
+	(ivy-prescient-mode 1))
 
 (use-package no-littering
   :config
@@ -97,6 +114,9 @@
 	(setq which-key-idle-delay 0.3))
 
 (use-package evil
+	:init
+	(setq evil-want-integration t)
+	(setq evil-want-keybinding nil)
 	:config
 	(evil-mode t)
 	(evil-global-set-key 'motion "j" 'evil-next-visual-line)
@@ -104,10 +124,28 @@
 
 (use-package general)
 
+(use-package magit
+	:commands magit-status
+	:custom
+	(magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1))
+
+(use-package evil-collection
+	:config
+	(evil-collection-init))
+
+(use-package vterm
+	:commands vterm)
+(use-package vterm-toggle
+	:commands vterm-toggle)
+
 ; Customization
 (setq-default
  delete-by-moving-to-trash t
- tab-width 2)
+ tab-width 2
+ mouse-wheel-progressive-speed nil
+ mouse-wheel-scroll-amount '(2 ((shift) . hscroll)
+																((meta))
+																((control) . text-scale)))
 
 (global-subword-mode t)
 (tool-bar-mode 0)
@@ -121,11 +159,44 @@
 (setq global-auto-revert-non-file-buffers t)
 (global-auto-revert-mode t)
 (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
+(global-set-key (kbd "<deletechar>") 'evil-delete)
 
 (general-define-key
- :states 'normal
+ :states '(normal visual)
  :keymaps 'override
  :prefix "SPC"
  "SPC" '(execute-extended-command :which-key "M-x")
  "e" '(:ignore t :which-key "eval")
- "e b" '(eval-buffer :which-key "eval-buffer"))
+ "e b" '(eval-buffer :which-key "eval-buffer")
+ "f" '(:ignore t :which-key "file")
+ "f f" '(counsel-find-file :which-key "counsel-find-file")
+ "f i" '((lambda () (interactive) (find-file (concat user-emacs-directory "init.el"))) :which-key "Browse private configuration")
+ "f s" '(save-buffer :which-key "save-buffer")
+ "g" '(:ignore t :which-key "magit")
+ "g g" '(magit-status :which-key "magit-status")
+ "h" '(:ignore t :which-key "help")
+ "h f" '(counsel-describe-function :which-key "counsel-describe-function")
+ "h o" '(counsel-describe-symbol :which-key "counsel-describe-symbol")
+ "h v" '(counsel-describe-variable :which-key "counsel-describe-variable")
+ "w" '(:ignore t :which-key "window")
+ "w d" '(evil-window-delete :which-key "delete window")
+ "q" '(:ignore t :which-key "quit")
+ "q q" '(evil-quit :which-key "quit"))
+
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(custom-safe-themes
+	 '("234dbb732ef054b109a9e5ee5b499632c63cc24f7c2383a849815dacc1727cb6" default)))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
+
+(use-package doom-themes
+	:config
+	(load-theme 'doom-dracula))
