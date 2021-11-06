@@ -27,6 +27,7 @@
 # Hand-rolled Emacs configuration
 !emacs
 !emacs/init.el
+!emacs/custom.el
 
 # Git configuration
 !git

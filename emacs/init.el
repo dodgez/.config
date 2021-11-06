@@ -63,7 +63,8 @@
 (use-package no-littering
   :config
   (setq auto-save-file-name-transforms
-	`((".*" ,(no-littering-expand-var-file-name "auto-save/") t))))
+				`((".*" ,(no-littering-expand-var-file-name "auto-save/") t)))
+	(setq custom-file (expand-file-name "custom.el" user-emacs-directory)))
 
 (use-package auto-package-update
   :custom
@@ -171,7 +172,8 @@
  "e e" '(eval-expression :which-key)
  "f" '(:ignore t :which-key "file")
  "f f" '(counsel-find-file :which-key)
- "f i" '((lambda () (interactive) (find-file (concat user-emacs-directory "init.el"))) :which-key "Browse private configuration")
+ "f i" '((lambda () (interactive) (find-file (expand-file-name "init.el" user-emacs-directory))) :which-key "Edit init file")
+ "f p" '((lambda () (interactive) (counsel-find-file "" user-emacs-directory)) :which-key "Browse private config")
  "f s" '(save-buffer :which-key)
  "g" '(:ignore t :which-key "magit")
  "g g" '(magit-status :which-key)
@@ -188,19 +190,7 @@
  "q" '(:ignore t :which-key "quit")
  "q q" '(evil-quit :which-key))
 
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(custom-safe-themes
-	 '("234dbb732ef054b109a9e5ee5b499632c63cc24f7c2383a849815dacc1727cb6" default)))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
+(load (expand-file-name "custom.el" user-emacs-directory) t t)
 
 (use-package doom-themes
 	:config
