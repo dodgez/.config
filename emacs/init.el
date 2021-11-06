@@ -205,3 +205,7 @@
 (use-package doom-themes
 	:config
 	(load-theme 'doom-dracula))
+
+(use-package doom-modeline
+	:config
+	(doom-modeline-mode 1))
