@@ -139,6 +139,10 @@
 (use-package vterm-toggle
 	:commands vterm-toggle)
 
+(use-package web-mode
+	:config
+	(add-to-list 'auto-mode-alist '("\\.[jt]sx?\\'" . web-mode)))
+
 ; Customization
 (setq-default
  delete-by-moving-to-trash t
@@ -160,7 +164,12 @@
 (setq global-auto-revert-non-file-buffers t)
 (global-auto-revert-mode t)
 (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
-(global-set-key (kbd "<deletechar>") 'evil-delete)
+(global-set-key (kbd "<delete>") 'evil-delete)
+
+(general-define-key
+ :states 'insert
+ :keymaps 'override
+ "<delete>" 'evil-delete)
 
 (general-define-key
  :states '(normal visual)
