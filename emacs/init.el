@@ -143,6 +143,18 @@
 	:config
 	(add-to-list 'auto-mode-alist '("\\.[jt]sx?\\'" . web-mode)))
 
+(use-package doom-modeline
+	:config
+	(doom-modeline-mode 1))(use-package doom-modeline
+	:config
+	(doom-modeline-mode 1))
+
+(load (expand-file-name "custom.el" user-emacs-directory) t t)
+
+(use-package doom-themes
+	:config
+	(load-theme 'doom-dracula))
+
 ; Customization
 (setq-default
  delete-by-moving-to-trash t
@@ -151,7 +163,7 @@
  mouse-wheel-scroll-amount '(2 ((shift) . hscroll)
 																((meta))
 																((control) . text-scale)))
-
+(setq warning-minimum-level :error)
 (global-subword-mode t)
 (tool-bar-mode 0)
 (tooltip-mode 0)
@@ -163,8 +175,15 @@
 
 (setq global-auto-revert-non-file-buffers t)
 (global-auto-revert-mode t)
-(global-set-key (kbd "<escape>") 'keyboard-escape-quit)
-(global-set-key (kbd "<delete>") 'evil-delete)
+
+; Keybindings
+(general-define-key
+ "<escape>" 'keyboard-escape-quit
+ "<delete>" 'evil-delete)
+
+(general-define-key
+ :states 'normal
+ "q" nil)
 
 (general-define-key
  :states 'insert
@@ -188,6 +207,7 @@
  "g g" '(magit-status :which-key)
  "h" '(:ignore t :which-key "help")
  "h f" '(counsel-describe-function :which-key)
+ "h k" '(describe-key :which-key)
  "h o" '(counsel-describe-symbol :which-key)
  "h v" '(counsel-describe-variable :which-key)
  "w" '(:ignore t :which-key "window")
@@ -198,13 +218,3 @@
  "w l" '(evil-window-right :which-key)
  "q" '(:ignore t :which-key "quit")
  "q q" '(evil-quit :which-key))
-
-(load (expand-file-name "custom.el" user-emacs-directory) t t)
-
-(use-package doom-themes
-	:config
-	(load-theme 'doom-dracula))
-
-(use-package doom-modeline
-	:config
-	(doom-modeline-mode 1))
