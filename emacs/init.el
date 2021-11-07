@@ -145,9 +145,17 @@
 
 (use-package doom-modeline
 	:config
-	(doom-modeline-mode 1))(use-package doom-modeline
+	(doom-modeline-mode t))
+
+(use-package undo-tree
 	:config
-	(doom-modeline-mode 1))
+	(global-undo-tree-mode t))
+
+(use-package paren
+	:config
+	(show-paren-mode t))
+
+(use-package evil-nerd-commenter :defer t)
 
 (load (expand-file-name "custom.el" user-emacs-directory) t t)
 
@@ -156,14 +164,15 @@
 	(load-theme 'doom-dracula))
 
 ; Customization
-(setq-default
- delete-by-moving-to-trash t
- tab-width 2
- mouse-wheel-progressive-speed nil
- mouse-wheel-scroll-amount '(2 ((shift) . hscroll)
+(setq delete-by-moving-to-trash t
+			mouse-wheel-progressive-speed nil
+			mouse-wheel-scroll-amount '(2 ((shift) . hscroll)
 																((meta))
-																((control) . text-scale)))
-(setq warning-minimum-level :error)
+																((control) . text-scale))
+			warning-minimum-level :error
+			inhibit-startup-message t)
+(setq-default tab-width 2)
+
 (global-subword-mode t)
 (tool-bar-mode 0)
 (tooltip-mode 0)
@@ -179,16 +188,12 @@
 ; Keybindings
 (general-define-key
  "<escape>" 'keyboard-escape-quit
- "<delete>" 'evil-delete)
+ :keymaps 'override
+ "C-/" 'evilnc-comment-or-uncomment-lines)
 
 (general-define-key
  :states 'normal
  "q" nil)
-
-(general-define-key
- :states 'insert
- :keymaps 'override
- "<delete>" 'evil-delete)
 
 (general-define-key
  :states '(normal visual)
@@ -210,6 +215,11 @@
  "h k" '(describe-key :which-key)
  "h o" '(counsel-describe-symbol :which-key)
  "h v" '(counsel-describe-variable :which-key)
+ "u" '(:ignore t :which-key "undo")
+ "u b" '(undo-tree-switch-branch :which-key)
+ "u r" '(undo-tree-redo :which-key)
+ "u u" '(undo-tree-undo :which-key)
+ "u v" '(undo-tree-visualize :which-key)
  "w" '(:ignore t :which-key "window")
  "w d" '(evil-window-delete :which-key)
  "w h" '(evil-window-left :which-key)
