@@ -1,39 +1,39 @@
 (defvar bootstrap-version)
 (let ((bootstrap-file
-       (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
-      (bootstrap-version 5))
-  (unless (file-exists-p bootstrap-file)
-    (with-current-buffer
-        (url-retrieve-synchronously
-         "https://raw.githubusercontent.com/raxod502/straight.el/develop/install.el"
-         'silent 'inhibit-cookies)
-      (goto-char (point-max))
-      (eval-print-last-sexp)))
-  (load bootstrap-file nil 'nomessage))
+			 (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
+			(bootstrap-version 5))
+	(unless (file-exists-p bootstrap-file)
+		(with-current-buffer
+				(url-retrieve-synchronously
+				 "https://raw.githubusercontent.com/raxod502/straight.el/develop/install.el"
+				 'silent 'inhibit-cookies)
+			(goto-char (point-max))
+			(eval-print-last-sexp)))
+	(load bootstrap-file nil 'nomessage))
 
 (defun display-startup-time ()
-  "Displays the startup time in the echo buffer when Emacs is finished loading."
-  (message "Emacs loaded in %s with %d garbage collections."
-	   (format "%.2f seconds"
-		   (float-time (time-subtract after-init-time before-init-time)))
-	   gcs-done))
+	"Displays the startup time in the echo buffer when Emacs is finished loading."
+	(message "Emacs loaded in %s with %d garbage collections."
+					 (format "%.2f seconds"
+									 (float-time (time-subtract after-init-time before-init-time)))
+					 gcs-done))
 (add-hook 'emacs-startup-hook #'display-startup-time)
 
 (defun set-ideal-frame-size (&optional proportion)
-  (interactive)
-  (when (display-graphic-p)
-    (pcase (frame-monitor-workarea)
-      (`(,display-x ,display-y ,display-raw-width ,display-raw-height)
-       (let* ((proportion (or proportion 0.9))
-              (margin (/ (- 1 proportion) 2))
-              (display-width (- display-raw-width (if (< display-x 1920) display-x 0)))
-              (display-height (- display-raw-height display-y))
-              (width (truncate (* display-width proportion)))
-              (height (truncate (* display-height proportion)))
-              (margin-left (+ display-x (truncate (* display-width margin))))
-              (margin-top (+ display-y (truncate (* display-height margin)))))
-         (set-frame-position (selected-frame) margin-left margin-top)
-         (set-frame-size (selected-frame) width height t))))))
+	(interactive)
+	(when (display-graphic-p)
+		(pcase (frame-monitor-workarea)
+			(`(,display-x ,display-y ,display-raw-width ,display-raw-height)
+			 (let* ((proportion (or proportion 0.9))
+							(margin (/ (- 1 proportion) 2))
+							(display-width (- display-raw-width (if (< display-x 1920) display-x 0)))
+							(display-height (- display-raw-height display-y))
+							(width (truncate (* display-width proportion)))
+							(height (truncate (* display-height proportion)))
+							(margin-left (+ display-x (truncate (* display-width margin))))
+							(margin-top (+ display-y (truncate (* display-height margin)))))
+				 (set-frame-position (selected-frame) margin-left margin-top)
+				 (set-frame-size (selected-frame) width height t))))))
 (add-hook 'emacs-startup-hook #'set-ideal-frame-size)
 
 (straight-use-package 'use-package)
@@ -41,8 +41,8 @@
 
 (use-package ivy
 	:bind (("C-s" . swiper))
-  :config
-  (ivy-mode))
+	:config
+	(ivy-mode))
 
 (use-package counsel
 	:bind (("M-x" . counsel-M-x)
@@ -61,19 +61,19 @@
 	(ivy-prescient-mode 1))
 
 (use-package no-littering
-  :config
-  (setq auto-save-file-name-transforms
+	:config
+	(setq auto-save-file-name-transforms
 				`((".*" ,(no-littering-expand-var-file-name "auto-save/") t)))
 	(setq custom-file (expand-file-name "custom.el" user-emacs-directory)))
 
 (use-package auto-package-update
-  :custom
-  (auto-package-update-interval 7)
-  (auto-package-update-prompt-before-update t)
-  (auto-package-update-hide-results t)
-  :config
-  (auto-package-update-maybe)
-  (auto-package-update-at-time "09:00"))
+	:custom
+	(auto-package-update-interval 7)
+	(auto-package-update-prompt-before-update t)
+	(auto-package-update-hide-results t)
+	:config
+	(auto-package-update-maybe)
+	(auto-package-update-at-time "09:00"))
 
 (use-package all-the-icons)
 
@@ -87,27 +87,27 @@
 (use-package projectile)
 
 (use-package popper
-  :after projectile
-  :init
-  (setq popper-reference-buffers
-        '("\\*Messages\\*"
-          "^\\*Warnings\\*"
-          "^\\*IBuffer\\*"
-          "^\\*Compile-Log\\*"
-          "^\\*Backtrace\\*"
-          "[Oo]utput\\*$"
-          "\\*Help\\*"
-          "\\*helpful\\*"
-          "\\*vterm\\*"
-          "\\*Excorporate\\*"
-          "\\*xref\\*"
-          help-mode
-          helpful-mode
-          compilation-mode
-          term-mode
-          vterm-mode)
-        popper-group-function #'popper-group-by-projectile)
-  (popper-mode t))
+	:after projectile
+	:init
+	(setq popper-reference-buffers
+				'("\\*Messages\\*"
+					"^\\*Warnings\\*"
+					"^\\*IBuffer\\*"
+					"^\\*Compile-Log\\*"
+					"^\\*Backtrace\\*"
+					"[Oo]utput\\*$"
+					"\\*Help\\*"
+					"\\*helpful\\*"
+					"\\*vterm\\*"
+					"\\*Excorporate\\*"
+					"\\*xref\\*"
+					help-mode
+					helpful-mode
+					compilation-mode
+					term-mode
+					vterm-mode)
+				popper-group-function #'popper-group-by-projectile)
+	(popper-mode t))
 
 (use-package which-key
 	:config
@@ -167,10 +167,11 @@
 (setq delete-by-moving-to-trash t
 			mouse-wheel-progressive-speed nil
 			mouse-wheel-scroll-amount '(2 ((shift) . hscroll)
-																((meta))
-																((control) . text-scale))
+																		((meta))
+																		((control) . text-scale))
 			warning-minimum-level :error
-			inhibit-startup-message t)
+			inhibit-startup-message t
+			org-support-shift-select t)
 (setq-default tab-width 2)
 
 (global-subword-mode t)
@@ -185,7 +186,7 @@
 (setq global-auto-revert-non-file-buffers t)
 (global-auto-revert-mode t)
 
-; Keybindings
+																				; Keybindings
 (general-define-key
  "<escape>" 'keyboard-escape-quit
  :keymaps 'override
@@ -195,6 +196,8 @@
  :states 'normal
  "q" nil)
 
+(defun tangle-and-eval-init () (interactive) (org-babel-tangle-file (expand-file-name "init.org" user-emacs-directory)) (load (expand-file-name "init.el" user-emacs-directory)))
+
 (general-define-key
  :states '(normal visual)
  :keymaps 'override
@@ -203,9 +206,10 @@
  "e" '(:ignore t :which-key "eval")
  "e b" '(eval-buffer :which-key)
  "e e" '(eval-expression :which-key)
+ "e i" '(tangle-and-eval-init :which-key "Tangle and eval init")
  "f" '(:ignore t :which-key "file")
  "f f" '(counsel-find-file :which-key)
- "f i" '((lambda () (interactive) (find-file (expand-file-name "init.el" user-emacs-directory))) :which-key "Edit init file")
+ "f i" '((lambda () (interactive) (find-file (expand-file-name "init.org" user-emacs-directory))) :which-key "Edit init file")
  "f p" '((lambda () (interactive) (counsel-find-file "" user-emacs-directory)) :which-key "Browse private config")
  "f s" '(save-buffer :which-key)
  "g" '(:ignore t :which-key "magit")
