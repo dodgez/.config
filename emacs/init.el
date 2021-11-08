@@ -253,7 +253,9 @@
 (general-define-key
  "<escape>" 'keyboard-escape-quit
  :keymaps 'override
- "C-/" 'evilnc-comment-or-uncomment-lines)
+ "C-/" 'evilnc-comment-or-uncomment-lines
+ "<home>" 'beginning-of-line
+ "<end>" 'end-of-line)
 
 (general-define-key
  :states 'normal
