@@ -190,7 +190,9 @@
 	(evil-collection-init))
 
 (use-package vterm
-	:commands vterm)
+	:commands vterm
+	:config
+	(setq vterm-shell "fish"))
 (use-package vterm-toggle
 	:commands vterm-toggle)
 
@@ -249,7 +251,7 @@
 (setq global-auto-revert-non-file-buffers t)
 (global-auto-revert-mode t)
 
-																				; Keybindings
+; Keybindings
 (general-define-key
  "<escape>" 'keyboard-escape-quit
  :keymaps 'override
@@ -287,6 +289,8 @@
  "h k" '(describe-key :which-key)
  "h o" '(counsel-describe-symbol :which-key)
  "h v" '(counsel-describe-variable :which-key)
+ "o" '(:ignore t :which-key "open")
+ "o t" '(vterm-toggle :which-key)
  "u" '(:ignore t :which-key "undo")
  "u b" '(undo-tree-switch-branch :which-key)
  "u r" '(undo-tree-redo :which-key)
