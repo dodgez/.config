@@ -218,11 +218,15 @@
 	:config
 	(load-theme 'doom-dracula))
 
-; Customization
 (use-package git-gutter
 	:config
 	(global-git-gutter-mode t))
 
+(use-package blamer
+	:config
+	(global-blamer-mode t))
+
+; Customization
 (setq delete-by-moving-to-trash t
 			mouse-wheel-progressive-speed nil
 			mouse-wheel-scroll-amount '(2 ((shift) . hscroll)
