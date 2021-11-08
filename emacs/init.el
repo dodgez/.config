@@ -11,6 +11,7 @@
 			(eval-print-last-sexp)))
 	(load bootstrap-file nil 'nomessage))
 
+(setq gc-cons-threshold (* 50 1000 1000))
 (defun display-startup-time ()
 	"Displays the startup time in the echo buffer when Emacs is finished loading."
 	(message "Emacs loaded in %s with %d garbage collections."
@@ -51,6 +52,60 @@
 	:config
 	(setq ivy-initial-inputs-alist nil)
 	(counsel-mode t))
+
+(defun +ivy-rich-describe-variable-transformer (cand)
+	"Previews the value of the variable in the minibuffer"
+	(let* ((sym (intern cand))
+				 (val (and (boundp sym) (symbol-value sym)))
+				 (print-level 3))
+		(replace-regexp-in-string
+		 "[\n\t\^[\^M\^@\^G]" " "
+		 (cond ((booleanp val)
+						(propertize (format "%s" val) 'face
+												(if (null val)
+														'font-lock-comment-face
+													'success)))
+					 ((symbolp val)
+						(propertize (format "'%s" val)
+												'face 'highlight-quoted-symbol))
+					 ((keymapp val)
+						(propertize "<keymap>" 'face 'font-lock-constant-face))
+					 ((listp val)
+						(prin1-to-string val))
+					 ((stringp val)
+						(propertize (format "%S" val) 'face 'font-lock-string-face))
+					 ((numberp val)
+						(propertize (format "%s" val) 'face 'highlight-numbers-number))
+					 ((format "%s" val)))
+		 t)))
+
+(use-package ivy-rich
+	:config
+	(plist-put ivy-rich-display-transformers-list
+						 'counsel-describe-variable
+						 '(:columns
+							 ((counsel-describe-variable-transformer (:width 40))
+								(+ivy-rich-describe-variable-transformer (:width 50))
+								(ivy-rich-counsel-variable-docstring (:face font-lock-doc-face)))))
+	(plist-put ivy-rich-display-transformers-list
+						 'counsel-M-x
+						 '(:columns
+							 ((counsel-M-x-transformer (:width 60))
+								(ivy-rich-counsel-function-docstring (:face font-lock-doc-face)))))
+	(plist-put ivy-rich-display-transformers-list
+						 'counsel-projectile-switch-to-buffer
+						 (plist-get ivy-rich-display-transformers-list 'ivy-switch-buffer))
+	(plist-put ivy-rich-display-transformers-list
+						 'counsel-bookmark
+						 '(:columns
+							 ((ivy-rich-candidate (:width 0.5))
+								(ivy-rich-bookmark-filename-or-empty (:width 60)))))
+	(ivy-rich-mode t))
+
+(use-package all-the-icons-ivy
+	:after ivy
+	:config
+	(all-the-icons-ivy-setup))
 
 (use-package prescient
 	:after counsel)
@@ -196,8 +251,6 @@
  :states 'normal
  "q" nil)
 
-(defun tangle-and-eval-init () (interactive) (org-babel-tangle-file (expand-file-name "init.org" user-emacs-directory)) (load (expand-file-name "init.el" user-emacs-directory)))
-
 (general-define-key
  :states '(normal visual)
  :keymaps 'override
@@ -206,10 +259,10 @@
  "e" '(:ignore t :which-key "eval")
  "e b" '(eval-buffer :which-key)
  "e e" '(eval-expression :which-key)
- "e i" '(tangle-and-eval-init :which-key "Tangle and eval init")
+ "e i" '((lambda () (interactive) (load (expand-file-name "init.el" user-emacs-directory))) :which-key "Load init file")
  "f" '(:ignore t :which-key "file")
  "f f" '(counsel-find-file :which-key)
- "f i" '((lambda () (interactive) (find-file (expand-file-name "init.org" user-emacs-directory))) :which-key "Edit init file")
+ "f i" '((lambda () (interactive) (find-file (expand-file-name "init.el" user-emacs-directory))) :which-key "Edit init file")
  "f p" '((lambda () (interactive) (counsel-find-file "" user-emacs-directory)) :which-key "Browse private config")
  "f s" '(save-buffer :which-key)
  "g" '(:ignore t :which-key "magit")

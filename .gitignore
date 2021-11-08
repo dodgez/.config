@@ -26,7 +26,6 @@
 
 # Hand-rolled Emacs configuration
 !emacs
-!emacs/init.org
 !emacs/init.el
 !emacs/custom.el
 
