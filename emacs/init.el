@@ -203,8 +203,8 @@
 	(doom-modeline-mode t))
 
 (use-package undo-tree
-	:config
-	(global-undo-tree-mode t))
+	:hook ((text-mode . undo-tree-mode)
+				 (prog-mode . undo-tree-mode)))
 
 (use-package paren
 	:config
@@ -219,6 +219,10 @@
 	(load-theme 'doom-dracula))
 
 ; Customization
+(use-package git-gutter
+	:config
+	(global-git-gutter-mode t))
+
 (setq delete-by-moving-to-trash t
 			mouse-wheel-progressive-speed nil
 			mouse-wheel-scroll-amount '(2 ((shift) . hscroll)
