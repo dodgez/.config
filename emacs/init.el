@@ -266,6 +266,11 @@
  :keymaps 'override
  :prefix "SPC"
  "SPC" '(counsel-M-x :which-key "M-x")
+ "b" '(:ignore t :which-key "buffer")
+ "b b" '(counsel-ibuffer :which-key)
+ "b d" '(kill-buffer :which-key)
+ "b n" '(next-buffer :which-key)
+ "b p" '(previous-buffer :which-key)
  "e" '(:ignore t :which-key "eval")
  "e b" '(eval-buffer :which-key)
  "e e" '(eval-expression :which-key)
