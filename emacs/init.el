@@ -231,8 +231,8 @@
 ; Customization
 (setq delete-by-moving-to-trash t
 			mouse-wheel-progressive-speed nil
-			mouse-wheel-scroll-amount '(2 ((shift) . hscroll)
-																		((meta))
+			mouse-wheel-scroll-amount '(5 ((shift) . hscroll)
+																		((meta) . 1)
 																		((control) . text-scale))
 			warning-minimum-level :error
 			inhibit-startup-message t
