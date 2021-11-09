@@ -178,6 +178,18 @@
 	(evil-global-set-key 'motion "j" 'evil-next-visual-line)
 	(evil-global-set-key 'motion "k" 'evil-previous-visual-line))
 
+(use-package eaf
+	:load-path "~/emacs-application-framework"
+	:commands 'eaf-open-browser
+	:custom
+	(eaf-browser-enable-adblocker t)
+	(browse-url-browser-function 'eaf-open-browser)
+	:config
+	(let ((SPC-map (key-binding (kbd "SPC"))))
+		(require 'eaf-browser)
+		(require 'eaf-evil)
+		(setq eaf-evil-leader-keymap SPC-map)))
+
 (use-package general)
 
 (use-package magit
