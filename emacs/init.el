@@ -143,7 +143,8 @@
 
 (use-package projectile)
 
-(use-package rg)
+(use-package rg
+	:commands (rg ripgrep))
 
 (use-package popper
 	:after projectile
@@ -237,6 +238,10 @@
 (use-package blamer
 	:config
 	(global-blamer-mode t))
+
+(use-package markdown-mode
+	:commands 'markdown-mode
+	:mode (("\\.md\\'" . markdown-mode)))
 
 (load (expand-file-name "custom.el" user-emacs-directory) t t)
 
