@@ -242,6 +242,8 @@
 	:config
 	(load-theme 'doom-dracula))
 
+(load (expand-file-name "private.el" user-emacs-directory) t t)
+
 ; Customization
 (setq delete-by-moving-to-trash t
 			mouse-wheel-progressive-speed nil
