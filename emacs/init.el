@@ -229,7 +229,8 @@
 	:config
 	(show-paren-mode t))
 
-(use-package evil-nerd-commenter :defer t)
+(use-package evil-nerd-commenter
+	:commands evilnc-comment-or-uncomment-lines)
 
 (use-package git-gutter
 	:config
@@ -238,6 +239,10 @@
 (use-package blamer
 	:config
 	(global-blamer-mode t))
+
+(use-package flycheck
+	:config
+	(global-flycheck-mode t))
 
 (use-package markdown-mode
 	:commands 'markdown-mode
