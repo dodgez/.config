@@ -15,6 +15,7 @@ alias reload='source $PROFILE'
 
 fish_add_path "$HOME/.cargo/bin"
 fish_add_path "$HOME/.emacs.d/bin"
+fish_add_path "/usr/local/bin"
 
 if test -e "$HOME/.config/fish/work_config.fish"
     source "$HOME/.config/fish/work_config.fish"
