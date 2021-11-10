@@ -20,6 +20,8 @@
 					 gcs-done))
 (add-hook 'emacs-startup-hook #'display-startup-time)
 
+(add-to-list 'exec-path "/usr/local/bin")
+
 (defun set-ideal-frame-size (&optional proportion)
 	(interactive)
 	(when (display-graphic-p)
@@ -204,7 +206,7 @@
 (use-package vterm
 	:commands vterm
 	:config
-	(setq vterm-shell "fish"))
+	(when (not (or (eq system-type "windows-nt") (eq system-type "ms-dos"))) (setq vterm-shell (executable-find "fish"))))
 (use-package vterm-toggle
 	:commands vterm-toggle)
 
@@ -226,12 +228,6 @@
 
 (use-package evil-nerd-commenter :defer t)
 
-(load (expand-file-name "custom.el" user-emacs-directory) t t)
-
-(use-package doom-themes
-	:config
-	(load-theme 'doom-dracula))
-
 (use-package git-gutter
 	:config
 	(global-git-gutter-mode t))
@@ -239,6 +235,12 @@
 (use-package blamer
 	:config
 	(global-blamer-mode t))
+
+(load (expand-file-name "custom.el" user-emacs-directory) t t)
+
+(use-package doom-themes
+	:config
+	(load-theme 'doom-dracula))
 
 ; Customization
 (setq delete-by-moving-to-trash t
@@ -258,6 +260,9 @@
 (set-face-attribute 'default nil :font "Hack Nerd Font Mono" :height 130)
 (column-number-mode)
 (global-display-line-numbers-mode t)
+(dolist (mode '(vterm-mode-hook
+								eshell-mode-hook))
+	(add-hook mode (lambda () (display-line-numbers-mode 0))))
 (global-hl-line-mode)
 
 (setq global-auto-revert-non-file-buffers t)
