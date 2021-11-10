@@ -208,7 +208,7 @@
 (use-package vterm
 	:commands vterm
 	:config
-	(when (not (or (eq system-type "windows-nt") (eq system-type "ms-dos"))) (setq vterm-shell (executable-find "fish"))))
+	(when (not (or (eq system-type 'windows-nt) (eq system-type 'ms-dos))) (setq vterm-shell (executable-find "fish"))))
 (use-package vterm-toggle
 	:commands vterm-toggle)
 
@@ -273,6 +273,8 @@
 (global-auto-revert-mode t)
 
 ; Keybindings
+(when (eq system-type 'darwin) (setq mac-command-modifier 'control))
+
 (general-define-key
  "<escape>" 'keyboard-escape-quit
  :keymaps 'override
