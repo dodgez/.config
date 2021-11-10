@@ -143,6 +143,8 @@
 
 (use-package projectile)
 
+(use-package rg)
+
 (use-package popper
 	:after projectile
 	:init
@@ -306,6 +308,7 @@
  "h" '(:ignore t :which-key "help")
  "h f" '(counsel-describe-function :which-key)
  "h k" '(describe-key :which-key)
+ "h m" '(describe-mode :which-key)
  "h o" '(counsel-describe-symbol :which-key)
  "h v" '(counsel-describe-variable :which-key)
  "o" '(:ignore t :which-key "open")
@@ -316,6 +319,11 @@
  "p p" '(projectile-switch-project :which-key)
  "q" '(:ignore t :which-key "quit")
  "q q" '(evil-quit :which-key)
+ "s" '(:ignore t :which-key "search")
+ "s p" '(projectile-ripgrep :which-key)
+ "s r" '(rg :which-key)
+ "s R" '(rg-menu :which-key)
+ "s s" '(swiper :which-key)
  "u" '(:ignore t :which-key "undo")
  "u b" '(undo-tree-switch-branch :which-key)
  "u r" '(undo-tree-redo :which-key)
