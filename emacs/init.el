@@ -55,6 +55,9 @@
 	(setq ivy-initial-inputs-alist nil)
 	(counsel-mode t))
 
+(use-package company-box
+	:hook (after-init . global-company-mode))
+
 (defun +ivy-rich-describe-variable-transformer (cand)
 	"Previews the value of the variable in the minibuffer"
 	(let* ((sym (intern cand))
