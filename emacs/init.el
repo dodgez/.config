@@ -366,4 +366,6 @@
  "w h" '(evil-window-left :which-key)
  "w j" '(evil-window-down :which-key)
  "w k" '(evil-window-up :which-key)
- "w l" '(evil-window-right :which-key))
+ "w l" '(evil-window-right :which-key)
+ "w s" '(evil-window-split :which-key)
+ "w v" '(evil-window-vsplit :which-key))
