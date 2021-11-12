@@ -261,6 +261,9 @@
 	:config
 	(evil-terminal-cursor-changer-activate))
 
+(use-package lsp-mode
+	:hook (web-mode . lsp))
+
 (load (expand-file-name "custom.el" user-emacs-directory) t t)
 
 (use-package doom-themes
