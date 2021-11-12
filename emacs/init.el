@@ -295,6 +295,8 @@
 (xterm-mouse-mode)
 (setq xterm-set-window-title t)
 
+(add-hook 'prog-mode-hook 'hs-minor-mode)
+
 ; Keybindings
 (when (eq system-type 'darwin) (setq mac-command-modifier 'control))
 
@@ -326,6 +328,7 @@
  "b p" '(previous-buffer :which-key)
  "c" '(:ignore t :which-key "code")
  "c c" '(evilnc-comment-or-uncomment-lines :which-key)
+ "c f" '(hs-toggle-hiding :which-key)
  "e" '(:ignore t :which-key "eval")
  "e b" '(eval-buffer :which-key)
  "e e" '(eval-expression :which-key)
