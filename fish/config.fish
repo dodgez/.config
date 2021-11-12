@@ -1,4 +1,4 @@
-set -x EDITOR "micro"
+set -x EDITOR "emacs -nw"
 alias editor="$EDITOR"
 alias edit="editor"
 
@@ -19,6 +19,15 @@ fish_add_path "/usr/local/bin"
 
 if test -e "$HOME/.config/fish/work_config.fish"
     source "$HOME/.config/fish/work_config.fish"
+end
+
+function di
+    set _dir $argv[1]
+    if test -d $_dir
+		    ls -alh $_dir
+		else
+		    cat $_dir
+		end
 end
 
 switch (uname -s)
