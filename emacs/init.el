@@ -248,6 +248,16 @@
 	:commands 'markdown-mode
 	:mode (("\\.md\\'" . markdown-mode)))
 
+(use-package clipetty
+	:straight (clipetty :type git :host github :repo "spudlyo/clipetty")
+	:config
+	(global-clipetty-mode t))
+
+(use-package evil-terminal-cursor-changer
+	:straight (evil-terminal-cursor-changer :type git :host github :repo "kisaragi-hiu/evil-terminal-cursor-changer")
+	:config
+	(evil-terminal-cursor-changer-activate))
+
 (load (expand-file-name "custom.el" user-emacs-directory) t t)
 
 (use-package doom-themes
@@ -282,6 +292,9 @@
 (setq global-auto-revert-non-file-buffers t)
 (global-auto-revert-mode t)
 
+(xterm-mouse-mode)
+(setq xterm-set-window-title t)
+
 ; Keybindings
 (when (eq system-type 'darwin) (setq mac-command-modifier 'control))
 
@@ -297,6 +310,11 @@
  "q" nil)
 
 (general-define-key
+ :keymaps 'global
+ "<mouse-3>" 'mouse-set-point
+ "<drag-mouse-3>" 'mouse-set-region)
+
+(general-define-key
  :states '(normal visual)
  :keymaps 'override
  :prefix "SPC"
@@ -306,6 +324,8 @@
  "b d" '(kill-current-buffer :which-key)
  "b n" '(next-buffer :which-key)
  "b p" '(previous-buffer :which-key)
+ "c" '(:ignore t :which-key "code")
+ "c c" '(evilnc-comment-or-uncomment-lines :which-key)
  "e" '(:ignore t :which-key "eval")
  "e b" '(eval-buffer :which-key)
  "e e" '(eval-expression :which-key)
