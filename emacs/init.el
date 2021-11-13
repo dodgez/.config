@@ -221,6 +221,9 @@
 	(add-to-list 'auto-mode-alist '("\\.[jt]sx?\\'" . web-mode))
 	(setq web-mode-code-indent-offset 2))
 
+(use-package rust-mode
+	:commands 'rust-mode)
+
 (use-package doom-modeline
 	:config
 	(doom-modeline-mode t))
@@ -263,7 +266,8 @@
 	(evil-terminal-cursor-changer-activate))
 
 (use-package lsp-mode
-	:hook (web-mode . lsp))
+	:hook ((web-mode . lsp)
+				 (rust-mode . lsp)))
 
 (load (expand-file-name "custom.el" user-emacs-directory) t t)
 
