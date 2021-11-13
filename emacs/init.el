@@ -218,7 +218,8 @@
 
 (use-package web-mode
 	:config
-	(add-to-list 'auto-mode-alist '("\\.[jt]sx?\\'" . web-mode)))
+	(add-to-list 'auto-mode-alist '("\\.[jt]sx?\\'" . web-mode))
+	(setq web-mode-code-indent-offset 2))
 
 (use-package doom-modeline
 	:config
