@@ -364,7 +364,7 @@
  "p f" '(projectile-find-file :which-key)
  "p p" '(projectile-switch-project :which-key)
  "q" '(:ignore t :which-key "quit")
- "q q" '(evil-quit :which-key)
+ "q q" '(evil-quit-all :which-key)
  "s" '(:ignore t :which-key "search")
  "s p" '(projectile-ripgrep :which-key)
  "s r" '(rg :which-key)
