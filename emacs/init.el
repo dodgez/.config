@@ -244,8 +244,8 @@
 	(global-git-gutter-mode t))
 
 (use-package blamer
-	:config
-	(global-blamer-mode t))
+	:hook ((text-mode . blamer-mode)
+				 (prog-mode . blamer-mode)))
 
 (use-package flycheck
 	:config
