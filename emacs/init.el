@@ -1,3 +1,9 @@
+;;; init.el --- Emacs config for dodgez
+
+;;; Commentary:
+;; This is an Emacs private configuration file.
+
+;;; Code:
 (defvar bootstrap-version)
 (let ((bootstrap-file
 			 (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
@@ -23,6 +29,7 @@
 (add-to-list 'exec-path "/usr/local/bin")
 
 (defun set-ideal-frame-size (&optional proportion)
+	"Set the frame to fill a PROPORTION of the screen."
 	(interactive)
 	(when (display-graphic-p)
 		(pcase (frame-monitor-workarea)
@@ -39,27 +46,32 @@
 				 (set-frame-size (selected-frame) width height t))))))
 (add-hook 'emacs-startup-hook #'set-ideal-frame-size)
 
+(setq flycheck-emacs-lisp-load-path 'inherit)
+
+(require 'straight)
 (straight-use-package 'use-package)
 (setq straight-use-package-by-default t)
 
+(require 'use-package)
 (use-package ivy
 	:bind (("C-s" . swiper))
 	:config
-	(ivy-mode))
+	(ivy-mode t))
 
 (use-package counsel
 	:bind (("M-x" . counsel-M-x)
 				 ("C-x b" . counsel-ibuffer)
 				 ("C-x C-f" . counsel-find-file))
+	:custom
+	(ivy-initial-inputs-alist nil)
 	:config
-	(setq ivy-initial-inputs-alist nil)
 	(counsel-mode t))
 
 (use-package company-box
 	:hook (after-init . global-company-mode))
 
 (defun +ivy-rich-describe-variable-transformer (cand)
-	"Previews the value of the variable in the minibuffer"
+	"Preview the value of CAND in the minibuffer."
 	(let* ((sym (intern cand))
 				 (val (and (boundp sym) (symbol-value sym)))
 				 (print-level 3))
@@ -121,10 +133,10 @@
 	(ivy-prescient-mode 1))
 
 (use-package no-littering
-	:config
-	(setq auto-save-file-name-transforms
+	:custom
+	(auto-save-file-name-transforms
 				`((".*" ,(no-littering-expand-var-file-name "auto-save/") t)))
-	(setq custom-file (expand-file-name "custom.el" user-emacs-directory)))
+	(custom-file (expand-file-name "custom.el" user-emacs-directory)))
 
 (use-package auto-package-update
 	:custom
@@ -173,9 +185,10 @@
 	(popper-mode t))
 
 (use-package which-key
+	:custom
+	(which-key-idle-delay 0.3)
 	:config
-	(which-key-mode)
-	(setq which-key-idle-delay 0.3))
+	(which-key-mode))
 
 (use-package evil
 	:init
@@ -217,9 +230,10 @@
 	:commands vterm-toggle)
 
 (use-package web-mode
+	:custom
+	(web-mode-code-indent-offset 2)
 	:config
-	(add-to-list 'auto-mode-alist '("\\.[jt]sx?\\'" . web-mode))
-	(setq web-mode-code-indent-offset 2))
+	(add-to-list 'auto-mode-alist '("\\.[jt]sx?\\'" . web-mode)))
 
 (use-package rust-mode
 	:commands 'rust-mode)
@@ -269,6 +283,10 @@
 	:hook ((web-mode . lsp)
 				 (rust-mode . lsp)))
 
+(use-package org
+	:custom
+	(org-support-shift-select t))
+
 (load (expand-file-name "custom.el" user-emacs-directory) t t)
 
 (use-package doom-themes
@@ -284,8 +302,7 @@
 																		((meta) . 1)
 																		((control) . text-scale))
 			warning-minimum-level :error
-			inhibit-startup-message t
-			org-support-shift-select t)
+			inhibit-startup-message t)
 (setq-default tab-width 2)
 
 (global-subword-mode t)
@@ -383,3 +400,6 @@
  "w l" '(evil-window-right :which-key)
  "w s" '(evil-window-split :which-key)
  "w v" '(evil-window-vsplit :which-key))
+
+(provide 'init)
+;;; init.el ends here
