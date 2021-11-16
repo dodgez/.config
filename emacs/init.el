@@ -138,15 +138,6 @@
 				`((".*" ,(no-littering-expand-var-file-name "auto-save/") t)))
 	(custom-file (expand-file-name "custom.el" user-emacs-directory)))
 
-(use-package auto-package-update
-	:custom
-	(auto-package-update-interval 7)
-	(auto-package-update-prompt-before-update t)
-	(auto-package-update-hide-results t)
-	:config
-	(auto-package-update-maybe)
-	(auto-package-update-at-time "09:00"))
-
 (use-package all-the-icons)
 
 (use-package rainbow-delimiters
@@ -282,6 +273,15 @@
 	(load-theme 'doom-dracula))
 
 (load (expand-file-name "private.el" user-emacs-directory) t t)
+
+(use-package auto-package-update
+	:custom
+	(auto-package-update-interval 7)
+	(auto-package-update-prompt-before-update t)
+	(auto-package-update-hide-results t)
+	:config
+	(auto-package-update-maybe)
+	(auto-package-update-at-time "09:00"))
 
 ; Customization
 (setq delete-by-moving-to-trash t
