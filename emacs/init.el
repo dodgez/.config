@@ -262,6 +262,9 @@
 	:hook ((web-mode . lsp)
 				 (rust-mode . lsp)))
 
+(use-package lsp-ui
+	:after 'lsp-mode)
+
 (use-package org
 	:custom
 	(org-support-shift-select t))
