@@ -345,6 +345,7 @@
  "b d" '(kill-current-buffer :which-key)
  "b n" '(next-buffer :which-key)
  "b p" '(previous-buffer :which-key)
+ "b r" '(revert-buffer-quick :which-key)
  "c" '(:ignore t :which-key "code")
  "c c" '(evilnc-comment-or-uncomment-lines :which-key)
  "c f" '(hs-toggle-hiding :which-key)
