@@ -68,7 +68,7 @@
 	(counsel-mode t))
 
 (use-package company-box
-	:hook (after-init . global-company-mode))
+	:hook (emacs-startup . global-company-mode))
 
 (defun +ivy-rich-describe-variable-transformer (cand)
 	"Preview the value of CAND in the minibuffer."
