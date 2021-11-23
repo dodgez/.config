@@ -310,6 +310,7 @@
 			warning-minimum-level :error
 			inhibit-startup-message t)
 (setq-default tab-width 2)
+(setq-default indent-tabs-mode nil)
 
 (global-subword-mode t)
 (tool-bar-mode 0)
