@@ -55,6 +55,9 @@
 (require 'use-package)
 (use-package ivy
 	:bind (("C-s" . swiper))
+	:custom
+	(ivy-use-virtual-buffers t)
+	(enable-recursive-minibuffers t)
 	:config
 	(ivy-mode t))
 
@@ -269,6 +272,11 @@
 	:custom
 	(org-support-shift-select t))
 
+(use-package avy
+	:custom
+	(avy-style 'pre)
+	:commands (avy-goto-char avy-goto-word-0 avy-goto-line))
+
 (load (expand-file-name "custom.el" user-emacs-directory) t t)
 
 (use-package doom-themes
@@ -366,6 +374,10 @@
  "h m" '(describe-mode :which-key)
  "h o" '(counsel-describe-symbol :which-key)
  "h v" '(counsel-describe-variable :which-key)
+ "j" '(:ignore t :which-key "jump")
+ "j c" '(avy-goto-char :which-key)
+ "j l" '(avy-goto-line :which-key)
+ "j w" '(avy-goto-word-0 :which-key)
  "o" '(:ignore t :which-key "open")
  "o t" '(vterm-toggle :which-key)
  "p" '(:ignore t :which-key "project")
