@@ -152,6 +152,13 @@
 
 (use-package projectile)
 
+(use-package counsel-projectile
+	:after (projectile counsel)
+	:custom
+	(counsel-projectile-sort-buffers t)
+	(counsel-projectile-sort-files t)
+	(counsel-projectile-sort-projects t))
+
 (use-package rg
 	:commands (rg ripgrep))
 
@@ -349,7 +356,7 @@
  :prefix "SPC"
  "SPC" '(counsel-M-x :which-key "M-x")
  "b" '(:ignore t :which-key "buffer")
- "b b" '(counsel-ibuffer :which-key)
+ "b b" '(counsel-switch-buffer :which-key)
  "b d" '(kill-current-buffer :which-key)
  "b n" '(next-buffer :which-key)
  "b p" '(previous-buffer :which-key)
@@ -382,13 +389,15 @@
  "o t" '(vterm-toggle :which-key)
  "p" '(:ignore t :which-key "project")
  "p a" '(projectile-add-known-project :which-key)
- "p f" '(projectile-find-file :which-key)
- "p p" '(projectile-switch-project :which-key)
+ "p b" '(counsel-projectile-switch-to-buffer :which-key)
+ "p f" '(counsel-projectile-find-file :which-key)
+ "p p" '(counsel-projectile-switch-project :which-key)
+ "p s" '(counsel-projectile-rg :which-key)
  "q" '(:ignore t :which-key "quit")
  "q q" '(evil-quit-all :which-key)
  "s" '(:ignore t :which-key "search")
- "s p" '(projectile-ripgrep :which-key)
- "s r" '(rg :which-key)
+ "s p" '(counsel-projectile-rg :which-key)
+ "s r" '(counsel-rg :which-key)
  "s R" '(rg-menu :which-key)
  "s s" '(swiper :which-key)
  "u" '(:ignore t :which-key "undo")
