@@ -385,6 +385,7 @@
  "f p" '((lambda () (interactive) (counsel-find-file "" user-emacs-directory)) :which-key "Browse private config")
  "f s" '(save-buffer :which-key)
  "g" '(:ignore t :which-key "magit")
+ "g b" '(magit-blame :which-key)
  "g g" '(magit-status :which-key)
  "h" '(:ignore t :which-key "help")
  "h f" '(counsel-describe-function :which-key)
