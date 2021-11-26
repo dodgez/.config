@@ -224,6 +224,15 @@
 	:config
 	(add-to-list 'auto-mode-alist '("\\.[jt]sx?\\'" . web-mode)))
 
+(use-package js
+  :commands 'js-mode
+  :custom
+  (js-indent-level 2))
+
+(use-package json-mode
+  :commands 'json-mode
+  :mode (("\\.json\\'" . json-mode)))
+
 (use-package rust-mode
 	:commands 'rust-mode)
 
@@ -311,6 +320,7 @@
 			inhibit-startup-message t)
 (setq-default tab-width 2)
 (setq-default indent-tabs-mode nil)
+(setq-default standard-indent 2)
 
 (global-subword-mode t)
 (tool-bar-mode 0)
