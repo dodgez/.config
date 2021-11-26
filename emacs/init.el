@@ -322,6 +322,7 @@
 (setq-default indent-tabs-mode nil)
 (setq-default standard-indent 2)
 
+(setq vc-follow-symlinks t)
 (global-subword-mode t)
 (tool-bar-mode 0)
 (tooltip-mode 0)
