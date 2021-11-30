@@ -122,11 +122,6 @@
 								(ivy-rich-bookmark-filename-or-empty (:width 60)))))
 	(ivy-rich-mode t))
 
-(use-package all-the-icons-ivy
-	:after ivy
-	:config
-	(all-the-icons-ivy-setup))
-
 (use-package prescient
 	:after counsel)
 
@@ -292,6 +287,15 @@
 	:custom
 	(avy-style 'pre)
 	:commands (avy-goto-char avy-goto-word-0 avy-goto-line))
+
+(use-package all-the-icons-ivy
+	:after ivy
+	:config
+	(all-the-icons-ivy-setup))
+
+(use-package fish-mode
+  :commands 'fish-mode
+  :mode (("\\.fish\\'" . fish-mode)))
 
 (load (expand-file-name "custom.el" user-emacs-directory) t t)
 
