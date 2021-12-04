@@ -301,6 +301,14 @@
   :commands 'yaml-mode
   :mode (("\\.ya?ml\\'" . yaml-mode)))
 
+(use-package haskell-mode
+  :commands 'haskell-mode
+  :mode (("\\.hs\\'" . haskell-mode)
+         ("\\.cabal\\'" . haskell-mode)))
+
+(use-package dante
+  :commands 'dante-mode)
+
 (load (expand-file-name "custom.el" user-emacs-directory) t t)
 
 (use-package doom-themes
