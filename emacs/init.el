@@ -364,6 +364,8 @@
 
 (add-hook 'prog-mode-hook 'hs-minor-mode)
 
+(when (not (fboundp 'revert-buffer-quick)) (defun revert-buffer-quick () (interactive) (revert-buffer t (not (buffer-modified-p)))))
+
 ; Keybindings
 (when (eq system-type 'darwin) (setq mac-command-modifier 'control))
 
