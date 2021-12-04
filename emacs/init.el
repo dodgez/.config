@@ -307,7 +307,12 @@
          ("\\.cabal\\'" . haskell-mode)))
 
 (use-package dante
-  :commands 'dante-mode)
+  :commands 'dante-mode
+  :hook (haskell-mode . dante-mode))
+
+(use-package hindent
+  :commands (hindent-reformat-buffer hindent-reformat-region)
+  :hook (haskell-mode . hindent-mode))
 
 (load (expand-file-name "custom.el" user-emacs-directory) t t)
 
