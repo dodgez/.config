@@ -297,6 +297,10 @@
   :commands 'fish-mode
   :mode (("\\.fish\\'" . fish-mode)))
 
+(use-package yaml-mode
+  :commands 'yaml-mode
+  :mode (("\\.ya?ml\\'" . yaml-mode)))
+
 (load (expand-file-name "custom.el" user-emacs-directory) t t)
 
 (use-package doom-themes
