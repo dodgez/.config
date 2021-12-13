@@ -389,6 +389,10 @@
  "<drag-mouse-3>" 'mouse-set-region)
 
 (general-define-key
+ :states 'normal
+ "f" 'avy-goto-word-0)
+
+(general-define-key
  :states '(normal visual)
  :keymaps 'override
  :prefix "SPC"
