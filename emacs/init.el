@@ -277,6 +277,9 @@
 				 (rust-mode . lsp)))
 
 (use-package lsp-ui
+  :config
+  (lsp-ui-doc-position 'at-point)
+  (lsp-ui-doc-location 'at-point)
 	:after 'lsp-mode)
 
 (use-package org
