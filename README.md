@@ -10,7 +10,7 @@
 ### Debian-based Installation
 
 ```
-curl -sSL https://starship/install.sh | sh &&
+curl -sSL https://starship.rs/install.sh | sh &&
 sudo apt-add-repository ppa:fish-shell/release-3 &&
 sudo apt update &&
 sudo apt upgrade &&
