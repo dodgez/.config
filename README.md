@@ -10,15 +10,15 @@
 ### Debian-based Installation
 
 ```
-curl -sSL https://starship/install.sh | sh &
-sudo apt-add-repository ppa:fish-shell/release-3 &
-sudo apt update &
-sudo apt upgrade &
-sudo apt install -y fish emacs ripgrep fd-find git &
-mkdir -p ~/.config &
-cd ~/.config &
-git remote add origin https://github.com/dodgez/.config &
-git fetch &
+curl -sSL https://starship/install.sh | sh &&
+sudo apt-add-repository ppa:fish-shell/release-3 &&
+sudo apt update &&
+sudo apt upgrade &&
+sudo apt install -y fish emacs ripgrep fd-find git &&
+mkdir -p ~/.config &&
+cd ~/.config &&
+git remote add origin https://github.com/dodgez/.config &&
+git fetch &&
 git checkout main
 ```
 
