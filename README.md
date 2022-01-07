@@ -19,6 +19,7 @@ mkdir -p ~/.config &&
 cd ~/.config &&
 git remote add origin https://github.com/dodgez/.config &&
 git fetch &&
-git checkout main
+git checkout main &&
+chsh -s /usr/bin/fish
 ```
 
