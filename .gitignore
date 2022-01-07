@@ -3,6 +3,7 @@
 
 # This file
 !.gitignore
+!README.md
 
 # Starship shell prompt configuration
 !starship.toml
