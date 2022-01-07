@@ -12,11 +12,13 @@
 ```
 curl -sSL https://starship.rs/install.sh | sh &&
 sudo apt-add-repository ppa:fish-shell/release-3 &&
+sudo apt-add-repository ppa:kelleyk/emacs &&
 sudo apt update &&
 sudo apt upgrade &&
-sudo apt install -y fish emacs ripgrep fd-find git &&
+sudo apt install -y fish emacs27 ripgrep fd-find git &&
 mkdir -p ~/.config &&
 cd ~/.config &&
+git init &&
 git remote add origin https://github.com/dodgez/.config &&
 git fetch &&
 git checkout main &&
