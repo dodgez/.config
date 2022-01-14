@@ -393,9 +393,9 @@
  :states 'normal
  "f" 'avy-goto-word-0)
 
-(general-define-key
- :states 'normal
- "<tab>" 'evil-indent-line)
+;; (general-define-key
+;;  :states 'normal
+;;  "<tab>" 'evil-indent-line)
 
 (general-define-key
  :states '(normal visual)
