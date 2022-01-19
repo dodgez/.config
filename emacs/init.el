@@ -321,7 +321,7 @@
 
 (use-package doom-themes
 	:config
-	(load-theme 'doom-dracula))
+	(load-theme 'doom-one))
 
 (load (expand-file-name "private.el" user-emacs-directory) t t)
 
