@@ -321,9 +321,7 @@
 
 (use-package doom-themes
 	:config
-	(load-theme 'doom-one))
-
-(load (expand-file-name "private.el" user-emacs-directory) t t)
+	(load-theme 'doom-zenburn))
 
 (use-package auto-package-update
 	:custom
@@ -461,6 +459,8 @@
  "w l" '(evil-window-right :which-key)
  "w s" '(evil-window-split :which-key)
  "w v" '(evil-window-vsplit :which-key))
+
+(load (expand-file-name "private.el" user-emacs-directory) t t)
 
 (provide 'init)
 ;;; init.el ends here
