@@ -251,6 +251,8 @@
 	(global-git-gutter-mode t))
 
 (use-package blamer
+  :config
+  (setq blamer-view 'overlay-right)
 	:hook ((text-mode . blamer-mode)
 				 (prog-mode . blamer-mode)))
 
