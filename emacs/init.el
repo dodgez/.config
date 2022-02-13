@@ -284,9 +284,45 @@
   (lsp-ui-doc-location 'at-point)
 	:after 'lsp-mode)
 
+(defun org-mode-setup ()
+  (org-indent-mode)
+  (auto-fill-mode 0)
+  (visual-line-mode 1)
+  (setq org-agenda-files (list org-directory))
+  (setq evil-auto-indent nil))
+
 (use-package org
+  :hook (org-mode . org-mode-setup)
+  :commands (org-capture org-agenda)
 	:custom
-	(org-support-shift-select t))
+	(org-support-shift-select t)
+  (org-hide-emphasis-markers t)
+  (org-catch-invisible-edits t))
+
+(use-package org-appear
+  :hook
+  (org-mode . org-appear-mode))
+
+(use-package org-bullets
+  :hook
+  (org-mode . org-bullets-mode))
+
+(defun visual-fill-setup ()
+  (setq visual-fill-column-width 100
+        visual-fill-column-center-text t)
+  (visual-fill-column-mode 1))
+
+(use-package visual-fill-column
+  :hook
+  (org-mode . visual-fill-setup))
+
+(use-package evil-org
+  :after org
+  :hook
+  (org-mode . (lambda () evil-org-mode))
+  :config
+  (require 'evil-org-agenda)
+  (evil-org-agenda-set-keys))
 
 (use-package avy
 	:custom
@@ -356,7 +392,8 @@
 (column-number-mode)
 (global-display-line-numbers-mode t)
 (dolist (mode '(vterm-mode-hook
-								eshell-mode-hook))
+								eshell-mode-hook
+                org-mode-hook))
 	(add-hook mode (lambda () (display-line-numbers-mode 0))))
 (global-hl-line-mode)
 
