@@ -296,6 +296,7 @@
   :hook (org-mode . org-mode-setup)
   :commands (org-capture org-agenda)
 	:custom
+  (org-todo-keywords '((sequence "TODO(t)" "BLOCKED(b)" "|" "DONE(d)")))
 	(org-support-shift-select t)
   (org-hide-emphasis-markers t)
   (org-catch-invisible-edits t))
@@ -320,10 +321,7 @@
 (use-package evil-org
   :after org
   :hook
-  (org-mode . (lambda () evil-org-mode))
-  :config
-  (require 'evil-org-agenda)
-  (evil-org-agenda-set-keys))
+  (org-mode . (lambda () evil-org-mode)))
 
 (use-package avy
 	:custom
@@ -436,6 +434,15 @@
  "<tab>" 'evil-indent-line)
 
 (general-define-key
+ :states 'normal
+ :keymaps 'org-mode-map
+ "t" 'org-todo)
+
+(general-define-key
+ :states 'insert
+ "S-<escape>" (lambda () (interactive) (evil-force-normal-state) (evil-forward-char)))
+
+(general-define-key
  :states '(normal visual)
  :keymaps 'override
  :prefix "SPC"
@@ -471,8 +478,9 @@
  "j c" '(avy-goto-char :which-key)
  "j l" '(avy-goto-line :which-key)
  "j w" '(avy-goto-word-0 :which-key)
- "o" '(:ignore t :which-key "open")
- "o t" '(vterm-toggle :which-key)
+ "o" '(:ignore t :which-key "open/org")
+ "o t" '(org-todo :which-key)
+ "o v" '(vterm-toggle :which-key)
  "p" '(:ignore t :which-key "project")
  "p a" '(projectile-add-known-project :which-key)
  "p b" '(counsel-projectile-switch-to-buffer :which-key)
