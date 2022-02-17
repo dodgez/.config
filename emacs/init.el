@@ -406,6 +406,8 @@
 
 (when (not (fboundp 'revert-buffer-quick)) (defun revert-buffer-quick () (interactive) (revert-buffer t (not (buffer-modified-p)))))
 
+(set-window-scroll-bars (minibuffer-window) nil nil)
+
 ; Keybindings
 (when (eq system-type 'darwin) (setq mac-command-modifier 'control))
 
