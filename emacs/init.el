@@ -331,7 +331,7 @@
 (use-package all-the-icons-ivy
 	:after ivy
 	:config
-	(all-the-icons-ivy-setup))
+  (when (display-graphic-p) (all-the-icons-ivy-setup)))
 
 (use-package fish-mode
   :commands 'fish-mode
