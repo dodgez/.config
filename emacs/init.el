@@ -409,8 +409,6 @@
 (set-window-scroll-bars (minibuffer-window) nil nil)
 
 ; Keybindings
-(when (eq system-type 'darwin) (setq mac-command-modifier 'control))
-
 (general-define-key
  "<escape>" 'keyboard-escape-quit
  :keymaps 'override
