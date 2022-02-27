@@ -296,7 +296,7 @@
   :hook (org-mode . org-mode-setup)
   :commands (org-capture org-agenda)
 	:custom
-  (org-todo-keywords '((sequence "TODO(t)" "BLOCKED(b)" "|" "DONE(d)")))
+  (org-todo-keywords '((sequence "TODO(t)" "BLOCKED(b)" "|" "DONE(d)" "CANCELLED(c)")))
 	(org-support-shift-select t)
   (org-hide-emphasis-markers t)
   (org-catch-invisible-edits t))
