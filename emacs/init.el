@@ -169,14 +169,11 @@
 					"[Oo]utput\\*$"
 					"\\*Help\\*"
 					"\\*helpful\\*"
-					"\\*vterm\\*"
 					"\\*Excorporate\\*"
 					"\\*xref\\*"
 					help-mode
 					helpful-mode
-					compilation-mode
-					term-mode
-					vterm-mode)
+					compilation-mode)
 				popper-group-function #'popper-group-by-projectile)
 	(popper-mode t))
 
