@@ -359,6 +359,11 @@
   :config
   (global-aggressive-indent-mode))
 
+(use-package exec-path-from-shell
+  :config
+  (when (eq window-system 'ns)
+    (exec-path-from-shell-initialize)))
+
 (load (expand-file-name "custom.el" user-emacs-directory) t t)
 
 (use-package doom-themes
