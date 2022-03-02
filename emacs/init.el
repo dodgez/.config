@@ -6,44 +6,44 @@
 ;;; Code:
 (defvar bootstrap-version)
 (let ((bootstrap-file
-			 (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
-			(bootstrap-version 5))
-	(unless (file-exists-p bootstrap-file)
-		(with-current-buffer
-				(url-retrieve-synchronously
-				 "https://raw.githubusercontent.com/raxod502/straight.el/develop/install.el"
-				 'silent 'inhibit-cookies)
-			(goto-char (point-max))
-			(eval-print-last-sexp)))
-	(load bootstrap-file nil 'nomessage))
+       (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
+      (bootstrap-version 5))
+  (unless (file-exists-p bootstrap-file)
+    (with-current-buffer
+        (url-retrieve-synchronously
+         "https://raw.githubusercontent.com/raxod502/straight.el/develop/install.el"
+         'silent 'inhibit-cookies)
+      (goto-char (point-max))
+      (eval-print-last-sexp)))
+  (load bootstrap-file nil 'nomessage))
 
 (setq gc-cons-threshold (* 50 1000 1000))
 (defun display-startup-time ()
-	"Displays the startup time in the echo buffer when Emacs is finished loading."
-	(message "Emacs loaded in %s with %d garbage collections."
-					 (format "%.2f seconds"
-									 (float-time (time-subtract after-init-time before-init-time)))
-					 gcs-done))
+  "Displays the startup time in the echo buffer when Emacs is finished loading."
+  (message "Emacs loaded in %s with %d garbage collections."
+           (format "%.2f seconds"
+                   (float-time (time-subtract after-init-time before-init-time)))
+           gcs-done))
 (add-hook 'emacs-startup-hook #'display-startup-time)
 
 (add-to-list 'exec-path "/usr/local/bin")
 
 (defun set-ideal-frame-size (&optional proportion)
-	"Set the frame to fill a PROPORTION of the screen."
-	(interactive)
-	(when (display-graphic-p)
-		(pcase (frame-monitor-workarea)
-			(`(,display-x ,display-y ,display-raw-width ,display-raw-height)
-			 (let* ((proportion (or proportion 0.9))
-							(margin (/ (- 1 proportion) 2))
-							(display-width (- display-raw-width (if (< display-x 1920) display-x 0)))
-							(display-height (- display-raw-height display-y))
-							(width (truncate (* display-width proportion)))
-							(height (truncate (* display-height proportion)))
-							(margin-left (+ display-x (truncate (* display-width margin))))
-							(margin-top (+ display-y (truncate (* display-height margin)))))
-				 (set-frame-position (selected-frame) margin-left margin-top)
-				 (set-frame-size (selected-frame) width height t))))))
+  "Set the frame to fill a PROPORTION of the screen."
+  (interactive)
+  (when (display-graphic-p)
+    (pcase (frame-monitor-workarea)
+      (`(,display-x ,display-y ,display-raw-width ,display-raw-height)
+       (let* ((proportion (or proportion 0.9))
+              (margin (/ (- 1 proportion) 2))
+              (display-width (- display-raw-width (if (< display-x 1920) display-x 0))) ;
+              (display-height (- display-raw-height display-y))
+              (width (truncate (* display-width proportion)))
+              (height (truncate (* display-height proportion)))
+              (margin-left (+ display-x (truncate (* display-width margin))))
+              (margin-top (+ display-y (truncate (* display-height margin)))))
+         (set-frame-position (selected-frame) margin-left margin-top)
+         (set-frame-size (selected-frame) width height t))))))
 (add-hook 'emacs-startup-hook #'set-ideal-frame-size)
 
 (setq flycheck-emacs-lisp-load-path 'inherit)
@@ -54,168 +54,168 @@
 
 (require 'use-package)
 (use-package ivy
-	:bind (("C-s" . swiper))
-	:custom
-	(ivy-use-virtual-buffers t)
-	(enable-recursive-minibuffers t)
-	:config
-	(ivy-mode t))
+  :bind (("C-s" . swiper))
+  :custom
+  (ivy-use-virtual-buffers t)
+  (enable-recursive-minibuffers t)
+  :config
+  (ivy-mode t))
 
 (use-package counsel
-	:bind (("M-x" . counsel-M-x)
-				 ("C-x b" . counsel-ibuffer)
-				 ("C-x C-f" . counsel-find-file))
-	:custom
-	(ivy-initial-inputs-alist nil)
-	:config
-	(counsel-mode t))
+  :bind (("M-x" . counsel-M-x)
+         ("C-x b" . counsel-ibuffer)
+         ("C-x C-f" . counsel-find-file))
+  :custom
+  (ivy-initial-inputs-alist nil)
+  :config
+  (counsel-mode t))
 
 (use-package company-box
-	:hook (emacs-startup . global-company-mode))
+  :hook (emacs-startup . global-company-mode))
 
 (defun +ivy-rich-describe-variable-transformer (cand)
-	"Preview the value of CAND in the minibuffer."
-	(let* ((sym (intern cand))
-				 (val (and (boundp sym) (symbol-value sym)))
-				 (print-level 3))
-		(replace-regexp-in-string
-		 "[\n\t\^[\^M\^@\^G]" " "
-		 (cond ((booleanp val)
-						(propertize (format "%s" val) 'face
-												(if (null val)
-														'font-lock-comment-face
-													'success)))
-					 ((symbolp val)
-						(propertize (format "'%s" val)
-												'face 'highlight-quoted-symbol))
-					 ((keymapp val)
-						(propertize "<keymap>" 'face 'font-lock-constant-face))
-					 ((listp val)
-						(prin1-to-string val))
-					 ((stringp val)
-						(propertize (format "%S" val) 'face 'font-lock-string-face))
-					 ((numberp val)
-						(propertize (format "%s" val) 'face 'highlight-numbers-number))
-					 ((format "%s" val)))
-		 t)))
+  "Preview the value of CAND in the minibuffer."
+  (let* ((sym (intern cand))
+         (val (and (boundp sym) (symbol-value sym)))
+         (print-level 3))
+    (replace-regexp-in-string
+     "[\n\t\^[\^M\^@\^G]" " "
+     (cond ((booleanp val)
+            (propertize (format "%s" val) 'face
+                        (if (null val)
+                            'font-lock-comment-face
+                          'success)))
+           ((symbolp val)
+            (propertize (format "'%s" val)
+                        'face 'highlight-quoted-symbol))
+           ((keymapp val)
+            (propertize "<keymap>" 'face 'font-lock-constant-face))
+           ((listp val)
+            (prin1-to-string val))
+           ((stringp val)
+            (propertize (format "%S" val) 'face 'font-lock-string-face))
+           ((numberp val)
+            (propertize (format "%s" val) 'face 'highlight-numbers-number))
+           ((format "%s" val)))
+     t)))
 
 (use-package ivy-rich
-	:config
-	(plist-put ivy-rich-display-transformers-list
-						 'counsel-describe-variable
-						 '(:columns
-							 ((counsel-describe-variable-transformer (:width 40))
-								(+ivy-rich-describe-variable-transformer (:width 50))
-								(ivy-rich-counsel-variable-docstring (:face font-lock-doc-face)))))
-	(plist-put ivy-rich-display-transformers-list
-						 'counsel-M-x
-						 '(:columns
-							 ((counsel-M-x-transformer (:width 60))
-								(ivy-rich-counsel-function-docstring (:face font-lock-doc-face)))))
-	(plist-put ivy-rich-display-transformers-list
-						 'counsel-projectile-switch-to-buffer
-						 (plist-get ivy-rich-display-transformers-list 'ivy-switch-buffer))
-	(plist-put ivy-rich-display-transformers-list
-						 'counsel-bookmark
-						 '(:columns
-							 ((ivy-rich-candidate (:width 0.5))
-								(ivy-rich-bookmark-filename-or-empty (:width 60)))))
-	(ivy-rich-mode t))
+  :config
+  (plist-put ivy-rich-display-transformers-list
+             'counsel-describe-variable
+             '(:columns
+               ((counsel-describe-variable-transformer (:width 40))
+                (+ivy-rich-describe-variable-transformer (:width 50))
+                (ivy-rich-counsel-variable-docstring (:face font-lock-doc-face)))))
+  (plist-put ivy-rich-display-transformers-list
+             'counsel-M-x
+             '(:columns
+               ((counsel-M-x-transformer (:width 60))
+                (ivy-rich-counsel-function-docstring (:face font-lock-doc-face)))))
+  (plist-put ivy-rich-display-transformers-list
+             'counsel-projectile-switch-to-buffer
+             (plist-get ivy-rich-display-transformers-list 'ivy-switch-buffer))
+  (plist-put ivy-rich-display-transformers-list
+             'counsel-bookmark
+             '(:columns
+               ((ivy-rich-candidate (:width 0.5))
+                (ivy-rich-bookmark-filename-or-empty (:width 60)))))
+  (ivy-rich-mode t))
 
 (use-package prescient
-	:after counsel)
+  :after counsel)
 
 (use-package ivy-prescient
-	:after prescient
-	:config
-	(ivy-prescient-mode 1))
+  :after prescient
+  :config
+  (ivy-prescient-mode 1))
 
 (use-package no-littering
-	:custom
-	(auto-save-file-name-transforms
-				`((".*" ,(no-littering-expand-var-file-name "auto-save/") t)))
-	(custom-file (expand-file-name "custom.el" user-emacs-directory)))
+  :custom
+  (auto-save-file-name-transforms
+        `((".*" ,(no-littering-expand-var-file-name "auto-save/") t)))
+  (custom-file (expand-file-name "custom.el" user-emacs-directory)))
 
 (use-package all-the-icons)
 
 (use-package rainbow-delimiters
-	:hook (prog-mode . rainbow-delimiters-mode))
+  :hook (prog-mode . rainbow-delimiters-mode))
 
 (use-package ws-butler
-	:hook ((text-mode . ws-butler-mode)
-				 (prog-mode . ws-butler-mode)))
+  :hook ((text-mode . ws-butler-mode)
+         (prog-mode . ws-butler-mode)))
 
 (use-package projectile)
 
 (use-package counsel-projectile
-	:after (projectile counsel)
-	:custom
-	(counsel-projectile-sort-buffers t)
-	(counsel-projectile-sort-files t)
-	(counsel-projectile-sort-projects t))
+  :after (projectile counsel)
+  :custom
+  (counsel-projectile-sort-buffers t)
+  (counsel-projectile-sort-files t)
+  (counsel-projectile-sort-projects t))
 
 (use-package rg
-	:commands (rg ripgrep))
+  :commands (rg ripgrep))
 
 (use-package popper
-	:after projectile
-	:init
-	(setq popper-reference-buffers
-				'("\\*Messages\\*"
-					"^\\*Warnings\\*"
-					"^\\*IBuffer\\*"
-					"^\\*Compile-Log\\*"
-					"^\\*Backtrace\\*"
-					"[Oo]utput\\*$"
-					"\\*Help\\*"
-					"\\*helpful\\*"
-					"\\*Excorporate\\*"
-					"\\*xref\\*"
-					help-mode
-					helpful-mode
-					compilation-mode)
-				popper-group-function #'popper-group-by-projectile)
-	(popper-mode t))
+  :after projectile
+  :init
+  (setq popper-reference-buffers
+        '("\\*Messages\\*"
+          "^\\*Warnings\\*"
+          "^\\*IBuffer\\*"
+          "^\\*Compile-Log\\*"
+          "^\\*Backtrace\\*"
+          "[Oo]utput\\*$"
+          "\\*Help\\*"
+          "\\*helpful\\*"
+          "\\*Excorporate\\*"
+          "\\*xref\\*"
+          help-mode
+          helpful-mode
+          compilation-mode)
+        popper-group-function #'popper-group-by-projectile)
+  (popper-mode t))
 
 (use-package which-key
-	:custom
-	(which-key-idle-delay 0.3)
-	:config
-	(which-key-mode))
+  :custom
+  (which-key-idle-delay 0.3)
+  :config
+  (which-key-mode))
 
 (use-package evil
-	:init
-	(setq evil-want-integration t)
-	(setq evil-want-keybinding nil)
-	:config
-	(evil-mode t)
-	(evil-global-set-key 'motion "j" 'evil-next-visual-line)
-	(evil-global-set-key 'motion "k" 'evil-previous-visual-line))
+  :init
+  (setq evil-want-integration t)
+  (setq evil-want-keybinding nil)
+  :config
+  (evil-mode t)
+  (evil-global-set-key 'motion "j" 'evil-next-visual-line)
+  (evil-global-set-key 'motion "k" 'evil-previous-visual-line))
 
 (use-package general)
 
 (use-package magit
-	:commands magit-status
-	:custom
-	(magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1))
+  :commands magit-status
+  :custom
+  (magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1))
 
 (use-package evil-collection
-	:config
-	(evil-collection-init))
+  :config
+  (evil-collection-init))
 
 (use-package vterm
-	:commands vterm
-	:config
-	(when (not (or (eq system-type 'windows-nt) (eq system-type 'ms-dos))) (setq vterm-shell (executable-find "fish"))))
+  :commands vterm
+  :config
+  (when (not (or (eq system-type 'windows-nt) (eq system-type 'ms-dos))) (setq vterm-shell (executable-find "fish"))))
 (use-package vterm-toggle
-	:commands vterm-toggle)
+  :commands vterm-toggle)
 
 (use-package web-mode
-	:custom
-	(web-mode-code-indent-offset 2)
+  :custom
+  (web-mode-code-indent-offset 2)
   (web-mode-markup-indent-offset 2)
-	:config
-	(add-to-list 'auto-mode-alist '("\\.[jt]sx?\\'" . web-mode)))
+  :config
+  (add-to-list 'auto-mode-alist '("\\.[jt]sx?\\'" . web-mode)))
 
 (use-package js
   :commands 'js-mode
@@ -227,60 +227,60 @@
   :mode (("\\.json\\'" . json-mode)))
 
 (use-package rust-mode
-	:commands 'rust-mode)
+  :commands 'rust-mode)
 
 (use-package doom-modeline
-	:config
-	(doom-modeline-mode t))
+  :config
+  (doom-modeline-mode t))
 
 (use-package undo-tree
-	:hook ((text-mode . undo-tree-mode)
-				 (prog-mode . undo-tree-mode)))
+  :hook ((text-mode . undo-tree-mode)
+         (prog-mode . undo-tree-mode)))
 
 (use-package paren
-	:config
-	(show-paren-mode t))
+  :config
+  (show-paren-mode t))
 
 (use-package evil-nerd-commenter
-	:commands evilnc-comment-or-uncomment-lines)
+  :commands evilnc-comment-or-uncomment-lines)
 
 (use-package git-gutter
-	:config
-	(global-git-gutter-mode t))
+  :config
+  (global-git-gutter-mode t))
 
 (use-package blamer
   :config
   (setq blamer-view 'overlay-right)
-	:hook ((text-mode . blamer-mode)
-				 (prog-mode . blamer-mode)))
+  :hook ((text-mode . blamer-mode)
+         (prog-mode . blamer-mode)))
 
 (use-package flycheck
-	:config
-	(global-flycheck-mode t))
+  :config
+  (global-flycheck-mode t))
 
 (use-package markdown-mode
-	:commands 'markdown-mode
-	:mode (("\\.md\\'" . markdown-mode)))
+  :commands 'markdown-mode
+  :mode (("\\.md\\'" . markdown-mode)))
 
 (use-package clipetty
-	:straight (clipetty :type git :host github :repo "spudlyo/clipetty")
-	:config
-	(global-clipetty-mode t))
+  :straight (clipetty :type git :host github :repo "spudlyo/clipetty")
+  :config
+  (global-clipetty-mode t))
 
 (use-package evil-terminal-cursor-changer
-	:straight (evil-terminal-cursor-changer :type git :host github :repo "kisaragi-hiu/evil-terminal-cursor-changer")
-	:config
-	(evil-terminal-cursor-changer-activate))
+  :straight (evil-terminal-cursor-changer :type git :host github :repo "kisaragi-hiu/evil-terminal-cursor-changer")
+  :config
+  (evil-terminal-cursor-changer-activate))
 
 (use-package lsp-mode
-	:hook ((web-mode . lsp)
-				 (rust-mode . lsp)))
+  :hook ((web-mode . lsp)
+         (rust-mode . lsp)))
 
 (use-package lsp-ui
   :config
   (lsp-ui-doc-position 'at-point)
   (lsp-ui-doc-location 'at-point)
-	:after 'lsp-mode)
+  :after 'lsp-mode)
 
 (defun org-mode-setup ()
   (org-indent-mode)
@@ -292,9 +292,9 @@
 (use-package org
   :hook (org-mode . org-mode-setup)
   :commands (org-capture org-agenda)
-	:custom
+  :custom
   (org-todo-keywords '((sequence "TODO(t)" "BLOCKED(b)" "|" "DONE(d)" "CANCELLED(c)")))
-	(org-support-shift-select t)
+  (org-support-shift-select t)
   (org-hide-emphasis-markers t)
   (org-catch-invisible-edits t))
 
@@ -321,13 +321,13 @@
   (org-mode . (lambda () evil-org-mode)))
 
 (use-package avy
-	:custom
-	(avy-style 'pre)
-	:commands (avy-goto-char avy-goto-word-0 avy-goto-line))
+  :custom
+  (avy-style 'pre)
+  :commands (avy-goto-char avy-goto-word-0 avy-goto-line))
 
 (use-package all-the-icons-ivy
-	:after ivy
-	:config
+  :after ivy
+  :config
   (when (display-graphic-p) (all-the-icons-ivy-setup)))
 
 (use-package fish-mode
@@ -351,29 +351,33 @@
   :commands (hindent-reformat-buffer hindent-reformat-region)
   :hook (haskell-mode . hindent-mode))
 
+(use-package highlight-indentation
+  :hook (prog-mode . highlight-indentation-mode)
+  :hook (prog-mode . highlight-indentation-current-column-mode))
+
 (load (expand-file-name "custom.el" user-emacs-directory) t t)
 
 (use-package doom-themes
-	:config
-	(load-theme 'doom-zenburn))
+  :config
+  (load-theme 'doom-zenburn))
 
 (use-package auto-package-update
-	:custom
-	(auto-package-update-interval 7)
-	(auto-package-update-prompt-before-update t)
-	(auto-package-update-hide-results t)
-	:config
-	(auto-package-update-maybe)
-	(auto-package-update-at-time "09:00"))
+  :custom
+  (auto-package-update-interval 7)
+  (auto-package-update-prompt-before-update t)
+  (auto-package-update-hide-results t)
+  :config
+  (auto-package-update-maybe)
+  (auto-package-update-at-time "09:00"))
 
 ; Customization
 (setq delete-by-moving-to-trash t
-			mouse-wheel-progressive-speed nil
-			mouse-wheel-scroll-amount '(5 ((shift) . hscroll)
-																		((meta) . 1)
-																		((control) . text-scale))
-			warning-minimum-level :error
-			inhibit-startup-message t)
+      mouse-wheel-progressive-speed nil
+      mouse-wheel-scroll-amount '(5 ((shift) . hscroll)
+                                    ((meta) . 1)
+                                    ((control) . text-scale))
+      warning-minimum-level :error
+      inhibit-startup-message t)
 (setq-default tab-width 2)
 (setq-default indent-tabs-mode nil)
 (setq-default standard-indent 2)
@@ -388,9 +392,9 @@
 (column-number-mode)
 (global-display-line-numbers-mode t)
 (dolist (mode '(vterm-mode-hook
-								eshell-mode-hook
+                eshell-mode-hook
                 org-mode-hook))
-	(add-hook mode (lambda () (display-line-numbers-mode 0))))
+  (add-hook mode (lambda () (display-line-numbers-mode 0))))
 (global-hl-line-mode)
 
 (setq global-auto-revert-non-file-buffers t)
