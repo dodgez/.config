@@ -355,6 +355,10 @@
   :hook (prog-mode . highlight-indentation-mode)
   :hook (prog-mode . highlight-indentation-current-column-mode))
 
+(use-package aggressive-indent
+  :config
+  (global-aggressive-indent-mode))
+
 (load (expand-file-name "custom.el" user-emacs-directory) t t)
 
 (use-package doom-themes
