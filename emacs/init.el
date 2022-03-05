@@ -210,12 +210,28 @@
 (use-package vterm-toggle
   :commands vterm-toggle)
 
+(use-package tide
+  :custom
+  (typescript-indent-level 2))
+
+(defun setup-tide-mode ()
+  (interactive)
+  (add-hook 'before-save-hook 'tide-format-before-save)
+  (tide-setup)
+  (flycheck-mode t)
+  (eldoc-mode t)
+  (tide-hl-identifier-mode t)
+  (company-mode t))
+
 (use-package web-mode
   :custom
   (web-mode-code-indent-offset 2)
   (web-mode-markup-indent-offset 2)
   :config
-  (add-to-list 'auto-mode-alist '("\\.[jt]sx?\\'" . web-mode)))
+  (add-to-list 'auto-mode-alist '("\\.[jt]sx?\\'" . web-mode))
+  (flycheck-add-mode 'typescript-tslint 'web-mode)
+  :hook
+  (web-mode . (lambda () (when (s-starts-with-p "ts" (file-name-extension buffer-file-name)) (setup-tide-mode)))))
 
 (use-package js
   :commands 'js-mode
@@ -273,8 +289,7 @@
   (evil-terminal-cursor-changer-activate))
 
 (use-package lsp-mode
-  :hook ((web-mode . lsp)
-         (rust-mode . lsp)))
+  :hook (rust-mode . lsp))
 
 (use-package lsp-ui
   :config
@@ -354,10 +369,6 @@
 (use-package highlight-indentation
   :hook (prog-mode . highlight-indentation-mode)
   :hook (prog-mode . highlight-indentation-current-column-mode))
-
-(use-package aggressive-indent
-  :config
-  (global-aggressive-indent-mode))
 
 (use-package exec-path-from-shell
   :config
