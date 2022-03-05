@@ -216,12 +216,14 @@
 
 (defun setup-tide-mode ()
   (interactive)
-  (add-hook 'before-save-hook 'tide-format-before-save)
   (tide-setup)
   (flycheck-mode t)
   (eldoc-mode t)
   (tide-hl-identifier-mode t)
   (company-mode t))
+
+(use-package prettier-js
+  :commands (prettier-js-mode prettier-js))
 
 (use-package web-mode
   :custom
@@ -231,7 +233,8 @@
   (add-to-list 'auto-mode-alist '("\\.[jt]sx?\\'" . web-mode))
   (flycheck-add-mode 'typescript-tslint 'web-mode)
   :hook
-  (web-mode . (lambda () (when (s-starts-with-p "ts" (file-name-extension buffer-file-name)) (setup-tide-mode)))))
+  (web-mode . (lambda () (when (s-starts-with-p "ts" (file-name-extension buffer-file-name)) (setup-tide-mode))))
+  (web-mode . (lambda () (prettier-js-mode))))
 
 (use-package js
   :commands 'js-mode
