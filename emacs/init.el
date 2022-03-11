@@ -207,8 +207,6 @@
   :commands vterm
   :config
   (when (not (or (eq system-type 'windows-nt) (eq system-type 'ms-dos))) (setq vterm-shell (executable-find "fish"))))
-(use-package vterm-toggle
-  :commands vterm-toggle)
 
 (use-package tide
   :custom
@@ -505,7 +503,7 @@
  "o" '(:ignore t :which-key "open/org")
  "o c" '(org-toggle-checkbox :which-key)
  "o t" '(org-todo :which-key)
- "o v" '(vterm-toggle :which-key)
+ "o v" '(projectile-run-vterm :which-key)
  "o w" '((lambda () (interactive) (find-file (concat (file-name-as-directory "~/org") "work.org"))) :which-key "Edit work org file")
  "p" '(:ignore t :which-key "project")
  "p a" '(projectile-add-known-project :which-key)
