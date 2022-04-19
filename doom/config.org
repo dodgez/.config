@@ -7,7 +7,7 @@
 #+end_src
 
 #+begin_src elisp
-(setq doom-theme 'doom-dracula)
+(setq doom-theme 'doom-zenburn)
 (setq doom-font (font-spec :family "Hack Nerd Font Mono" :size 16))
 #+end_src
 
@@ -39,24 +39,14 @@
 ;  :hook (magit-mode . magit-delta-mode))
 #+end_src
 
-#+begin_src elisp
-(use-package evil
-  :custom
-  (evil-toggle-key "C-v"))
-(map! "C-z" #'undo)
-#+end_src
-
 - Make escape quit (instead of triple escape)
 - Make home and end relative to single lines
-- Normalize meta shift on MAC
 - Add comment line shortcut
 - SPC e as eval-last-sexp
 #+begin_src elisp
 (map! "<escape>" #'keyboard-escape-quit)
 (map! "<home>" #'beginning-of-line)
 (map! "<end>" #'end-of-line)
-(map! :when IS-MAC :i "<M-S-right>" "<C-S-right>")
-(map! :when IS-MAC :i "<M-S-left>" "<C-S-left>")
 (map! "C-/" #'comment-line)
 (map! :leader "e" #'eval-last-sexp)
 #+end_src
@@ -81,7 +71,7 @@ Therefore, if the number is too high (like 1920), treat it as 0 for calculating 
               (margin-top (+ display-y (truncate (* display-height margin)))))
          (set-frame-position (selected-frame) margin-left margin-top)
          (set-frame-size (selected-frame) width height t))))))
-(set-ideal-frame-size)
+(add-hook 'emacs-startup-hook #'set-ideal-frame-size)
 (map! :leader
       :desc "Set ideal frame size" "F" #'set-ideal-frame-size)
 #+end_src
