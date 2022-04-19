@@ -1,7 +1,7 @@
 (setq user-full-name "Zachary Dodge"
       user-mail-address "zacharysdodge@gmail.com")
 
-(setq doom-theme 'doom-dracula)
+(setq doom-theme 'doom-zenburn)
 (setq doom-font (font-spec :family "Hack Nerd Font Mono" :size 16))
 
 (setq org-support-shift-select t)
@@ -19,16 +19,9 @@
 ;(use-package! magit-delta
 ;  :hook (magit-mode . magit-delta-mode))
 
-(use-package evil
-  :custom
-  (evil-toggle-key "C-v"))
-(map! "C-z" #'undo)
-
 (map! "<escape>" #'keyboard-escape-quit)
 (map! "<home>" #'beginning-of-line)
 (map! "<end>" #'end-of-line)
-(map! :when IS-MAC :i "<M-S-right>" "<C-S-right>")
-(map! :when IS-MAC :i "<M-S-left>" "<C-S-left>")
 (map! "C-/" #'comment-line)
 (map! :leader "e" #'eval-last-sexp)
 
@@ -47,7 +40,7 @@
               (margin-top (+ display-y (truncate (* display-height margin)))))
          (set-frame-position (selected-frame) margin-left margin-top)
          (set-frame-size (selected-frame) width height t))))))
-(set-ideal-frame-size)
+(add-hook 'emacs-startup-hook #'set-ideal-frame-size)
 (map! :leader
       :desc "Set ideal frame size" "F" #'set-ideal-frame-size)
 
