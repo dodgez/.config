@@ -71,9 +71,9 @@ Therefore, if the number is too high (like 1920), treat it as 0 for calculating 
               (margin-top (+ display-y (truncate (* display-height margin)))))
          (set-frame-position (selected-frame) margin-left margin-top)
          (set-frame-size (selected-frame) width height t))))))
-(add-hook 'emacs-startup-hook #'set-ideal-frame-size)
 (map! :leader
       :desc "Set ideal frame size" "F" #'set-ideal-frame-size)
+(setq initial-frame-alist '((fullscreen . maximized)))
 #+end_src
 
 Use swiper instead of isearch.
