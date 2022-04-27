@@ -1,7 +1,7 @@
 (setq user-full-name "Zachary Dodge"
       user-mail-address "zacharysdodge@gmail.com")
 
-(setq doom-theme 'doom-zenburn)
+(setq doom-theme 'doom-monokai-machine)
 (setq doom-font (font-spec :family "Hack Nerd Font Mono" :size 16))
 
 (setq org-support-shift-select t)
@@ -30,9 +30,8 @@
 (map! "<escape>" #'keyboard-escape-quit)
 (map! "<home>" #'beginning-of-line)
 (map! "<end>" #'end-of-line)
-(map! "C-/" #'comment-line)
 (map! :leader "e" #'eval-last-sexp)
-(map! :leader :desc "M-x" "SPC" #'counsel-M-x)
+(map! :leader :desc "M-x" "SPC" #'execute-extended-command)
 
 (defun set-ideal-frame-size (&optional proportion)
   (interactive)
@@ -57,12 +56,8 @@
 
 (when IS-WINDOWS (setq default-directory doom-private-dir))
 
-(use-package! ivy-prescient
-  :after (ivy counsel prescient)
-  :config
-  (setq prescient-sort-length-enable t)
-  (setq ivy-sort-max-size 100000))
-
+(after! undo-tree
+  (setq undo-tree-auto-save-history nil))
 (map! :after undo-tree
       :leader (:prefix ("U" . "undo")
                :desc "redo" "r" #'undo-tree-redo
