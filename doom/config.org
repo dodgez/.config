@@ -7,7 +7,7 @@
 #+end_src
 
 #+begin_src elisp
-(setq doom-theme 'doom-zenburn)
+(setq doom-theme 'doom-monokai-machine)
 (setq doom-font (font-spec :family "Hack Nerd Font Mono" :size 16))
 #+end_src
 
@@ -59,9 +59,8 @@ Set js/ts/web indent levels to two spaces.
 (map! "<escape>" #'keyboard-escape-quit)
 (map! "<home>" #'beginning-of-line)
 (map! "<end>" #'end-of-line)
-(map! "C-/" #'comment-line)
 (map! :leader "e" #'eval-last-sexp)
-(map! :leader :desc "M-x" "SPC" #'counsel-M-x)
+(map! :leader :desc "M-x" "SPC" #'execute-extended-command)
 #+end_src
 
 Size the frame to be proportional to the display.
@@ -99,18 +98,10 @@ When on Windows, change the default directory for faster indexing.
 (when IS-WINDOWS (setq default-directory doom-private-dir))
 #+end_src
 
-Enable ivy-prescient for sorts by length.
-Increase max sort size otherwise describe-symbol doesn't work.
-#+begin_src elisp
-(use-package! ivy-prescient
-  :after (ivy counsel prescient)
-  :config
-  (setq prescient-sort-length-enable t)
-  (setq ivy-sort-max-size 100000))
-#+end_src
-
 Setup undo tree with keybindings.
 #+begin_src elisp
+(after! undo-tree
+  (setq undo-tree-auto-save-history nil))
 (map! :after undo-tree
       :leader (:prefix ("U" . "undo")
                :desc "redo" "r" #'undo-tree-redo
