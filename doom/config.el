@@ -64,6 +64,11 @@
                :desc "undo" "u" #'undo-tree-undo
                :desc "visualize" "v" #'undo-tree-visualize))
 
+(after! org
+  (setq org-directory "~/org")
+  (setq org-agenda-files (directory-files-recursively "~/org" "\\.org$"))
+  (setq org-log-done 'time))
+
 (let ((work-config (doom-dir doom-private-dir "+work-config.el")))
   (when (file-exists-p work-config)
     (load! "+work-config.el")))

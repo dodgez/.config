@@ -109,6 +109,14 @@ Setup undo tree with keybindings.
                :desc "visualize" "v" #'undo-tree-visualize))
 #+end_src
 
+Setup org and org agenda.
+#+begin_src elisp
+(after! org
+  (setq org-directory "~/org")
+  (setq org-agenda-files (directory-files-recursively "~/org" "\\.org$"))
+  (setq org-log-done 'time))
+#+end_src
+
 Load a work config file if it exists.
 #+begin_src elisp
 (let ((work-config (doom-dir doom-private-dir "+work-config.el")))
