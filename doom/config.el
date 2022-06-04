@@ -53,6 +53,11 @@
 (setq initial-frame-alist '((fullscreen . maximized)))
 
 (map! "C-s" #'swiper)
+(map! :after avy
+      :leader (:prefix ("j" . "avy")
+               :desc "char" "c" #'evil-avy-goto-char
+               :desc "line" "l" #'evil-avy-goto-line
+               :desc "word" "w" #'evil-avy-goto-word-0))
 
 (when IS-WINDOWS (setq default-directory doom-private-dir))
 
@@ -68,6 +73,10 @@
   (setq org-directory "~/org")
   (setq org-agenda-files (directory-files-recursively "~/org" "\\.org$"))
   (setq org-log-done 'time))
+
+(use-package! highlight-indent-guides
+  :config
+  (setq highlight-indent-guides-method 'column))
 
 (let ((work-config (doom-dir doom-private-dir "+work-config.el")))
   (when (file-exists-p work-config)
