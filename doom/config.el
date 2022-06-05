@@ -32,6 +32,11 @@
 (map! "<end>" #'end-of-line)
 (map! :leader "e" #'eval-last-sexp)
 (map! :leader :desc "M-x" "SPC" #'execute-extended-command)
+(map! :leader (:prefix "w"
+               :desc "evil-window-left" "<left>" #'evil-window-left
+               :desc "evil-window-down" "<down>" #'evil-window-down
+               :desc "evil-window-up" "<up>" #'evil-window-up
+               :desc "evil-window-right" "<right>" #'evil-window-right))
 
 (defun set-ideal-frame-size (&optional proportion)
   (interactive)

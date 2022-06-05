@@ -55,12 +55,18 @@ Set js/ts/web indent levels to two spaces.
 - Make home and end relative to single lines
 - Add comment line shortcut
 - SPC e as eval-last-sexp
+- Setup arrow keys for window navigation
 #+begin_src elisp
 (map! "<escape>" #'keyboard-escape-quit)
 (map! "<home>" #'beginning-of-line)
 (map! "<end>" #'end-of-line)
 (map! :leader "e" #'eval-last-sexp)
 (map! :leader :desc "M-x" "SPC" #'execute-extended-command)
+(map! :leader (:prefix "w"
+               :desc "evil-window-left" "<left>" #'evil-window-left
+               :desc "evil-window-down" "<down>" #'evil-window-down
+               :desc "evil-window-up" "<up>" #'evil-window-up
+               :desc "evil-window-right" "<right>" #'evil-window-right))
 #+end_src
 
 Size the frame to be proportional to the display.
