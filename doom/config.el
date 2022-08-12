@@ -45,7 +45,7 @@
       (`(,display-x ,display-y ,display-raw-width ,display-raw-height)
        (let* ((proportion (or proportion 0.9))
               (margin (/ (- 1 proportion) 2))
-              (display-width (- display-raw-width (if (< display-x 1920) display-x 0)))
+              (display-width (- display-raw-width display-x))
               (display-height (- display-raw-height display-y))
               (width (truncate (* display-width proportion)))
               (height (truncate (* display-height proportion)))
@@ -58,8 +58,7 @@
 (setq initial-frame-alist '((fullscreen . maximized)))
 
 (map! "C-s" #'swiper)
-(map! :after avy
-      :leader (:prefix ("j" . "avy")
+(map! :leader (:prefix ("j" . "avy")
                :desc "char" "c" #'evil-avy-goto-char
                :desc "line" "l" #'evil-avy-goto-line
                :desc "word" "w" #'evil-avy-goto-word-0))
@@ -88,6 +87,56 @@
       #'(lambda ()
           (interactive)
           (let ((shell-file-name "/bin/sh")) (call-interactively #'projectile-ripgrep))))
+
+(defvar my/re-builder-positions nil
+  "Store point and region bounds before calling re-builder")
+(advice-add 're-builder
+            :before
+            (defun my/re-builder-save-state (&rest _)
+              "Save into `my/re-builder-positions' the point and region
+positions before calling `re-builder'."
+              (setq my/re-builder-positions
+                    (cons (point)
+                          (when (region-active-p)
+                            (list (region-beginning)
+                                  (region-end)))))))
+
+(defun reb-replace-regexp (&optional delimited)
+  "Run `query-replace-regexp' with the contents of re-builder. With
+non-nil optional argument DELIMITED, only replace matches
+surrounded by word boundaries."
+  (interactive "P")
+  (reb-update-regexp)
+  (let* ((re (reb-target-binding reb-regexp))
+         (replacement (query-replace-read-to
+                       re
+                       (concat "Query replace"
+                               (if current-prefix-arg
+                                   (if (eq current-prefix-arg '-) " backward" " word")
+                                 "")
+                               " regexp"
+                               (if (with-selected-window reb-target-window
+                                     (region-active-p)) " in region" ""))
+                       t))
+         (pnt (car my/re-builder-positions))
+         (beg (cadr my/re-builder-positions))
+         (end (caddr my/re-builder-positions)))
+    (with-selected-window reb-target-window
+      (goto-char pnt) ; replace with (goto-char (match-beginning 0)) if you want
+                                        ; to control where in the buffer the replacement starts
+                                        ; with re-builder
+      (setq my/re-builder-positions nil)
+      (reb-quit)
+      (query-replace-regexp re replacement delimited beg end))))
+(use-package! re-builder
+  :bind (:map doom-leader-map ("r" . re-builder))
+  :hook ((reb-lisp-mode . centaur-tabs-local-mode)
+         (reb-lisp-mode . hide-mode-line-mode))
+  :custom
+  (reb-re-syntax 'string)
+  :config
+  (map! :map reb-mode-map :n "RET" #'reb-replace-regexp)
+  (map! :map reb-mode-map :n "<escape>" #'reb-quit))
 
 (let ((work-config (doom-dir doom-private-dir "+work-config.el")))
   (when (file-exists-p work-config)
