@@ -83,6 +83,12 @@
   :config
   (setq highlight-indent-guides-method 'column))
 
+(use-package! rg)
+(map! :after projectile :leader "/"
+      #'(lambda ()
+          (interactive)
+          (let ((shell-file-name "/bin/sh")) (call-interactively #'projectile-ripgrep))))
+
 (let ((work-config (doom-dir doom-private-dir "+work-config.el")))
   (when (file-exists-p work-config)
     (load! "+work-config.el")))
