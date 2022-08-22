@@ -11,6 +11,12 @@ vicmd_symbol = "[<](bold green)"
 [aws]
 symbol = "aws "
 
+[bun]
+symbol = "bun "
+
+[c]
+symbol = "C "
+
 [cobol]
 symbol = "cobol "
 
@@ -22,6 +28,9 @@ symbol = "cr "
 
 [cmake]
 symbol = "cmake "
+
+[daml]
+symbol = "daml "
 
 [dart]
 symbol = "dart "
@@ -72,8 +81,11 @@ symbol = "jl "
 [kotlin]
 symbol = "kt "
 
-[line_break]
-disabled = true
+# [line_break]
+# disabled = true
+
+[lua]
+symbol = "lua "
 
 [nodejs]
 symbol = "nodejs "
@@ -100,11 +112,17 @@ symbol = "pl "
 [php]
 symbol = "php "
 
+[pulumi]
+symbol = "pulumi "
+
 [purescript]
 symbol = "purs "
 
 [python]
 symbol = "py "
+
+[raku]
+symbol = "raku "
 
 [ruby]
 symbol = "rb "
@@ -115,8 +133,17 @@ symbol = "rs "
 [scala]
 symbol = "scala "
 
+[spack]
+symbol = "spack "
+
+[sudo]
+symbol = "sudo "
+
 [swift]
 symbol = "swift "
+
+[terraform]
+symbol = "terraform "
 
 [zig]
 symbol = "zig "
