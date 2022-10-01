@@ -8,7 +8,6 @@
 
 (setq projectile-indexing-method 'alien)
 (blink-cursor-mode t)
-(setq blink-cursor-blinks 0)
 (setq confirm-kill-emacs nil)
 (setq mouse-wheel-progressive-speed nil)
 
@@ -28,17 +27,9 @@
 ;(use-package! magit-delta
 ;  :hook (magit-mode . magit-delta-mode))
 
-(setq evil-cross-lines t)
-(define-key evil-normal-state-map (kbd "<remap> <evil-next-line>") 'evil-next-visual-line)
-(define-key evil-normal-state-map (kbd "<remap> <evil-previous-line>") 'evil-previous-visual-line)
-(define-key evil-normal-state-map (kbd "<remap> <evil-beginning-of-line>") 'evil-beginning-of-visual-line)
-(define-key evil-normal-state-map (kbd "<remap> <evil-end-of-line>") 'evil-end-of-visual-line)
-
 (map! "<escape>" #'keyboard-escape-quit)
-(map! "<home>" #'evil-beginning-of-line)
-(map! "<end>" #'evil-end-of-line)
-(map! "<up>" #'evil-previous-visual-line)
-(map! :leader "d" #'dired)
+(map! "<home>" #'beginning-of-line)
+(map! "<end>" #'end-of-line)
 (map! :leader "e" #'eval-last-sexp)
 (map! :leader :desc "M-x" "SPC" #'execute-extended-command)
 (map! :leader (:prefix "w"
