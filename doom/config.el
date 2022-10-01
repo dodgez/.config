@@ -147,6 +147,13 @@ surrounded by word boundaries."
   (map! :map reb-mode-map :n "RET" #'reb-replace-regexp)
   (map! :map reb-mode-map :n "<escape>" #'reb-quit))
 
+(defun eshell-prompt ()
+  (ansi-color-apply (shell-command-to-string "starship prompt")))
+(after! eshell
+  (setenv "TERM" "xterm-256color")
+  (setq eshell-prompt-function #'eshell-prompt)
+  (setq eshell-highlight-prompt nil))
+
 (let ((work-config (doom-dir doom-private-dir "+work-config.el")))
   (when (file-exists-p work-config)
     (load! "+work-config.el")))
