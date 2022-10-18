@@ -7,7 +7,7 @@
 #+end_src
 
 #+begin_src elisp
-(setq doom-theme 'doom-monokai-machine)
+(setq doom-theme 'doom-material-dark)
 (setq doom-font (font-spec :family "Hack Nerd Font Mono" :size 16))
 #+end_src
 
@@ -198,13 +198,24 @@ surrounded by word boundaries."
   (map! :map reb-mode-map :n "<escape>" #'reb-quit))
 #+end_src
 
+Setup eshell to use ansi color codes.
 #+begin_src elisp
 (defun eshell-prompt ()
+  (setenv "TERM" "xterm-256color")
   (ansi-color-apply (shell-command-to-string "starship prompt")))
 (after! eshell
   (setenv "TERM" "xterm-256color")
   (setq eshell-prompt-function #'eshell-prompt)
   (setq eshell-highlight-prompt nil))
+#+end_src
+
+Allow crossing beginning and end of lines with horizontal movements.
+Setup page up/down as evil-scroll-up/down.
+#+begin_src elisp
+(after! evil
+  (setq evil-cross-lines t)
+  (map! "<next>" #'evil-scroll-down)
+  (map! "<prior>" #'evil-scroll-up))
 #+end_src
 
 Load a work config file if it exists.
