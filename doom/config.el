@@ -1,7 +1,7 @@
 (setq user-full-name "Zachary Dodge"
       user-mail-address "zacharysdodge@gmail.com")
 
-(setq doom-theme 'doom-monokai-machine)
+(setq doom-theme 'doom-material-dark)
 (setq doom-font (font-spec :family "Hack Nerd Font Mono" :size 16))
 
 (setq org-support-shift-select t)
@@ -139,11 +139,17 @@ surrounded by word boundaries."
   (map! :map reb-mode-map :n "<escape>" #'reb-quit))
 
 (defun eshell-prompt ()
+  (setenv "TERM" "xterm-256color")
   (ansi-color-apply (shell-command-to-string "starship prompt")))
 (after! eshell
   (setenv "TERM" "xterm-256color")
   (setq eshell-prompt-function #'eshell-prompt)
   (setq eshell-highlight-prompt nil))
+
+(after! evil
+  (setq evil-cross-lines t)
+  (map! "<next>" #'evil-scroll-down)
+  (map! "<prior>" #'evil-scroll-up))
 
 (let ((work-config (doom-dir doom-private-dir "+work-config.el")))
   (when (file-exists-p work-config)
