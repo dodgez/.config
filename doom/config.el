@@ -26,6 +26,7 @@
   :hook (magit-mode . magit-delta-mode))
 
 (map! "<escape>" #'keyboard-escape-quit)
+(map! :n "q" #'keyboard-escape-quit)
 (map! "<home>" #'beginning-of-line)
 (map! "<end>" #'end-of-line)
 (map! :leader "e" #'eval-last-sexp)
