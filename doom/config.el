@@ -48,7 +48,7 @@
 (after! undo-tree
   (setq undo-tree-auto-save-history nil))
 (map! :after undo-tree
-      :leader (:prefix ("U" . "undo")
+      :leader (:prefix-map ("u" . "undo")
                :desc "redo" "r" #'undo-tree-redo
                :desc "undo" "u" #'undo-tree-undo
                :desc "visualize" "v" #'undo-tree-visualize))
