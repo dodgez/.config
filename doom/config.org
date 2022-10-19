@@ -11,10 +11,6 @@
 (setq doom-font (font-spec :family "Hack Nerd Font Mono" :size 16))
 #+end_src
 
-#+begin_src elisp
-(setq org-support-shift-select t)
-#+end_src
-
 - Tell projectile to only search non-gitignored files
 - Blink the cursor
 - Don't require confirmation to exit emacs
@@ -69,35 +65,13 @@ Set js/ts/web indent levels to two spaces.
                :desc "evil-window-right" "<right>" #'evil-window-right))
 #+end_src
 
-Size the frame to be proportional to the display.
-The default proportion is 0.8 of width and height.
-The first parameter of workarea is simultaneously the display's offset from the left and padding from the window manager.
-Therefore, if the number is too high (like 1920), treat it as 0 for calculating frame width but use it to position correctly.
+Default Emacs to maximized.
 #+begin_src elisp
-(defun set-ideal-frame-size (&optional proportion)
-  (interactive)
-  (when (display-graphic-p)
-    (pcase (frame-monitor-workarea)
-      (`(,display-x ,display-y ,display-raw-width ,display-raw-height)
-       (let* ((proportion (or proportion 0.9))
-              (margin (/ (- 1 proportion) 2))
-              (display-width (- display-raw-width display-x))
-              (display-height (- display-raw-height display-y))
-              (width (truncate (* display-width proportion)))
-              (height (truncate (* display-height proportion)))
-              (margin-left (+ display-x (truncate (* display-width margin))))
-              (margin-top (+ display-y (truncate (* display-height margin)))))
-         (set-frame-position (selected-frame) margin-left margin-top)
-         (set-frame-size (selected-frame) width height t))))))
-(map! :leader
-      :desc "Set ideal frame size" "F" #'set-ideal-frame-size)
 (setq initial-frame-alist '((fullscreen . maximized)))
 #+end_src
 
-Use swiper instead of isearch.
 Trigger avy commands on SPC-j.
 #+begin_src elisp
-(map! "C-s" #'swiper)
 (map! :leader (:prefix ("j" . "avy")
                :desc "char" "c" #'evil-avy-goto-char
                :desc "line" "l" #'evil-avy-goto-line
