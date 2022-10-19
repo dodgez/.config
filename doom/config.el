@@ -22,8 +22,8 @@
       web-mode-css-indent-offset 2)
 
 ; Performance isn't great: https://github.com/dandavison/magit-delta/issues/9
-;(use-package! magit-delta
-;  :hook (magit-mode . magit-delta-mode))
+(use-package! magit-delta
+  :hook (magit-mode . magit-delta-mode))
 
 (map! "<escape>" #'keyboard-escape-quit)
 (map! "<home>" #'beginning-of-line)
