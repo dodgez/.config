@@ -53,10 +53,20 @@
                :desc "undo" "u" #'undo-tree-undo
                :desc "visualize" "v" #'undo-tree-visualize))
 
-(after! org
-  (setq org-directory "~/org")
-  (setq org-agenda-files (directory-files-recursively "~/org" "\\.org$"))
-  (setq org-log-done 'time))
+(use-package! org
+  :custom
+  (org-hide-emphasis-markers t)
+  (org-directory "~/org")
+  (org-agenda-files (directory-files-recursively "~/org" "\\.org$"))
+  (org-log-done 'time))
+(use-package! org-appear
+  :hook (org-mode . org-appear-mode))
+(defun org-mode-visual-fill ()
+  (setq visual-fill-column-width 120)
+  (setq visual-fill-column-center-text t)
+  (visual-fill-column-mode 1))
+(use-package! visual-fill-column
+  :hook (org-mode . org-mode-visual-fill))
 
 (use-package! highlight-indent-guides
   :config
