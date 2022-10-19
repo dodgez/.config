@@ -43,8 +43,8 @@ Set js/ts/web indent levels to two spaces.
 - Use delta mode in magit
 #+begin_src elisp
 ; Performance isn't great: https://github.com/dandavison/magit-delta/issues/9
-;(use-package! magit-delta
-;  :hook (magit-mode . magit-delta-mode))
+(use-package! magit-delta
+  :hook (magit-mode . magit-delta-mode))
 #+end_src
 
 - Make escape quit (instead of triple escape)
