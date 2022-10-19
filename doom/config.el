@@ -4,8 +4,6 @@
 (setq doom-theme 'doom-material-dark)
 (setq doom-font (font-spec :family "Hack Nerd Font Mono" :size 16))
 
-(setq org-support-shift-select t)
-
 (setq projectile-indexing-method 'alien)
 (blink-cursor-mode t)
 (setq confirm-kill-emacs nil)
@@ -38,26 +36,8 @@
                :desc "evil-window-up" "<up>" #'evil-window-up
                :desc "evil-window-right" "<right>" #'evil-window-right))
 
-(defun set-ideal-frame-size (&optional proportion)
-  (interactive)
-  (when (display-graphic-p)
-    (pcase (frame-monitor-workarea)
-      (`(,display-x ,display-y ,display-raw-width ,display-raw-height)
-       (let* ((proportion (or proportion 0.9))
-              (margin (/ (- 1 proportion) 2))
-              (display-width (- display-raw-width display-x))
-              (display-height (- display-raw-height display-y))
-              (width (truncate (* display-width proportion)))
-              (height (truncate (* display-height proportion)))
-              (margin-left (+ display-x (truncate (* display-width margin))))
-              (margin-top (+ display-y (truncate (* display-height margin)))))
-         (set-frame-position (selected-frame) margin-left margin-top)
-         (set-frame-size (selected-frame) width height t))))))
-(map! :leader
-      :desc "Set ideal frame size" "F" #'set-ideal-frame-size)
 (setq initial-frame-alist '((fullscreen . maximized)))
 
-(map! "C-s" #'swiper)
 (map! :leader (:prefix ("j" . "avy")
                :desc "char" "c" #'evil-avy-goto-char
                :desc "line" "l" #'evil-avy-goto-line
