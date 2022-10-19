@@ -118,6 +118,10 @@ Setup projectile-ripgrep as "SPC-/"
           (let ((shell-file-name "/bin/sh")) (call-interactively #'projectile-ripgrep))))
 #+end_src
 
+#+begin_src elisp
+(map! :mode lisp-mode :n "SPC E" #'sly-pprint-eval-last-expression)
+#+end_src
+
 Setup re-builder and query-replace-regexp to work together.
 Source: https://karthinks.com/software/bridging-islands-in-emacs-1/
 #+begin_src elisp
@@ -183,6 +187,16 @@ Setup eshell to use ansi color codes.
   (setq eshell-highlight-prompt nil))
 #+end_src
 
+#+begin_src elisp
+(remove-hook 'doom-first-input-hook #'evil-snipe-mode)
+(map! :map evil-normal-state-map
+      (:prefix-map ("s" . "smart-parens")
+       :desc "sp-forward-sexp" "f" #'sp-forward-parallel-sexp
+       :desc "sp-backward-sexp" "b" #'sp-backward-parallel-sexp
+       :desc "sp-up-sexp" "u" #'sp-up-sexp
+       :desc "sp-down-sexp" "d" #'sp-down-sexp))
+#+end_src
+
 Allow crossing beginning and end of lines with horizontal movements.
 Setup page up/down as evil-scroll-up/down.
 #+begin_src elisp
@@ -190,6 +204,11 @@ Setup page up/down as evil-scroll-up/down.
   (setq evil-cross-lines t)
   (map! "<next>" #'evil-scroll-down)
   (map! "<prior>" #'evil-scroll-up))
+#+end_src
+
+Use roswell for lisp.
+#+begin_src elisp
+(setq inferior-lisp-program "ros -Q run")
 #+end_src
 
 Load a work config file if it exists.

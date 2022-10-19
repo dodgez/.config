@@ -68,6 +68,8 @@
           (interactive)
           (let ((shell-file-name "/bin/sh")) (call-interactively #'projectile-ripgrep))))
 
+(map! :mode lisp-mode :n "SPC E" #'sly-pprint-eval-last-expression)
+
 (defvar my/re-builder-positions nil
   "Store point and region bounds before calling re-builder")
 (advice-add 're-builder
@@ -126,10 +128,20 @@ surrounded by word boundaries."
   (setq eshell-prompt-function #'eshell-prompt)
   (setq eshell-highlight-prompt nil))
 
+(remove-hook 'doom-first-input-hook #'evil-snipe-mode)
+(map! :map evil-normal-state-map
+      (:prefix-map ("s" . "smart-parens")
+       :desc "sp-forward-sexp" "f" #'sp-forward-parallel-sexp
+       :desc "sp-backward-sexp" "b" #'sp-backward-parallel-sexp
+       :desc "sp-up-sexp" "u" #'sp-up-sexp
+       :desc "sp-down-sexp" "d" #'sp-down-sexp))
+
 (after! evil
   (setq evil-cross-lines t)
   (map! "<next>" #'evil-scroll-down)
   (map! "<prior>" #'evil-scroll-up))
+
+(setq inferior-lisp-program "ros -Q run")
 
 (let ((work-config (doom-dir doom-private-dir "+work-config.el")))
   (when (file-exists-p work-config)
