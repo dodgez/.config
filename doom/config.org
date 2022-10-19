@@ -54,6 +54,7 @@ Set js/ts/web indent levels to two spaces.
 - Setup arrow keys for window navigation
 #+begin_src elisp
 (map! "<escape>" #'keyboard-escape-quit)
+(map! :n "q" #'keyboard-escape-quit)
 (map! "<home>" #'beginning-of-line)
 (map! "<end>" #'end-of-line)
 (map! :leader "e" #'eval-last-sexp)
