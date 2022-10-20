@@ -4,7 +4,7 @@
 (setq doom-theme 'doom-material-dark)
 (setq doom-font (font-spec :family "Hack Nerd Font Mono" :size 16))
 
-(setq projectile-indexing-method 'alien)
+(after! projectile (setq projectile-indexing-method 'alien))
 (blink-cursor-mode t)
 (setq confirm-kill-emacs nil)
 (setq mouse-wheel-progressive-speed nil)

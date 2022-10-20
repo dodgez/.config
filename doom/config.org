@@ -16,7 +16,7 @@
 - Don't require confirmation to exit emacs
 - Disable scroll wheel "acceleration"
 #+begin_src elisp
-(setq projectile-indexing-method 'alien)
+(after! projectile (setq projectile-indexing-method 'alien))
 (blink-cursor-mode t)
 (setq confirm-kill-emacs nil)
 (setq mouse-wheel-progressive-speed nil)
