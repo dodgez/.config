@@ -39,10 +39,11 @@
 
 (setq initial-frame-alist '((fullscreen . maximized)))
 
-(map! :leader (:prefix ("j" . "avy")
+(map! :leader :desc "evil-avy-goto-char" "j" #'evil-avy-goto-char)
+(map! :leader (:prefix ("J" . "avy")
                :desc "char" "c" #'evil-avy-goto-char
                :desc "line" "l" #'evil-avy-goto-line
-               :desc "word" "w" #'evil-avy-goto-word-0))
+               :desc "word" "w" #'evil-avy-goto-word-1))
 
 (when IS-WINDOWS (setq default-directory doom-private-dir))
 

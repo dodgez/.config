@@ -73,10 +73,11 @@ Default Emacs to maximized.
 
 Trigger avy commands on SPC-j.
 #+begin_src elisp
-(map! :leader (:prefix ("j" . "avy")
+(map! :leader :desc "evil-avy-goto-char" "j" #'evil-avy-goto-char)
+(map! :leader (:prefix ("J" . "avy")
                :desc "char" "c" #'evil-avy-goto-char
                :desc "line" "l" #'evil-avy-goto-line
-               :desc "word" "w" #'evil-avy-goto-word-0))
+               :desc "word" "w" #'evil-avy-goto-word-1))
 #+end_src
 
 When on Windows, change the default directory for faster indexing.
