@@ -6,11 +6,12 @@
 !README.md
 
 # Starship shell prompt configuration
-!starship.toml
+!starship
+!starship/README.org
 
 # Fish shell configuration
 !fish
-!fish/config.fish
+!fish/README.org
 !fish/starship_cygwin.fish
 
 # Chemacs configuration

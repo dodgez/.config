@@ -1,25 +1,28 @@
 #+TITLE: Emacs Config
 #+AUTHOR: Zach Dodge
+#+PROPERTY: header-args:elisp
 
+* User info
 #+begin_src elisp
 (setq user-full-name "Zachary Dodge"
       user-mail-address "zacharysdodge@gmail.com")
 #+end_src
 
+* Doom theme and font
 #+begin_src elisp
 (setq doom-theme 'doom-material-dark)
 (setq doom-font (font-spec :family "Hack Nerd Font Mono" :size 16))
 #+end_src
 
-- Tell projectile to only search non-gitignored files
-- Blink the cursor
-- Don't require confirmation to exit emacs
-- Disable scroll wheel "acceleration"
+* Blink cursor and disable scroll acceleration
 #+begin_src elisp
-(after! projectile (setq projectile-indexing-method 'alien))
 (blink-cursor-mode t)
-(setq confirm-kill-emacs nil)
 (setq mouse-wheel-progressive-speed nil)
+#+end_src
+
+* Don't require confirmation to exit emacs
+#+begin_src elisp
+(setq confirm-kill-emacs nil)
 #+end_src
 
 Enable line numbers except in a few modes.
@@ -31,6 +34,7 @@ Enable line numbers except in a few modes.
   (add-hook mode (lambda () (display-line-numbers-mode 0))))
 #+end_src
 
+* Typescript indent
 Set js/ts/web indent levels to two spaces.
 #+begin_src elisp
 (setq js-indent-level 2
@@ -40,6 +44,7 @@ Set js/ts/web indent levels to two spaces.
       web-mode-css-indent-offset 2)
 #+end_src
 
+* Magit delta
 - Use delta mode in magit
 #+begin_src elisp
 ; Performance isn't great: https://github.com/dandavison/magit-delta/issues/9
@@ -47,6 +52,7 @@ Set js/ts/web indent levels to two spaces.
   :hook (magit-mode . magit-delta-mode))
 #+end_src
 
+* Keyboard shortcuts
 - Make escape quit (instead of triple escape)
 - Make home and end relative to single lines
 - Add comment line shortcut
@@ -66,12 +72,12 @@ Set js/ts/web indent levels to two spaces.
                :desc "evil-window-right" "<right>" #'evil-window-right))
 #+end_src
 
-Default Emacs to maximized.
+* Default Emacs to maximized.
 #+begin_src elisp
 (setq initial-frame-alist '((fullscreen . maximized)))
 #+end_src
 
-Trigger avy commands on SPC-j.
+* Trigger avy commands on SPC-j.
 #+begin_src elisp
 (map! :leader :desc "evil-avy-goto-char" "j" #'evil-avy-goto-char)
 (map! :leader (:prefix ("J" . "avy")
@@ -80,12 +86,12 @@ Trigger avy commands on SPC-j.
                :desc "word" "w" #'evil-avy-goto-word-1))
 #+end_src
 
-When on Windows, change the default directory for faster indexing.
+* When on Windows, change the default directory for faster indexing.
 #+begin_src elisp
 (when IS-WINDOWS (setq default-directory doom-private-dir))
 #+end_src
 
-Setup undo tree with keybindings.
+* Setup undo tree with keybindings.
 #+begin_src elisp
 (after! undo-tree
   (setq undo-tree-auto-save-history nil))
@@ -96,7 +102,7 @@ Setup undo tree with keybindings.
                :desc "visualize" "v" #'undo-tree-visualize))
 #+end_src
 
-Setup org and org agenda.
+* Setup org and org agenda.
 #+begin_src elisp
 (use-package! org
   :custom
@@ -112,16 +118,22 @@ Setup org and org agenda.
   (visual-fill-column-mode 1))
 (use-package! visual-fill-column
   :hook (org-mode . org-mode-visual-fill))
+(use-package visual-fill-column)
 #+end_src
 
-Modify highlight indent to use block characters instead of just vertical pipes.
+* Modify highlight indent to use block characters instead of just vertical pipes.
 #+begin_src elisp
 (use-package! highlight-indent-guides
   :config
   (setq highlight-indent-guides-method 'column))
 #+end_src
 
-Setup projectile-ripgrep as "SPC-/"
+* Change projectile indexing method to alien
+#+begin_src elisp
+(after! projectile (setq projectile-indexing-method 'alien))
+#+end_src
+
+* Setup projectile-ripgrep as "SPC-/"
 #+begin_src elisp
 (use-package! rg)
 (map! :after projectile :leader "/"
@@ -130,11 +142,12 @@ Setup projectile-ripgrep as "SPC-/"
           (let ((shell-file-name "/bin/sh")) (call-interactively #'projectile-ripgrep))))
 #+end_src
 
+* Common lisp eval shortcut
 #+begin_src elisp
 (map! :mode lisp-mode :n "SPC E" #'sly-pprint-eval-last-expression)
 #+end_src
 
-Setup re-builder and query-replace-regexp to work together.
+* Setup re-builder and query-replace-regexp to work together.
 Source: https://karthinks.com/software/bridging-islands-in-emacs-1/
 #+begin_src elisp
 (defvar my/re-builder-positions nil
@@ -188,7 +201,7 @@ surrounded by word boundaries."
   (map! :map reb-mode-map :n "<escape>" #'reb-quit))
 #+end_src
 
-Setup eshell to use ansi color codes.
+* Setup eshell to use ansi color codes
 #+begin_src elisp
 (defun eshell-prompt ()
   (setenv "TERM" "xterm-256color")
@@ -199,31 +212,25 @@ Setup eshell to use ansi color codes.
   (setq eshell-highlight-prompt nil))
 #+end_src
 
-#+begin_src elisp
-(remove-hook 'doom-first-input-hook #'evil-snipe-mode)
-(map! :map evil-normal-state-map
-      (:prefix-map ("s" . "smart-parens")
-       :desc "sp-forward-sexp" "f" #'sp-forward-parallel-sexp
-       :desc "sp-backward-sexp" "b" #'sp-backward-parallel-sexp
-       :desc "sp-up-sexp" "u" #'sp-up-sexp
-       :desc "sp-down-sexp" "d" #'sp-down-sexp))
-#+end_src
-
-Allow crossing beginning and end of lines with horizontal movements.
-Setup page up/down as evil-scroll-up/down.
+* Allow crossing beginning and end of lines with horizontal movements
 #+begin_src elisp
 (after! evil
-  (setq evil-cross-lines t)
+  (setq evil-cross-lines t))
+#+end_src
+
+* Setup page up/down as evil-scroll-up/down
+#+begin_src elisp
+(after! evil
   (map! "<next>" #'evil-scroll-down)
   (map! "<prior>" #'evil-scroll-up))
 #+end_src
 
-Use roswell for lisp.
+* Use roswell for lisp
 #+begin_src elisp
 (setq inferior-lisp-program "ros -Q run")
 #+end_src
 
-Load a work config file if it exists.
+* Load a work config file if it exists
 #+begin_src elisp
 (let ((work-config (doom-dir doom-private-dir "+work-config.el")))
   (when (file-exists-p work-config)

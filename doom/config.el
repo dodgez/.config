@@ -4,10 +4,10 @@
 (setq doom-theme 'doom-material-dark)
 (setq doom-font (font-spec :family "Hack Nerd Font Mono" :size 16))
 
-(after! projectile (setq projectile-indexing-method 'alien))
 (blink-cursor-mode t)
-(setq confirm-kill-emacs nil)
 (setq mouse-wheel-progressive-speed nil)
+
+(setq confirm-kill-emacs nil)
 
 (global-display-line-numbers-mode)
 (dolist (mode '(vterm-mode-hook
@@ -69,10 +69,13 @@
   (visual-fill-column-mode 1))
 (use-package! visual-fill-column
   :hook (org-mode . org-mode-visual-fill))
+(use-package visual-fill-column)
 
 (use-package! highlight-indent-guides
   :config
   (setq highlight-indent-guides-method 'column))
+
+(after! projectile (setq projectile-indexing-method 'alien))
 
 (use-package! rg)
 (map! :after projectile :leader "/"
@@ -140,16 +143,10 @@ surrounded by word boundaries."
   (setq eshell-prompt-function #'eshell-prompt)
   (setq eshell-highlight-prompt nil))
 
-(remove-hook 'doom-first-input-hook #'evil-snipe-mode)
-(map! :map evil-normal-state-map
-      (:prefix-map ("s" . "smart-parens")
-       :desc "sp-forward-sexp" "f" #'sp-forward-parallel-sexp
-       :desc "sp-backward-sexp" "b" #'sp-backward-parallel-sexp
-       :desc "sp-up-sexp" "u" #'sp-up-sexp
-       :desc "sp-down-sexp" "d" #'sp-down-sexp))
+(after! evil
+  (setq evil-cross-lines t))
 
 (after! evil
-  (setq evil-cross-lines t)
   (map! "<next>" #'evil-scroll-down)
   (map! "<prior>" #'evil-scroll-up))
 

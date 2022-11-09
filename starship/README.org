@@ -1,8 +1,20 @@
-add_newline = false
+#+TITLE: Starship Config
+#+AUTHOR: Zach Dodge
+#+PROPERTY: header-args:toml :tangle ../starship.toml
 
+* Remove newline before prompt text
+#+begin_src toml
+add_newline = false
+#+end_src
+
+* Battery indicator at 20%
+#+begin_src toml
 [[battery.display]]
 threshold = 20
+#+end_src
 
+* Text symbols for languages
+#+begin_src toml
 [character]
 success_symbol = "[>](bold green)"
 error_symbol = "[x](bold red)"
@@ -147,3 +159,4 @@ symbol = "terraform "
 
 [zig]
 symbol = "zig "
+#+end_src
