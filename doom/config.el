@@ -152,6 +152,8 @@ surrounded by word boundaries."
 
 (setq inferior-lisp-program "ros -Q run")
 
+(map! :nvm "C-/" #'evilnc-comment-or-uncomment-lines)
+
 (let ((work-config (doom-dir doom-private-dir "+work-config.el")))
   (when (file-exists-p work-config)
     (load! "+work-config.el")))
