@@ -47,8 +47,9 @@
 
 (when IS-WINDOWS (setq default-directory doom-private-dir))
 
-(after! undo-tree
-  (setq undo-tree-auto-save-history nil))
+(use-package! undo-tree
+  :hook ((text-mode . undo-tree-mode)
+         (prog-mode . undo-tree-mode)))
 (map! :after undo-tree
       :leader (:prefix-map ("u" . "undo")
                :desc "redo" "r" #'undo-tree-redo
