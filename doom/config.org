@@ -93,8 +93,9 @@ Set js/ts/web indent levels to two spaces.
 
 * Setup undo tree with keybindings.
 #+begin_src elisp
-(after! undo-tree
-  (setq undo-tree-auto-save-history nil))
+(use-package! undo-tree
+  :hook ((text-mode . undo-tree-mode)
+         (prog-mode . undo-tree-mode)))
 (map! :after undo-tree
       :leader (:prefix-map ("u" . "undo")
                :desc "redo" "r" #'undo-tree-redo
