@@ -29,6 +29,7 @@
 # Hand-rolled Emacs configuration
 !emacs
 !emacs/README.org
+!emacs/early-init.el
 !emacs/init.el
 !emacs/custom.el
 

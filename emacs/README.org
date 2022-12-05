@@ -2,14 +2,12 @@
 #+AUTHOR: Zach Dodge
 
 * User info
-
 #+begin_src elisp
   (setq user-full-name "Zachary Dodge"
         user-mail-address "zacharysdodge@gmail.com")
 #+end_src
 
 * Display startup time
-
 #+begin_src elisp
   (defun display-startup-time ()
     "Displays the startup time in the echo buffer when Emacs is finished loading."
@@ -20,8 +18,7 @@
   (add-hook 'emacs-startup-hook #'display-startup-time)
 #+end_src
 
-* Setup ivy/counsel
-
+* Ivy, Counsel, and Projectile
 #+begin_src elisp
   (use-package ivy
     :bind (("C-s" . swiper))
@@ -32,7 +29,6 @@
     (ivy-mode t))
 
   (use-package counsel
-    :after ivy
     :bind (("M-x" . counsel-M-x)
            ("C-x b" . counsel-ibuffer)
            ("C-x C-f" . counsel-find-file))
@@ -68,7 +64,6 @@
        t)))
 
   (use-package ivy-rich
-    :after (ivy counsel)
     :config
     (plist-put ivy-rich-display-transformers-list
                'counsel-describe-variable
@@ -91,23 +86,62 @@
                   (ivy-rich-bookmark-filename-or-empty (:width 60)))))
     (ivy-rich-mode t))
 
+  (use-package prescient)
+
+  (use-package ivy-prescient
+    :config
+    (ivy-prescient-mode 1))
+
+  (use-package projectile
+    :config
+    (when (eq system-type 'windows-nt) (setq projectile-enable-caching nil)))
+
+  (use-package counsel-projectile
+    :custom
+    (counsel-projectile-sort-buffers t)
+    (counsel-projectile-sort-files t)
+    (counsel-projectile-sort-projects t))
+
   (use-package all-the-icons)
 
   (use-package all-the-icons-ivy
-    :after (all-the-icons ivy)
     :config
     (when (display-graphic-p) (all-the-icons-ivy-setup)))
+
+  (use-package all-the-icons-dired
+    :hook (dired-mode . all-the-icons-dired-mode))
 #+end_src
 
 * Company for text completion
-
 #+begin_src elisp
   (use-package company-box
     :hook (emacs-startup . global-company-mode))
 #+end_src
 
-* Prevent Emacs from littering files and setup custom file
+* Popper to control windows
+#+begin_src elisp
+  (use-package popper
+    :after projectile
+    :init
+    (setq popper-reference-buffers
+          '("\\*Messages\\*"
+            "^\\*Warnings\\*"
+            "^\\*IBuffer\\*"
+            "^\\*Compile-Log\\*"
+            "^\\*Backtrace\\*"
+            "[Oo]utput\\*$"
+            "\\*Help\\*"
+            "\\*helpful\\*"
+            "\\*Excorporate\\*"
+            "\\*xref\\*"
+            help-mode
+            helpful-mode
+            compilation-mode)
+          popper-group-function #'popper-group-by-projectile)
+    (popper-mode t))
+#+end_src
 
+* Prevent Emacs from littering files and setup custom file
 #+begin_src elisp
   (use-package no-littering
     :custom
@@ -116,34 +150,8 @@
     (custom-file (expand-file-name "custom.el" user-emacs-directory)))
 #+end_src
 
-* Miscellaneous to be sorted
-
+* Evil
 #+begin_src elisp
-  (use-package all-the-icons-dired
-    :hook (dired-mode . all-the-icons-dired-mode))
-
-  (use-package rainbow-delimiters
-    :hook (prog-mode . rainbow-delimiters-mode))
-
-  (use-package ws-butler
-    :hook ((text-mode . ws-butler-mode)
-           (prog-mode . ws-butler-mode)))
-
-  (use-package projectile)
-
-  (use-package counsel-projectile
-    :after (projectile counsel)
-    :custom
-    (counsel-projectile-sort-buffers t)
-    (counsel-projectile-sort-files t)
-    (counsel-projectile-sort-projects t))
-
-  (use-package which-key
-    :custom
-    (which-key-idle-delay 0.3)
-    :config
-    (which-key-mode))
-
   (use-package evil
     :init
     (setq evil-want-integration t)
@@ -157,85 +165,15 @@
     :config
     (evil-collection-init))
 
-  (use-package general)
-
-  (use-package magit
-    :commands magit-status
+  (use-package which-key
     :custom
-    (magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1))
-
-  (use-package git-gutter
+    (which-key-idle-delay 0.3)
     :config
-    (global-git-gutter-mode t))
+    (which-key-mode))
+#+end_src
 
-  (use-package blamer
-    :config
-    (setq blamer-view 'overlay-right)
-    :hook ((text-mode . blamer-mode)
-           (prog-mode . blamer-mode)))
-
-  (use-package vterm
-    :commands vterm
-    :config
-    (when (not (or (eq system-type 'windows-nt) (eq system-type 'ms-dos))) (setq vterm-shell (executable-find "fish"))))
-
-  (use-package web-mode
-    :after flycheck
-    :custom
-    (web-mode-code-indent-offset 2)
-    (web-mode-markup-indent-offset 2)
-    :config
-    (add-to-list 'auto-mode-alist '("\\.[jt]sx?\\'" . web-mode))
-    (flycheck-add-mode 'typescript-tslint 'web-mode)
-    :hook
-    (web-mode . (lambda () (prettier-js-mode))))
-
-  (use-package prettier-js
-    :commands (prettier-js-mode prettier-js))
-
-  (use-package json-mode
-    :commands 'json-mode
-    :mode (("\\.json\\'" . json-mode)))
-
-  (use-package doom-modeline
-    :config
-    (doom-modeline-mode t))
-
-  (use-package undo-tree
-    :hook ((text-mode . undo-tree-mode)
-           (prog-mode . undo-tree-mode)))
-
-  (use-package paren
-    :config
-    (show-paren-mode t))
-
-  (use-package flycheck
-    :config
-    (global-flycheck-mode t))
-
-  (use-package markdown-mode
-    :commands 'markdown-mode
-    :mode (("\\.md\\'" . markdown-mode)))
-
-  (use-package clipetty
-    :straight (clipetty :type git :host github :repo "spudlyo/clipetty")
-    :config
-    (global-clipetty-mode t))
-
-  (use-package evil-terminal-cursor-changer
-    :straight (evil-terminal-cursor-changer :type git :host github :repo "kisaragi-hiu/evil-terminal-cursor-changer")
-    :config
-    (evil-terminal-cursor-changer-activate))
-
-  (use-package lsp-mode
-    :hook (web-mode . lsp))
-
-  (use-package lsp-ui
-    :after 'lsp-mode
-    :config
-    (lsp-ui-doc-position 'at-point)
-    (lsp-ui-doc-location 'at-point))
-
+* Org mode
+#+begin_src elisp
   (use-package org-appear
     :hook
     (org-mode . org-appear-mode))
@@ -254,34 +192,142 @@
     (org-mode . visual-fill-setup))
 
   (use-package evil-org
-    :after (evil org)
     :hook
-    (org-mode . (lambda () evil-org-mode)))
+    (org-mode . evil-org-mode))
+#+end_src
 
+* Magit
+#+begin_src elisp
+  (use-package magit
+    :commands magit-status
+    :custom
+    (magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1))
+
+  (use-package git-gutter
+    :config
+    (global-git-gutter-mode t))
+
+  (use-package blamer
+    :config
+    (setq blamer-view 'overlay-right)
+    :hook ((text-mode . blamer-mode)
+           (prog-mode . blamer-mode)))
+#+end_src
+
+* Languages
+** Flycheck
+#+begin_src elisp
+  (use-package flycheck
+    :config
+    (global-flycheck-mode t))
+#+end_src
+
+** LSP
+#+begin_src elisp
+  (use-package lsp-mode
+    :hook (web-mode . lsp))
+
+  (use-package lsp-ui
+    :after 'lsp-mode
+    :custom
+    (lsp-ui-doc-position 'at-point))
+#+end_src
+
+** JavaScript
+#+begin_src elisp
+  (use-package prettier-js
+    :commands (prettier-js-mode prettier-js))
+
+  (use-package web-mode
+    :custom
+    (web-mode-code-indent-offset 2)
+    (web-mode-markup-indent-offset 2)
+    :config
+    (add-to-list 'auto-mode-alist '("\\.[jt]sx?\\'" . web-mode))
+    (flycheck-add-mode 'typescript-tslint 'web-mode)
+    :hook
+    (web-mode . prettier-js-mode))
+
+  (use-package json-mode
+    :commands 'json-mode
+    :mode (("\\.json\\'" . json-mode)))
+#+end_src
+
+** Markdown
+#+begin_src elisp
+  (use-package markdown-mode
+    :commands 'markdown-mode
+    :mode (("\\.md\\'" . markdown-mode)))
+#+end_src
+
+** Fish
+#+begin_src elisp
+  (use-package fish-mode
+    :commands 'fish-mode
+    :mode (("\\.fish\\'" . fish-mode)))
+#+end_src
+
+* Vterm
+#+begin_src elisp
+  (use-package vterm
+    :commands vterm
+    :config
+    (when (not (or (eq system-type 'windows-nt) (eq system-type 'ms-dos))) (setq vterm-shell (executable-find "fish"))))
+#+end_src
+
+* Miscellaneous editor packages
+#+begin_src elisp
   (use-package avy
     :custom
     (avy-style 'pre)
     :commands (avy-goto-char avy-goto-word-0 avy-goto-line))
 
-  (use-package fish-mode
-    :commands 'fish-mode
-    :mode (("\\.fish\\'" . fish-mode)))
+  (use-package undo-tree
+    :hook ((text-mode . undo-tree-mode)
+           (prog-mode . undo-tree-mode)))
+
+  (use-package paren
+    :config
+    (show-paren-mode t))
+
+  (use-package rainbow-delimiters
+    :hook (prog-mode . rainbow-delimiters-mode))
+
+  (use-package ws-butler
+    :hook ((text-mode . ws-butler-mode)
+           (prog-mode . ws-butler-mode)))
 
   (use-package highlight-indentation
     :hook (prog-mode . highlight-indentation-mode)
     :hook (prog-mode . highlight-indentation-current-column-mode))
+#+end_src
 
+* Configure path from shell
+#+begin_src elisp
   (use-package exec-path-from-shell
     :config
     (when (eq window-system 'ns)
       (exec-path-from-shell-initialize)))
+#+end_src
 
+* Load custom file
+#+begin_src elisp
   (load (expand-file-name "custom.el" user-emacs-directory) t t)
+#+end_src
+
+* Doom zenburn theme and modeline
+#+begin_src elisp
+  (use-package doom-modeline
+    :config
+    (doom-modeline-mode t))
 
   (use-package doom-themes
     :config
-    (load-theme 'doom-zenburn))
+    (load-theme 'doom-material-dark))
+#+end_src
 
+* Automatically update packages
+#+begin_src elisp
   (use-package auto-package-update
     :custom
     (auto-package-update-interval 7)
@@ -290,14 +336,12 @@
     :config
     (auto-package-update-maybe)
     (auto-package-update-at-time "09:00"))
- #+end_src
+#+end_src
 
 * Global modes and non-standard customization
-
 #+begin_src elisp
   (global-subword-mode t)
   (tool-bar-mode 0)
-  (set-face-attribute 'default nil :font "Hack Nerd Font Mono" :height 130)
   (column-number-mode)
   (add-hook 'prog-mode-hook (display-line-numbers-mode 1))
   (add-hook 'prog-mode-hook 'hs-minor-mode)
@@ -308,8 +352,9 @@
 #+end_src
 
 * Keybindings
-
 #+begin_src elisp
+  (use-package general)
+
   (general-define-key
    :states 'normal
    "q" nil)
@@ -405,5 +450,5 @@
 * Load any private (non-version-controlled) config
 
 #+begin_src elisp
- (load (expand-file-name "private.el" user-emacs-directory) t t)
+  (load (expand-file-name "private.el" user-emacs-directory) t t)
 #+end_src

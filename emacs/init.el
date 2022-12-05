@@ -1,7 +1,7 @@
 ;;; init.el --- Emacs config for dodgez
 
 ;;; Commentary:
-;; This is an Emacs private configuration file.
+;; This is the init file for dodgez's Emacs config
 
 ;;; Code:
 (defvar bootstrap-version)
@@ -19,9 +19,8 @@
 
 (require 'straight)
 (straight-use-package 'use-package)
-(setq straight-use-package-by-default t)
-
 (require 'use-package)
+(setq straight-use-package-by-default t)
 
 (defun org-mode-setup ()
   (org-indent-mode)
