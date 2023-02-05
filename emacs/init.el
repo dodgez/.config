@@ -17,7 +17,12 @@
       (eval-print-last-sexp)))
   (load bootstrap-file nil 'nomessage))
 
-(setq gc-cons-threshold (* 50 1000 1000))
+(require 'straight)
+(straight-use-package 'use-package)
+(setq straight-use-package-by-default t)
+
+(require 'use-package)
+
 (defun display-startup-time ()
   "Displays the startup time in the echo buffer when Emacs is finished loading."
   (message "Emacs loaded in %s with %d garbage collections."
@@ -26,33 +31,6 @@
            gcs-done))
 (add-hook 'emacs-startup-hook #'display-startup-time)
 
-(add-to-list 'exec-path "/usr/local/bin")
-
-(defun set-ideal-frame-size (&optional proportion)
-  "Set the frame to fill a PROPORTION of the screen."
-  (interactive)
-  (when (display-graphic-p)
-    (pcase (frame-monitor-workarea)
-      (`(,display-x ,display-y ,display-raw-width ,display-raw-height)
-       (let* ((proportion (or proportion 0.9))
-              (margin (/ (- 1 proportion) 2))
-              (display-width (- display-raw-width (if (< display-x 1920) display-x 0))) ;
-              (display-height (- display-raw-height display-y))
-              (width (truncate (* display-width proportion)))
-              (height (truncate (* display-height proportion)))
-              (margin-left (+ display-x (truncate (* display-width margin))))
-              (margin-top (+ display-y (truncate (* display-height margin)))))
-         (set-frame-position (selected-frame) margin-left margin-top)
-         (set-frame-size (selected-frame) width height t))))))
-(add-hook 'emacs-startup-hook #'set-ideal-frame-size)
-
-(setq flycheck-emacs-lisp-load-path 'inherit)
-
-(require 'straight)
-(straight-use-package 'use-package)
-(setq straight-use-package-by-default t)
-
-(require 'use-package)
 (use-package ivy
   :bind (("C-s" . swiper))
   :custom
@@ -69,9 +47,6 @@
   (ivy-initial-inputs-alist nil)
   :config
   (counsel-mode t))
-
-(use-package company-box
-  :hook (emacs-startup . global-company-mode))
 
 (defun +ivy-rich-describe-variable-transformer (cand)
   "Preview the value of CAND in the minibuffer."
@@ -121,15 +96,6 @@
                ((ivy-rich-candidate (:width 0.5))
                 (ivy-rich-bookmark-filename-or-empty (:width 60)))))
   (ivy-rich-mode t))
-
-(use-package prescient
-  :after counsel)
-
-(use-package ivy-prescient
-  :after prescient
-  :config
-  (ivy-prescient-mode 1))
-
 (use-package no-littering
   :custom
   (auto-save-file-name-transforms
@@ -153,29 +119,6 @@
   (counsel-projectile-sort-buffers t)
   (counsel-projectile-sort-files t)
   (counsel-projectile-sort-projects t))
-
-(use-package rg
-  :commands (rg ripgrep))
-
-(use-package popper
-  :after projectile
-  :init
-  (setq popper-reference-buffers
-        '("\\*Messages\\*"
-          "^\\*Warnings\\*"
-          "^\\*IBuffer\\*"
-          "^\\*Compile-Log\\*"
-          "^\\*Backtrace\\*"
-          "[Oo]utput\\*$"
-          "\\*Help\\*"
-          "\\*helpful\\*"
-          "\\*Excorporate\\*"
-          "\\*xref\\*"
-          help-mode
-          helpful-mode
-          compilation-mode)
-        popper-group-function #'popper-group-by-projectile)
-  (popper-mode t))
 
 (use-package which-key
   :custom
@@ -208,22 +151,11 @@
   :config
   (when (not (or (eq system-type 'windows-nt) (eq system-type 'ms-dos))) (setq vterm-shell (executable-find "fish"))))
 
-(use-package tide
-  :custom
-  (typescript-indent-level 2))
-
-(defun setup-tide-mode ()
-  (interactive)
-  (tide-setup)
-  (flycheck-mode t)
-  (eldoc-mode t)
-  (tide-hl-identifier-mode t)
-  (company-mode t))
-
 (use-package prettier-js
   :commands (prettier-js-mode prettier-js))
 
 (use-package web-mode
+  :after flycheck
   :custom
   (web-mode-code-indent-offset 2)
   (web-mode-markup-indent-offset 2)
@@ -231,20 +163,11 @@
   (add-to-list 'auto-mode-alist '("\\.[jt]sx?\\'" . web-mode))
   (flycheck-add-mode 'typescript-tslint 'web-mode)
   :hook
-  (web-mode . (lambda () (when (s-starts-with-p "ts" (file-name-extension buffer-file-name)) (setup-tide-mode))))
   (web-mode . (lambda () (prettier-js-mode))))
-
-(use-package js
-  :commands 'js-mode
-  :custom
-  (js-indent-level 2))
 
 (use-package json-mode
   :commands 'json-mode
   :mode (("\\.json\\'" . json-mode)))
-
-(use-package rust-mode
-  :commands 'rust-mode)
 
 (use-package doom-modeline
   :config
@@ -257,9 +180,6 @@
 (use-package paren
   :config
   (show-paren-mode t))
-
-(use-package evil-nerd-commenter
-  :commands evilnc-comment-or-uncomment-lines)
 
 (use-package git-gutter
   :config
@@ -290,7 +210,7 @@
   (evil-terminal-cursor-changer-activate))
 
 (use-package lsp-mode
-  :hook (rust-mode . lsp))
+  :hook (web-mode . lsp))
 
 (use-package lsp-ui
   :config
@@ -349,23 +269,6 @@
 (use-package fish-mode
   :commands 'fish-mode
   :mode (("\\.fish\\'" . fish-mode)))
-
-(use-package yaml-mode
-  :commands 'yaml-mode
-  :mode (("\\.ya?ml\\'" . yaml-mode)))
-
-(use-package haskell-mode
-  :commands 'haskell-mode
-  :mode (("\\.hs\\'" . haskell-mode)
-         ("\\.cabal\\'" . haskell-mode)))
-
-(use-package dante
-  :commands 'dante-mode
-  :hook (haskell-mode . dante-mode))
-
-(use-package hindent
-  :commands (hindent-reformat-buffer hindent-reformat-region)
-  :hook (haskell-mode . hindent-mode))
 
 (use-package highlight-indentation
   :hook (prog-mode . highlight-indentation-mode)
@@ -456,12 +359,6 @@
  "<tab>" 'evil-indent-line)
 
 (general-define-key
- :states 'normal
- :keymaps 'org-mode-map
- "t" 'org-todo)
-
-(general-define-key
- :states 'insert
  "S-<escape>" (lambda () (interactive) (evil-force-normal-state) (evil-forward-char)))
 
 (general-define-key
@@ -529,6 +426,10 @@
  "w j" '(evil-window-down :which-key)
  "w k" '(evil-window-up :which-key)
  "w l" '(evil-window-right :which-key)
+ "w <left>" '(evil-window-left :which-key)
+ "w <down>" '(evil-window-down :which-key)
+ "w <up>" '(evil-window-up :which-key)
+ "w <right>" '(evil-window-right :which-key)
  "w s" '(evil-window-split :which-key)
  "w v" '(evil-window-vsplit :which-key))
 
