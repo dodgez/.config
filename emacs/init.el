@@ -40,6 +40,7 @@
   (ivy-mode t))
 
 (use-package counsel
+  :after ivy
   :bind (("M-x" . counsel-M-x)
          ("C-x b" . counsel-ibuffer)
          ("C-x C-f" . counsel-find-file))
@@ -75,6 +76,7 @@
      t)))
 
 (use-package ivy-rich
+  :after (ivy counsel)
   :config
   (plist-put ivy-rich-display-transformers-list
              'counsel-describe-variable
@@ -96,13 +98,19 @@
                ((ivy-rich-candidate (:width 0.5))
                 (ivy-rich-bookmark-filename-or-empty (:width 60)))))
   (ivy-rich-mode t))
+
+(use-package all-the-icons)
+
+(use-package all-the-icons-ivy
+  :after (all-the-icons ivy)
+  :config
+  (when (display-graphic-p) (all-the-icons-ivy-setup)))
+
 (use-package no-littering
   :custom
   (auto-save-file-name-transforms
         `((".*" ,(no-littering-expand-var-file-name "auto-save/") t)))
   (custom-file (expand-file-name "custom.el" user-emacs-directory)))
-
-(use-package all-the-icons)
 
 (use-package rainbow-delimiters
   :hook (prog-mode . rainbow-delimiters-mode))
@@ -135,6 +143,10 @@
   (evil-global-set-key 'motion "j" 'evil-next-visual-line)
   (evil-global-set-key 'motion "k" 'evil-previous-visual-line))
 
+(use-package evil-collection
+  :config
+  (evil-collection-init))
+
 (use-package general)
 
 (use-package magit
@@ -142,17 +154,20 @@
   :custom
   (magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1))
 
-(use-package evil-collection
+(use-package git-gutter
   :config
-  (evil-collection-init))
+  (global-git-gutter-mode t))
+
+(use-package blamer
+  :config
+  (setq blamer-view 'overlay-right)
+  :hook ((text-mode . blamer-mode)
+         (prog-mode . blamer-mode)))
 
 (use-package vterm
   :commands vterm
   :config
   (when (not (or (eq system-type 'windows-nt) (eq system-type 'ms-dos))) (setq vterm-shell (executable-find "fish"))))
-
-(use-package prettier-js
-  :commands (prettier-js-mode prettier-js))
 
 (use-package web-mode
   :after flycheck
@@ -164,6 +179,9 @@
   (flycheck-add-mode 'typescript-tslint 'web-mode)
   :hook
   (web-mode . (lambda () (prettier-js-mode))))
+
+(use-package prettier-js
+  :commands (prettier-js-mode prettier-js))
 
 (use-package json-mode
   :commands 'json-mode
@@ -180,16 +198,6 @@
 (use-package paren
   :config
   (show-paren-mode t))
-
-(use-package git-gutter
-  :config
-  (global-git-gutter-mode t))
-
-(use-package blamer
-  :config
-  (setq blamer-view 'overlay-right)
-  :hook ((text-mode . blamer-mode)
-         (prog-mode . blamer-mode)))
 
 (use-package flycheck
   :config
@@ -213,10 +221,10 @@
   :hook (web-mode . lsp))
 
 (use-package lsp-ui
+  :after 'lsp-mode
   :config
   (lsp-ui-doc-position 'at-point)
-  (lsp-ui-doc-location 'at-point)
-  :after 'lsp-mode)
+  (lsp-ui-doc-location 'at-point))
 
 (defun org-mode-setup ()
   (org-indent-mode)
@@ -252,7 +260,7 @@
   (org-mode . visual-fill-setup))
 
 (use-package evil-org
-  :after org
+  :after (evil org)
   :hook
   (org-mode . (lambda () evil-org-mode)))
 
@@ -260,11 +268,6 @@
   :custom
   (avy-style 'pre)
   :commands (avy-goto-char avy-goto-word-0 avy-goto-line))
-
-(use-package all-the-icons-ivy
-  :after ivy
-  :config
-  (when (display-graphic-p) (all-the-icons-ivy-setup)))
 
 (use-package fish-mode
   :commands 'fish-mode
@@ -295,52 +298,18 @@
   (auto-package-update-at-time "09:00"))
 
 ; Customization
-(setq delete-by-moving-to-trash t
-      mouse-wheel-progressive-speed nil
-      mouse-wheel-scroll-amount '(5 ((shift) . hscroll)
-                                    ((meta) . 1)
-                                    ((control) . text-scale))
-      warning-minimum-level :error
-      inhibit-startup-message t)
-(setq-default tab-width 2)
-(setq-default indent-tabs-mode nil)
-(setq-default standard-indent 2)
-(setq-default truncate-lines t)
-
-(setq vc-follow-symlinks t)
 (global-subword-mode t)
 (tool-bar-mode 0)
-(tooltip-mode 0)
-(menu-bar-mode 0)
 (set-face-attribute 'default nil :font "Hack Nerd Font Mono" :height 130)
 (column-number-mode)
-(global-display-line-numbers-mode t)
-(dolist (mode '(vterm-mode-hook
-                eshell-mode-hook
-                org-mode-hook))
-  (add-hook mode (lambda () (display-line-numbers-mode 0))))
-(global-hl-line-mode)
-
-(setq global-auto-revert-non-file-buffers t)
-(global-auto-revert-mode t)
-
-(xterm-mouse-mode)
-(setq xterm-set-window-title t)
-
+(add-hook 'prog-mode-hook (display-line-numbers-mode 1))
 (add-hook 'prog-mode-hook 'hs-minor-mode)
-
-(when (not (fboundp 'revert-buffer-quick)) (defun revert-buffer-quick () (interactive) (revert-buffer t (not (buffer-modified-p)))))
-
+(global-hl-line-mode)
+(global-auto-revert-mode t)
+(xterm-mouse-mode)
 (set-window-scroll-bars (minibuffer-window) nil nil)
 
 ; Keybindings
-(general-define-key
- "<escape>" 'keyboard-escape-quit
- :keymaps 'override
- "C-/" 'evilnc-comment-or-uncomment-lines
- "<home>" 'beginning-of-line
- "<end>" 'end-of-line)
-
 (general-define-key
  :states 'normal
  "q" nil)
@@ -358,9 +327,7 @@
  :states 'visual
  "<tab>" 'evil-indent-line)
 
-(general-define-key
- "S-<escape>" (lambda () (interactive) (evil-force-normal-state) (evil-forward-char)))
-
+(when (not (fboundp 'revert-buffer-quick)) (defun revert-buffer-quick () (interactive) (revert-buffer t (not (buffer-modified-p)))))
 (general-define-key
  :states '(normal visual)
  :keymaps 'override
@@ -379,6 +346,7 @@
  "e b" '(eval-buffer :which-key)
  "e e" '(eval-expression :which-key)
  "e i" '((lambda () (interactive) (load (expand-file-name "init.el" user-emacs-directory))) :which-key "Load init file")
+ "e l" '(eval-last-sexp :which-key)
  "f" '(:ignore t :which-key "file")
  "f f" '(counsel-find-file :which-key)
  "f i" '((lambda () (interactive) (find-file (expand-file-name "init.el" user-emacs-directory))) :which-key "Edit init file")
