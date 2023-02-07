@@ -225,7 +225,9 @@
 ** LSP
 #+begin_src elisp
   (use-package lsp-mode
-    :hook (web-mode . lsp))
+    :hook (web-mode . lsp)
+    :config
+    (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\\]build\\'"))
 
   (use-package lsp-ui
     :after 'lsp-mode
@@ -239,6 +241,7 @@
     :commands (prettier-js-mode prettier-js))
 
   (use-package web-mode
+    :mode "\\.\\(j\\|t\\)sx?\\'"
     :custom
     (web-mode-code-indent-offset 2)
     (web-mode-markup-indent-offset 2)
@@ -410,6 +413,8 @@
    "j c" '(avy-goto-char :which-key)
    "j l" '(avy-goto-line :which-key)
    "j w" '(avy-goto-word-0 :which-key)
+   "l" '(:ignore t :which-key "lsp")
+   "l a" '(lsp-execute-code-action :which-key)
    "o" '(:ignore t :which-key "open/org")
    "o c" '(org-toggle-checkbox :which-key)
    "o t" '(org-todo :which-key)
