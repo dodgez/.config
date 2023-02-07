@@ -7,7 +7,7 @@
    '("da75eceab6bea9298e04ce5b4b07349f8c02da305734f7c0c8c6af7b5eaa9738" default))
  '(delete-by-moving-to-trash t)
  '(global-auto-revert-non-file-buffers t)
- '(indent-tabs-mode nil)
+ '(indent-tabs-mode nil t)
  '(inhibit-startup-screen t)
  '(initial-frame-alist nil)
  '(menu-bar-mode nil)
@@ -21,9 +21,9 @@
      ((control)
       . text-scale)))
  '(org-fold-catch-invisible-edits 'show nil nil "Customized with use-package org")
- '(standard-indent 2)
- '(tab-width 2)
- '(truncate-lines t))
+ '(standard-indent 2 t)
+ '(tab-width 2 t)
+ '(truncate-lines t t))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
