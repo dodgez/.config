@@ -210,8 +210,8 @@
   (use-package blamer
     :config
     (setq blamer-view 'overlay-right)
-    :hook ((text-mode . blamer-mode)
-           (prog-mode . blamer-mode)))
+    :hook
+    (prog-mode . blamer-mode))
 #+end_src
 
 * Languages
@@ -235,9 +235,24 @@
     (lsp-ui-doc-position 'at-point))
 #+end_src
 
+** Tree sitter
+#+begin_src elisp
+  (use-package tree-sitter
+    :config
+    (global-tree-sitter-mode)
+    :hook (web-mode . tree-sitter-hl-mode))
+
+  (use-package tree-sitter-langs
+    :config
+    (tree-sitter-require 'tsx)
+    (add-to-list 'tree-sitter-major-mode-language-alist '(web-mode . tsx)))
+#+end_src
+
+
 ** JavaScript
 #+begin_src elisp
   (use-package prettier-js
+    :hook (web-mode . prettier-js-mode)
     :commands (prettier-js-mode prettier-js))
 
   (use-package web-mode
@@ -245,11 +260,9 @@
     :custom
     (web-mode-code-indent-offset 2)
     (web-mode-markup-indent-offset 2)
-    :config
-    (add-to-list 'auto-mode-alist '("\\.[jt]sx?\\'" . web-mode))
-    (flycheck-add-mode 'typescript-tslint 'web-mode)
     :hook
-    (web-mode . prettier-js-mode))
+    ;; https://github.com/emacs-tree-sitter/tree-sitter-langs/issues/23
+    (web-mode . (lambda () (set (make-local-variable 'tree-sitter-hl-use-font-lock-keywords) nil))))
 
   (use-package json-mode
     :commands 'json-mode
