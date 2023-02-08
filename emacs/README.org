@@ -156,6 +156,8 @@
     :init
     (setq evil-want-integration t)
     (setq evil-want-keybinding nil)
+    :custom
+    (evil-cross-lines t)
     :config
     (evil-mode t)
     (evil-global-set-key 'motion "j" 'evil-next-visual-line)
@@ -225,14 +227,12 @@
 ** LSP
 #+begin_src elisp
   (use-package lsp-mode
-    :hook (web-mode . lsp)
+    :hook (typescript-mode . lsp)
     :config
     (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\\]build\\'"))
 
   (use-package lsp-ui
-    :after 'lsp-mode
-    :custom
-    (lsp-ui-doc-position 'at-point))
+    :after 'lsp-mode)
 #+end_src
 
 ** Tree sitter
@@ -240,29 +240,25 @@
   (use-package tree-sitter
     :config
     (global-tree-sitter-mode)
-    :hook (web-mode . tree-sitter-hl-mode))
+    :hook (typescript-mode . tree-sitter-hl-mode))
 
   (use-package tree-sitter-langs
     :config
     (tree-sitter-require 'tsx)
-    (add-to-list 'tree-sitter-major-mode-language-alist '(web-mode . tsx)))
+    (add-to-list 'tree-sitter-major-mode-language-alist '(typescript-mode . tsx)))
 #+end_src
 
 
 ** JavaScript
 #+begin_src elisp
   (use-package prettier-js
-    :hook (web-mode . prettier-js-mode)
+    :hook (typescript-mode . prettier-js-mode)
     :commands (prettier-js-mode prettier-js))
 
-  (use-package web-mode
-    :mode "\\.\\(j\\|t\\)sx?\\'"
+  (use-package typescript-mode
+    :mode "\\.tsx?\\'"
     :custom
-    (web-mode-code-indent-offset 2)
-    (web-mode-markup-indent-offset 2)
-    :hook
-    ;; https://github.com/emacs-tree-sitter/tree-sitter-langs/issues/23
-    (web-mode . (lambda () (set (make-local-variable 'tree-sitter-hl-use-font-lock-keywords) nil))))
+    (typescript-indent-level 2))
 
   (use-package json-mode
     :commands 'json-mode
@@ -378,7 +374,9 @@
   (general-define-key
    :keymaps 'global
    "<mouse-3>" 'mouse-set-point
-   "<drag-mouse-3>" 'mouse-set-region)
+   "<drag-mouse-3>" 'mouse-set-region
+   "<home>" 'evil-beginning-of-visual-line
+   "<end>" 'evil-end-of-visual-line)
 
   (general-define-key
    :states 'normal
@@ -387,6 +385,11 @@
   (general-define-key
    :states 'visual
    "<tab>" 'evil-indent-line)
+
+  (general-define-key
+   :states '(normal motion visual)
+   "<remap> <evil-next-line>" 'evil-next-visual-line
+   "<remap> <evil-previous-line>" 'evil-previous-visual-line)
 
   (when (not (fboundp 'revert-buffer-quick)) (defun revert-buffer-quick () (interactive) (revert-buffer t (not (buffer-modified-p)))))
   (general-define-key

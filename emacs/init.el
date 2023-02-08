@@ -27,7 +27,8 @@
   (auto-fill-mode 0)
   (visual-line-mode 1)
   (setq org-agenda-files (list org-directory))
-  (setq evil-auto-indent nil))
+  (setq evil-auto-indent nil)
+  (electric-indent-local-mode -1))
 
 (use-package org
   :demand
