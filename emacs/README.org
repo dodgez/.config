@@ -393,6 +393,11 @@
    "<remap> <evil-next-line>" 'evil-next-visual-line
    "<remap> <evil-previous-line>" 'evil-previous-visual-line)
 
+  (general-define-key
+   :states 'insert
+   "S-<left>" (lambda () (interactive) (evil-visual-char) (backward-char))
+   "S-<right>" (lambda () (interactive) (evil-visual-char) (forward-char)))
+
   (when (not (fboundp 'revert-buffer-quick)) (defun revert-buffer-quick () (interactive) (revert-buffer t (not (buffer-modified-p)))))
   (general-define-key
    :states '(normal visual)
