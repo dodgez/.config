@@ -284,7 +284,9 @@
   (use-package vterm
     :commands vterm
     :config
-    (when (not (or (eq system-type 'windows-nt) (eq system-type 'ms-dos))) (setq vterm-shell (executable-find "fish"))))
+    (when (not (or (eq system-type 'windows-nt) (eq system-type 'ms-dos))) (setq vterm-shell (executable-find "fish")))
+    :hook
+    (vterm-mode . (lambda () (display-line-numbers-mode -1))))
 #+end_src
 
 * Miscellaneous editor packages
@@ -355,7 +357,7 @@
   (global-subword-mode t)
   (tool-bar-mode 0)
   (column-number-mode)
-  (add-hook 'prog-mode-hook (display-line-numbers-mode 1))
+  (global-display-line-numbers-mode 1)
   (add-hook 'prog-mode-hook 'hs-minor-mode)
   (global-hl-line-mode)
   (global-auto-revert-mode t)
