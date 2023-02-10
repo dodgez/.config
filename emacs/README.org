@@ -86,7 +86,9 @@
                   (ivy-rich-bookmark-filename-or-empty (:width 60)))))
     (ivy-rich-mode t))
 
-  (use-package prescient)
+  (use-package prescient
+    :config
+    (prescient-persist-mode))
 
   (use-package ivy-prescient
     :config
@@ -421,6 +423,7 @@
    "f" '(:ignore t :which-key "file")
    "f f" '(counsel-find-file :which-key)
    "f i" '((lambda () (interactive) (find-file (expand-file-name "init.el" user-emacs-directory))) :which-key "Edit init file")
+   "f o" '((lambda () (interactive) (find-file (expand-file-name "README.org" user-emacs-directory))) :which-key "Edit literate  config")
    "f p" '((lambda () (interactive) (counsel-find-file "" user-emacs-directory)) :which-key "Browse private config")
    "f s" '(save-buffer :which-key)
    "g" '(:ignore t :which-key "magit")
