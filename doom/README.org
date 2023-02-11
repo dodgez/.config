@@ -234,11 +234,6 @@ surrounded by word boundaries."
 (setq inferior-lisp-program "ros -Q run")
 #+end_src
 
-* Setup Ctrl-/ as comment/uncomment
-#+begin_src elisp
-(map! :nvm "C-/" #'evilnc-comment-or-uncomment-lines)
-#+end_src
-
 * Load a work config file if it exists
 #+begin_src elisp
 (let ((work-config (doom-dir doom-private-dir "+work-config.el")))
