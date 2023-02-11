@@ -43,6 +43,7 @@
 (package! magit-delta)
 (package! rg)
 (package! org-appear)
+(package! org-bullets)
 (package! visual-fill-column)
 (package! fish-mode)
 
