@@ -23,7 +23,7 @@
 !doom
 !doom/init.el
 !doom/packages.el
-!doom/config.org
+!doom/README.org
 !doom/config.el
 
 # Hand-rolled Emacs configuration

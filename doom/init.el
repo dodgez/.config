@@ -14,6 +14,8 @@
 ;;      Alternatively, press 'gd' (or 'C-c c d') on a module to browse its
 ;;      directory (for easy access to its source code).
 
+(setq +literate-config-file (file-name-concat doom-private-dir "README.org"))
+
 (doom! :input
        ;;chinese
        ;;japanese
