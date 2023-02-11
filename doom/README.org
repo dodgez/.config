@@ -109,17 +109,20 @@ Set js/ts/web indent levels to two spaces.
   :custom
   (org-hide-emphasis-markers t)
   (org-directory "~/org")
-  (org-agenda-files (directory-files-recursively "~/org" "\\.org$"))
-  (org-log-done 'time))
+  (org-agenda-files (directory-files-recursively "~/org" "\\.org$")))
+
 (use-package! org-appear
   :hook (org-mode . org-appear-mode))
+
+(use-package! org-bullets
+  :hook (org-mode . org-bullets-mode))
+
 (defun org-mode-visual-fill ()
   (setq visual-fill-column-width 120)
   (setq visual-fill-column-center-text t)
   (visual-fill-column-mode 1))
 (use-package! visual-fill-column
   :hook (org-mode . org-mode-visual-fill))
-(use-package visual-fill-column)
 #+end_src
 
 * Modify highlight indent to use block characters instead of just vertical pipes.
