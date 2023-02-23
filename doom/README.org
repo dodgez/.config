@@ -143,15 +143,6 @@ Set js/ts/web indent levels to two spaces.
 (after! projectile (setq projectile-indexing-method 'alien))
 #+end_src
 
-* Setup projectile-ripgrep as "SPC-/"
-#+begin_src elisp
-(use-package! rg)
-(map! :after projectile :leader "/"
-      #'(lambda ()
-          (interactive)
-          (let ((shell-file-name "/bin/sh")) (call-interactively #'projectile-ripgrep))))
-#+end_src
-
 * Common lisp eval shortcut
 #+begin_src elisp
 (map! :mode lisp-mode :n "SPC E" #'sly-pprint-eval-last-expression)
