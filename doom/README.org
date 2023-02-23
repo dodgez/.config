@@ -226,6 +226,13 @@ surrounded by word boundaries."
   (map! "<prior>" #'evil-scroll-up))
 #+end_src
 
+* Setup Evil Colemak with DH mod
+#+begin_src elisp
+(use-package! evil-colemak-basics
+  :init
+  (setq evil-colemak-basics-layout-mod 'mod-dh))
+#+end_src
+
 * Use roswell for lisp
 #+begin_src elisp
 (setq inferior-lisp-program "ros -Q run")
