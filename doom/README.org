@@ -111,12 +111,6 @@ Set js/ts/web indent levels to two spaces.
   (org-directory "~/org")
   (org-agenda-files (directory-files-recursively "~/org" "\\.org$")))
 
-(use-package! org-appear
-  :hook (org-mode . org-appear-mode))
-
-(use-package! org-bullets
-  :hook (org-mode . org-bullets-mode))
-
 (defun org-mode-visual-fill ()
   (setq visual-fill-column-width 120)
   (setq visual-fill-column-center-text t)
@@ -125,7 +119,7 @@ Set js/ts/web indent levels to two spaces.
   :hook (org-mode . org-mode-visual-fill))
 #+end_src
 
-* Ignore build directorie in LSP
+* Ignore build directories in LSP
 #+begin_src elisp
 (after! lsp-mode
   (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\\]build\\'"))
