@@ -225,6 +225,9 @@ surrounded by word boundaries."
 (use-package! evil-colemak-basics
   :init
   (setq evil-colemak-basics-layout-mod 'mod-dh))
+(map! :leader
+      :prefix "t"
+      "C" 'global-evil-colemak-basics-mode)
 #+end_src
 
 * Use roswell for lisp
