@@ -14,21 +14,11 @@
 !fish/README.org
 !fish/starship_cygwin.fish
 
-# Chemacs configuration
-!chemacs
-!chemacs/profile
-!chemacs/profiles.el
-
 # Doom Emacs configuration
 !doom
 !doom/init.el
 !doom/packages.el
 !doom/README.org
-
-# Hand-rolled Emacs configuration
-!emacs
-!emacs/init.el
-!emacs/custom.el
 
 # Git configuration
 !git
