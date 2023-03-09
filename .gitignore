@@ -19,6 +19,12 @@
 !doom/init.el
 !doom/packages.el
 !doom/README.org
+!doom/modules
+!doom/modules/tools
+!doom/modules/tools/chatgpt
+!doom/modules/tools/chatgpt/autoload.el
+!doom/modules/tools/chatgpt/config.el
+!doom/modules/tools/chatgpt/packages.el
 
 # Git configuration
 !git
