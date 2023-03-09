@@ -59,10 +59,8 @@ Set js/ts/web indent levels to two spaces.
 - SPC e as eval-last-sexp
 - Setup arrow keys for window navigation
 #+begin_src elisp
-(map! "<escape>" #'keyboard-escape-quit)
-(map! :n "q" #'keyboard-escape-quit)
-(map! "<home>" #'beginning-of-line)
-(map! "<end>" #'end-of-line)
+(map! "<escape>" #'evil-force-normal-state)
+(map! :n "q" #'evil-force-normal-state)
 (map! :leader "e" #'eval-last-sexp)
 (map! :leader :desc "M-x" "SPC" #'execute-extended-command)
 (map! :leader (:prefix "w"
