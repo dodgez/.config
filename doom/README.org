@@ -121,6 +121,10 @@ Set js/ts/web indent levels to two spaces.
 #+begin_src elisp
 (after! lsp-mode
   (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\\]build\\'"))
+(defun disable-format-with-lsp ()
+  (setq-local +format-with-lsp nil))
+(add-hook 'typescript-tsx-mode-hook #'disable-format-with-lsp)
+(add-hook 'typescript-mode-hook #'disable-format-with-lsp)
 #+end_src
 
 * Modify highlight indent to use block characters instead of just vertical pipes.
