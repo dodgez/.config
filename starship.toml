@@ -1,20 +1,11 @@
-#+TITLE: Starship Config
-#+AUTHOR: Zach Dodge
-#+PROPERTY: header-args:toml :tangle ../starship.toml
-
-* Remove newline before prompt text
-#+begin_src toml
+# Remove newline before prompt text
 add_newline = false
-#+end_src
 
-* Battery indicator at 20%
-#+begin_src toml
+# Battery indicator at 20%
 [[battery.display]]
 threshold = 20
-#+end_src
 
-* Text symbols for languages
-#+begin_src toml
+# Text symbols for languages
 [character]
 success_symbol = "[>](bold green)"
 error_symbol = "[x](bold red)"
@@ -93,9 +84,6 @@ symbol = "jl "
 [kotlin]
 symbol = "kt "
 
-# [line_break]
-# disabled = true
-
 [lua]
 symbol = "lua "
 
@@ -159,4 +147,3 @@ symbol = "terraform "
 
 [zig]
 symbol = "zig "
-#+end_src

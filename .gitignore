@@ -3,28 +3,15 @@
 
 # This file
 !.gitignore
+!install.sh
 !README.md
 
 # Starship shell prompt configuration
-!starship
-!starship/README.org
+!starship.toml
 
 # Fish shell configuration
 !fish
-!fish/README.org
-!fish/starship_cygwin.fish
-
-# Doom Emacs configuration
-!doom
-!doom/init.el
-!doom/packages.el
-!doom/README.org
-!doom/modules
-!doom/modules/tools
-!doom/modules/tools/chatgpt
-!doom/modules/tools/chatgpt/autoload.el
-!doom/modules/tools/chatgpt/config.el
-!doom/modules/tools/chatgpt/packages.el
+!fish/config.fish
 
 # Git configuration
 !git
