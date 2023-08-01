@@ -70,9 +70,9 @@ Set js/ts/web indent levels to two spaces.
                :desc "evil-window-right" "<right>" #'evil-window-right))
 #+end_src
 
-* Default Emacs to maximized.
+* Default Emacs size to 160x48
 #+begin_src elisp
-(setq initial-frame-alist '((fullscreen . maximized)))
+(setq initial-frame-alist '((width . 160) (height . 48)))
 #+end_src
 
 * Trigger avy commands on SPC-j.
