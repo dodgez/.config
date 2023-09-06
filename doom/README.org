@@ -120,7 +120,9 @@ Set js/ts/web indent levels to two spaces.
 * Ignore build directories in LSP
 #+begin_src elisp
 (after! lsp-mode
-  (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\\]build\\'"))
+  (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\\]build\\'")
+  (setq lsp-ui-sideline-show-code-actions t
+        lsp-ui-sideline-show-hover t))
 (defun disable-format-with-lsp ()
   (setq-local +format-with-lsp nil))
 (add-hook 'typescript-tsx-mode-hook #'disable-format-with-lsp)
