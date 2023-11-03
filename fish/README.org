@@ -44,7 +44,7 @@ alias rimraf="rm -rf"
 * Add multiple bin folders to path
 #+begin_src fish
 fish_add_path "$HOME/.cargo/bin"
-fish_add_path "$HOME/.doom.emacs.d/bin"
+fish_add_path "$HOME/.config/emacs/bin"
 fish_add_path "/usr/local/bin"
 #+end_src
 
