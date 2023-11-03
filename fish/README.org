@@ -11,20 +11,24 @@ alias edit="editor"
 
 * Create di = ls ^ cat alias
 #+begin_src fish
-function di
-    set _dir $argv[1]
-    if test -d $_dir
-        ls -alh $_dir
+function ccat
+    if type -q bat
+        bat $argv
     else
-        cat $_dir
+        cat $argv
     end
 end
-#+end_src
-
-* Long and all list directory aliases
-#+begin_src fish
-alias ll="ls -l"
-alias lal="ls -al"
+function di
+    argparse --name=di -i 'l' 'c' -- $argv
+    set _dir $argv[1]
+    if test "$_flag_c" = "-c"
+        ccat $argv
+    else if test "$_flag_l" = "-l"; or test -d $_dir
+        ls -hAl $argv
+    else
+        ccat $argv
+    end
+end
 #+end_src
 
 * Alias to untar
