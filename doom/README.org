@@ -222,7 +222,9 @@ surrounded by word boundaries."
 #+begin_src elisp
 (after! evil
   (map! "<next>" #'evil-scroll-down)
-  (map! "<prior>" #'evil-scroll-up))
+  (map! "<prior>" #'evil-scroll-up)
+  (map! "<end>" #'evil-end-of-visual-line)
+  (map! "<home>" #'evil-beginning-of-visual-line))
 #+end_src
 
 * Setup Evil Colemak with DH mod
