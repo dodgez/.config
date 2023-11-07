@@ -214,7 +214,8 @@ surrounded by word boundaries."
 * Allow crossing beginning and end of lines with horizontal movements
 #+begin_src elisp
 (after! evil
-  (setq evil-cross-lines t))
+  (setq evil-cross-lines t)
+  (setq evil-want-minibuffer t))
 #+end_src
 
 * Setup page up/down as evil-scroll-up/down
