@@ -46,6 +46,10 @@
 (package! visual-fill-column)
 (package! evil-colemak-basics)
 
+(let ((work-packages (doom-dir doom-private-dir "+work-packages.el")))
+  (when (file-exists-p work-packages)
+    (load! "+work-packages.el")))
+
 ;; Doom's packages are pinned to a specific commit and updated from release to
 ;; release. The `unpin!' macro allows you to unpin single packages...
 ;(unpin! pinned-package)
