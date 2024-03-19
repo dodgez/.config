@@ -238,6 +238,11 @@ surrounded by word boundaries."
       "C" 'global-evil-colemak-basics-mode)
 #+end_src
 
+* Setup kbd-mode for KMonad
+#+begin_src elisp
+(use-package! kbd-mode)
+#+end_src
+
 * Use roswell for lisp
 #+begin_src elisp
 (setq inferior-lisp-program "ros -Q run")

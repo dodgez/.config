@@ -45,6 +45,8 @@
 (package! org-bullets)
 (package! visual-fill-column)
 (package! evil-colemak-basics)
+(package! kbd-mode
+  :recipe (:host github :repo "kmonad/kbd-mode"))
 
 (let ((work-packages (doom-dir doom-private-dir "+work-packages.el")))
   (when (file-exists-p work-packages)
