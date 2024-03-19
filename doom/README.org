@@ -10,7 +10,7 @@
 
 * Doom theme and font
 #+begin_src elisp
-(setq doom-theme 'doom-material-dark)
+(setq doom-theme 'doom-solarized-light)
 (setq doom-font (font-spec :family "Hack Nerd Font Mono" :size 16))
 #+end_src
 
