@@ -47,6 +47,10 @@
 (package! evil-colemak-basics)
 (package! kbd-mode
   :recipe (:host github :repo "kmonad/kbd-mode"))
+(package! lean4-mode :recipe
+  (:host github
+   :repo "leanprover/lean4-mode"
+   :files ("*.el" "data")))
 
 (let ((work-packages (doom-dir doom-private-dir "+work-packages.el")))
   (when (file-exists-p work-packages)
