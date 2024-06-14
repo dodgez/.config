@@ -41,6 +41,11 @@ alias untar="tar -xvsf"
 alias rimraf="rm -rf"
 #+end_src
 
+* ll = ls -hAl --color=always
+#+begin_src fish
+alias ll="ls -hAl --color=always"
+#+end_src
+
 * Add multiple bin folders to path
 #+begin_src fish
 fish_add_path "$HOME/.cargo/bin"
