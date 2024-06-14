@@ -29,3 +29,7 @@
 # Git configuration
 !git
 !git/config
+
+# Kmonad configuration
+!kmonad
+!kmonad/dedicated.kbd

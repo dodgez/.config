@@ -1,0 +1,47 @@
+;; See keymap/tutorial.kbd for a more complete tutorial
+
+(defcfg
+ input (iokit-name "Magic Keyboard with Touch ID and Numeric Keypad")
+ output (kext)
+ fallthrough true
+ )
+
+(defsrc
+ esc  f1   f2   f3   f4   f5   f6   f7   f8   f9   f10  f11  f12
+ grv  1    2    3    4    5    6    7    8    9    0    -    =    bspc
+ tab  q    w    e    r    t    y    u    i    o    p    [    ]    \
+ caps a    s    d    f    g    h    j    k    l    ;    '    ret
+ lsft z    x    c    v    b    n    m    ,    .    /    rsft up
+ lctl lalt lmet      spc            rmet ralt rctl left down rght)
+
+(defalias esc (tap-hold-next 200 esc lmet))
+(defalias lft (tap-hold-next 200 (around lsft (around lmet (around lalt left))) lsft))
+(defalias rgt (tap-hold-next 200 (around rsft (around rmet (around ralt right))) rsft))
+(defalias med (layer-toggle media))
+
+(defalias col (layer-switch colemak))
+(defalias qwe (layer-switch default))
+
+(deflayer default
+          _    _    _    _    _    _    _    _    _    _    _    _    _
+          @med _    _    _    _    _    _    _    _    _    _    _    _    _
+          _    _    _    _    _    _    _    _    _    _    _    _    _    _
+          @esc _    _    _    _    _    _    _    _    _    _    _    _
+          _    _    _    _    _    _    _    _    _    _    _    _    _
+          _    _    _         _         _    @col _    _    _    _)
+
+(deflayer colemak
+          _    _    _    _    _    _    _    _    _    _    _    _    _
+          @med _    _    _    _    _    _    _    _    _    _    _    _    _
+          _    _    _    f    p    b    j    l    u    y    '    _    _    _
+          @esc _    r    s    t    _    m    n    e    i    o    ;    _
+          _    _    _    _    d    v    k    h    _    _    _    _    _
+          _    _    _         _         _    @qwe _    _    _    _)
+
+(deflayer media
+          _    _    _    _    _    _    _    prev pp   next mute vold volu
+          _    grv  _    _    _    _    _    _    _    _    _    _    _    _
+          _    _    _    _    _    _    _    _    _    _    _    _    _    _
+          _    _    _    _    _    _    _    _    _    _    _    _    _
+          _    _    _    _    _    _    _    _    _    _    _    _    _
+          _    _    _         _         _    _    _    _    _    _)
