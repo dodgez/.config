@@ -10,7 +10,15 @@
 
 * Doom theme and font
 #+begin_src elisp
-(setq doom-theme 'doom-solarized-light)
+(setq doom-theme 'doom-solarized-dark)
+(defun my/apply-theme (appearance)
+  "Load theme, taking current system APPEARANCE into consideration."
+  (mapc #'disable-theme custom-enabled-themes)
+  (pcase appearance
+    ('light (load-theme 'doom-solarized-light t))
+    ('dark (load-theme 'doom-solarized-dark t))))
+(add-hook 'ns-system-appearance-change-functions #'my/apply-theme)
+
 (setq doom-font (font-spec :family "Hack Nerd Font Mono" :size 16))
 #+end_src
 
