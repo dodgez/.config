@@ -32,4 +32,5 @@
 
 # Kmonad configuration
 !kmonad
-!kmonad/dedicated.kbd
+!kmonad/magic.kbd
+!kmonad/magicTouchNumpad.kbd
