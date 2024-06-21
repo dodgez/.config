@@ -22,6 +22,17 @@
 (setq doom-font (font-spec :family "Hack Nerd Font Mono" :size 16))
 #+end_src
 
+* Keybind to toggle CMD and CTRL behaviors on mac
+#+begin_src elisp
+(defun toggle-mac-modifiers ()
+  (interactive)
+  (when (eq system-type 'darwin)
+    (setq mac-command-modifier (if (eq mac-command-modifier 'meta) 'control 'meta))
+    (setq mac-control-modifier (if (eq mac-command-modifier 'meta) 'control 'meta))))
+(map! :leader (:prefix "t"
+               :desc "Mac modifiers" "M" #'toggle-mac-modifiers))
+#+end_src
+
 * Blink cursor and disable scroll acceleration
 #+begin_src elisp
 (blink-cursor-mode t)
