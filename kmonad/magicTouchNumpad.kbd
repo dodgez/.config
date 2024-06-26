@@ -28,7 +28,7 @@
           _    _    _    _    _    _    _    _    _    _    _    _    _    _
           @esc _    _    _    _    _    _    _    _    _    _    _    _
           _    _    _    _    _    _    _    _    _    _    _    _    _
-          _    _    _         _         _    @col _    _    _    _)
+          lmet _    lctl      _         _    @col _    _    _    _)
 
 (deflayer colemak
           _    _    _    _    _    _    _    _    _    _    _    _    _
@@ -36,7 +36,7 @@
           _    _    _    f    p    b    j    l    u    y    '    _    _    _
           @esc _    r    s    t    _    m    n    e    i    o    ;    _
           _    _    _    _    d    v    k    h    _    _    _    _    _
-          _    _    _         _         _    @qwe _    _    _    _)
+          lmet _    lctl      _         _    @qwe _    _    _    _)
 
 (deflayer media
           _    _    _    _    _    _    _    prev pp   next mute vold volu
