@@ -99,6 +99,8 @@ Set js/ts/web indent levels to two spaces.
 * Default Emacs size to 160x48
 #+begin_src elisp
 (setq initial-frame-alist '((width . 160) (height . 48)))
+(map! :leader (:prefix "t"
+               :desc "maximize frame" "m" #'toggle-frame-maximized))
 #+end_src
 
 * Trigger avy commands on SPC-j.
