@@ -10,7 +10,7 @@
 
 * Doom theme and font
 #+begin_src elisp
-(setq doom-theme 'doom-solarized-dark)
+(setq doom-theme (if (display-graphic-p) 'doom-solarized-dark 'doom-monokai-machine))
 (defun my/apply-theme (appearance)
   "Load theme, taking current system APPEARANCE into consideration."
   (mapc #'disable-theme custom-enabled-themes)
@@ -19,7 +19,7 @@
     ('dark (load-theme 'doom-solarized-dark t))))
 (add-hook 'ns-system-appearance-change-functions #'my/apply-theme)
 
-(setq doom-font (font-spec :family "Hack Nerd Font Mono" :size 16))
+(when (display-graphic-p) (setq doom-font (font-spec :family "Hack Nerd Font Mono" :size 16)))
 #+end_src
 
 * Keybind to toggle CMD and CTRL behaviors on mac
