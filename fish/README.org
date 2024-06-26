@@ -4,9 +4,11 @@
 
 * Setup emacs as editor
 #+begin_src fish
-set -x EDITOR "emacs -nw"
+set -x ALTERNATE_EDITOR ""
+set -x EDITOR "emacsclient -t"
 alias editor="$EDITOR"
 alias edit="editor"
+alias e="edit"
 #+end_src
 
 * Create di = ls ^ cat alias
