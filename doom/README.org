@@ -33,6 +33,13 @@
                :desc "Mac modifiers" "M" #'toggle-mac-modifiers))
 #+end_src
 
+* Configure Corfu
+#+begin_src elisp
+(use-package! corfu
+  :custom
+  (corfu-preselect 'first))
+#+end_src
+
 * Blink cursor and disable scroll acceleration
 #+begin_src elisp
 (blink-cursor-mode t)
@@ -105,7 +112,7 @@ Set js/ts/web indent levels to two spaces.
 
 * When on Windows, change the default directory for faster indexing.
 #+begin_src elisp
-(when IS-WINDOWS (setq default-directory doom-private-dir))
+(when (featurep :system 'windows) (setq default-directory doom-private-dir))
 #+end_src
 
 * Setup undo tree with keybindings.
@@ -147,13 +154,6 @@ Set js/ts/web indent levels to two spaces.
 (add-hook 'typescript-tsx-mode-hook #'disable-format-with-lsp)
 (add-hook 'typescript-mode-hook #'disable-format-with-lsp)
 (add-hook 'web-mode-hook #'disable-format-with-lsp)
-#+end_src
-
-* Modify highlight indent to use block characters instead of just vertical pipes.
-#+begin_src elisp
-(use-package! highlight-indent-guides
-  :config
-  (setq highlight-indent-guides-method 'column))
 #+end_src
 
 * Change projectile indexing method to alien
