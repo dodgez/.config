@@ -13,6 +13,11 @@ add_newline = false
 threshold = 20
 #+end_src
 
+#+begin_src toml
+[hostname]
+ssh_symbol = "ssh "
+#+end_src
+
 * Text symbols for languages
 #+begin_src toml
 [character]
